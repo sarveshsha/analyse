@@ -1,0 +1,40 @@
+<div class="col-xs-12 login-background">
+	<div class="row">
+		<div class="container">
+			<div class="row">
+				<div class="transparent-bg">
+					<div class="col-xs-12 login-logo">
+						<a href="index.html"> <img src="img/blogo.png"
+							alt="black logo" />
+						</a>
+					</div>
+					<div class="col-xs-12 login-details">
+						<form name='f'>
+							<div class="form-group">
+								<input ng-model="user.username" type="text"
+									placeholder="Username" class="form-control common-control"
+									name='username' /> <span class="login-icon"><img
+									src="img/home.png" alt="home icon"></span>
+							</div>
+							<div class="form-group">
+								<input ng-model="user.password" type="password"
+									placeholder="Password" class="form-control common-control"
+									name='password' /> <span class="login-icon"><img
+									src="img/pass.png" alt="pass icon"></span>
+							</div>
+							<div class="alert alert-danger form-group" ng-show="loginError">
+								<strong>Error!</strong> Username or password incorrect
+							</div>
+							<div class="form-group centerbtn">
+								<!-- <input name="submit" type="submit" value="login" class="btn btn-primary login-btn"/> -->
+								<button class="btn btn-primary login-btn default-radius" ng-click="login()">Log
+									In</button>
+								<!-- <a href="#/signup" class="btn btn-primary signin-btn">Signup</a> -->
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,318 @@
+
+<div class="container-fluid commonRightbarTop"
+	ng-init="getPrerequisite()">
+	<div class="row page-title-div">
+		<div class="col-md-12">
+			<h2 class="title">
+				Add Combo Asset
+				<button type="button" class="btn pull-right addBtnPopup"
+					id="addComboAsset" ng-click="onAddModalOpen()">
+					<!-- <img src="img/add.png" alt="add"> -->
+					<i class="fa fa-plus-circle" aria-hidden="true"></i>
+				</button>
+			</h2>
+		</div>
+	</div>
+	<!-- /.row -->
+	<div class="row breadcrumb-div">
+		<div class="col-md-6">
+			<ul class="breadcrumb">
+				<li><a href="#/"><i class="fa fa-home"></i> Home</a></li>
+				<li class="active">Combo Asset</li>
+			</ul>
+		</div>
+	</div>
+	<!-- /.row -->
+</div>
+
+<!-- new add form of asset -->
+<div id="NewAddWizard" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					ng-click="onAddModalClose()">&times;</button>
+				<h4 class="modal-title">Add Combo Asset</h4>
+			</div>
+			<div class="modal-body addAsset-modalbody">
+				<div class="row" ng-show="!isAssetSeleted">
+
+					<div class="dual-list list-left col-md-12">
+						<label for="company">Available asset: </label>
+						<div class="well text-right">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="input-group">
+										<span
+											class="input-group-addon glyphicon glyphicon-search comboWizrdSearch"></span>
+										<input type="text" name="SearchDualList" class="form-control"
+											placeholder="search" ng-model="searchAvailableAsset"
+											ng-change="onSearchAvailableAsset()" />
+									</div>
+								</div>
+							</div>
+							<table class="table table-bordered" style="margin: 0;">
+								<thead>
+									<tr>
+										<th>
+											Code
+										</th>
+										<th>
+											Base
+										</th>
+										<th>
+											Unit
+										</th>
+										<th>
+											Description
+										</th>
+										<th>
+											Remark
+										</th>
+										<th>
+											Price
+										</th>
+										
+									</tr>
+								</thead>
+							</table>
+							<ul class="list-group commonListGroup">
+								<li class="list-group-item text-left"
+									ng-repeat="availableAsset in assetList track by availableAsset.pentaBaseAssetID"
+									ng-click="moveToListB(availableAsset)">{{
+									availableAsset.pentaBaseAssetCode }} <i class="fa fa-arrows-v"
+									aria-hidden="true"></i> {{ availableAsset.pentaBaseAssetBase }}
+									<i class="fa fa-arrows-v" aria-hidden="true"></i> {{ availableAsset.pentaBaseAssetUnit }} <i class="fa fa-arrows-v"
+									aria-hidden="true"></i>{{ availableAsset.pentaBaseDescription[0].pentaBaseShortDesc }} <i class="fa fa-arrows-v"
+									aria-hidden="true"></i>{{ availableAsset.pentaBaseDescription[0].pentaBaseAssetRemarks }} <i class="fa fa-arrows-v"
+									aria-hidden="true"></i> {{ availableAsset.pentaBaseAssetCurrency[0].pentaBaseAssetCurCostPrice }}<i
+									class="fa fa-angle-down arrow pull-right commonAngle"></i>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="dual-list list-right col-md-12">
+						<label for="company">Selected asset: </label>
+						<div class="well">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="input-group">
+									 <span
+											class="input-group-addon glyphicon glyphicon-search comboWizrdSearch"></span>
+										<input type="text" name="SearchDualList" class="form-control"
+											placeholder="search" ng-model="query" />
+									</div>
+								</div>
+							</div>
+							<table class="table table-bordered" style="margin: 0;">
+								<thead>
+									<tr>
+										<th>
+											Code
+										</th>
+										<th>
+											Base
+										</th>
+										<th>
+											Unit
+										</th>
+										<th>
+											Description
+										</th>
+										<th>
+											Remark
+										</th>
+										<th>
+											Price
+										</th>
+									</tr>
+								</thead>
+							</table>
+							<ul class="list-group commonListGroup">
+								<li class="list-group-item text-left"
+									ng-repeat="selectedAsset in selectedAssetList | filter: search: false "
+									ng-click="moveToListA(selectedAsset)"> {{
+									selectedAsset.pentaBaseAssetCode }} <i class="fa fa-arrows-v"
+									aria-hidden="true"></i> {{ selectedAsset.pentaBaseAssetBase }} <i class="fa fa-arrows-v"
+									aria-hidden="true"></i> {{ selectedAsset.pentaBaseAssetUnit }}<i class="fa fa-arrows-v"
+									aria-hidden="true"></i> {{ selectedAsset.pentaBaseDescription[0].pentaBaseShortDesc }} <i class="fa fa-arrows-v"
+									aria-hidden="true"></i>{{ selectedAsset.pentaBaseDescription[0].pentaBaseAssetRemarks }} <i class="fa fa-arrows-v"
+									aria-hidden="true"></i>{{ selectedAsset.pentaBaseAssetCurrency[0].pentaBaseAssetCurCostPrice }} <i
+									class="fa fa-angle-up arrow pull-right commonAngle"></i></li>
+							</ul>
+							<div>
+							<label>Total Amount : {{totalAmount}} </label> </br>
+							<label>Total Amount with <input type="number" ng-keyup="changeDiscount(discountValue)" ng-model="discountValue"/> discount amount : {{totalAmountWithDis}} </label> 
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="text-center">
+					<button type="button" class="login-btn nextBtn default-radius"
+						ng-click="onAssetSelect()" ng-show="!isAssetSeleted"
+						ng-disabled="selectedAssetList.length < 2">Next</button>
+				</div>
+
+				<div id="wizard-container" ng-show="isAssetSeleted">
+
+					<div id="wizard-step-container">
+						<ul class="nav nav-pills nav-justified">
+							<li ng-repeat="step in assetAddsteps"
+								ng-class="{'active':step.step == currentAddAssetStep}"><a
+								href=""> {{step.name}}</a></li>
+						</ul>
+					</div>
+					<form role="form" name="assetForm">
+						<div id="wizard-content-container">
+							<ng-include src="getAddAssetStepTemplate()"></ng-include>
+						</div>
+					</form>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!--  -->
+
+<!-- end new form of asset -->
+<section class="section listSection">
+	<!-- List of Data in grid view -->
+	
+		<div class="col-xs-12 asset-table-list listContFluid">
+		<div class="panel-body">
+			<div class="col-xs-12 nopadding" > <!-- ng-app="pentaWorkflow.asset" ng-controller="AssetController" -->
+				<div id="grid1" ui-grid="gridOptions" ui-grid-pagination
+					ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning ui-grid-expandable
+					ui-grid-selection ui-grid-exporter ui-grid-auto-resize ui-grid-grouping ui-grid-save-state></div>
+				<p>Current page: {{ gridApi.pagination.getPage() }} of {{
+					gridApi.pagination.getTotalPages() }}</p>
+			</div>
+		</div>
+		<!-- end grid view option -->
+	<!-- <div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12 ">
+				<div class="panel">
+					<div class="panel-body ">
+						<table id="data-table-div"
+							class="display table table-striped table-bordered "
+							cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th>Base</th>
+									<th>Code</th>
+									<th>Unit</th>
+									<th>Cost Price</th>
+									<th>Sell Price</th>
+									<th>Remark</th>
+									<th>Description</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+						</table>
+
+					</div>
+					/.col-md-12
+				</div>
+			</div>
+			/.panel
+		</div>
+		/.col-md-6
+	</div> -->
+	<!-- /.row -->
+	</div>	
+</section>
+<!-- /.section -->
+
+<!-- new add form of asset -->
+<div id="expandRow" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					ng-click="onAddModalClose()">&times;</button>
+				<h4 class="modal-title">Combo asset list</h4>
+			</div>
+			<div class="modal-body addAsset-modalbody">
+				<!-- Main body start {{
+							childAsset.pentaBaseAssetCode }}-->
+				<div class="well">
+					<ul class="list-group">
+						<!-- .comboAssets -->
+						<li class="list-group-item" ng-repeat="childAsset in rowAsset"> {{
+									childAsset.pentaBaseAssetCode }} <i class="fa fa-arrows-v"
+									aria-hidden="true"></i> {{ childAsset.pentaBaseAssetBase }} <i class="fa fa-arrows-v"
+									aria-hidden="true"></i> {{ childAsset.pentaBaseAssetUnit }}</li>
+					</ul>
+				</div>
+				<!-- Main body end  -->
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- Expand table row  -->
+
+
+<!-- new add form of asset -->
+<div id="updateWizard" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					ng-click="onUpdateModalClose()">&times;</button>
+				<h4 class="modal-title">Update Combo Asset</h4>
+			</div>
+			<div class="modal-body addAsset-modalbody">
+				<div id="wizard-container">
+					<div id="wizard-step-container">
+						<ul class="nav nav-pills nav-justified">
+							<li ng-repeat="step in assetUpdatesteps"
+								ng-class="{'active':step.step == currentUpdateAssetStep}"><a
+								href=""> {{step.name}}</a></li>
+						</ul>
+					</div>
+					<form role="form" name="updateForm">
+						<div id="wizard-content-container">
+							<ng-include src="getUpdateAssetStepTemplate()"></ng-include>
+						</div>
+					</form>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!--  -->
+
+
+<script>
+	$(function() {	
+	});
+	function editData(id) {
+
+		$scope = angular.element(document.getElementById('addComboAsset')).scope();
+
+		$.get('v1.0/assets/assetById/' + id, function(data, status) {
+			if (data.body !== null && data.body !== undefined) {
+				$scope.editData(data.body);
+			}
+		});
+
+	}
+	function assetData(id) {
+		$scope = angular.element(document.getElementById('addComboAsset')).scope();
+		$scope.onExpandRow(id);
+
+	}
+</script>
+
+<!-- ========== ADD custom.js FILE BELOW WITH YOUR CHANGES ========== -->

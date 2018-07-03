@@ -1,0 +1,31 @@
+{
+  "LeadProgram": [
+    {
+      "id": "one",
+      "name": "name",
+      "": {}
+    }
+  ],
+  "LeadTransaction": [
+    {
+      "id": "id",
+      "source": "sorce",
+      "date": "2018-06-28T10:26:21.308Z",
+      "program": "program"
+    }
+  ],
+  "LeadAggregateByDay": {
+  "date": "2018-06-28T10:26:21.308Z",
+  "month": 0,
+  "year": 0,
+  "total": 0,
+  "countsByProgram": {
+    "programname": 0
+  },
+  "countsByTrial": {
+    "trial": 0
+  },
+  "countsByRegion": {
+    "regionName": 0
+  }
+}

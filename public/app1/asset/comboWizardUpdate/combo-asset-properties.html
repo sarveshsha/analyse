@@ -1,0 +1,144 @@
+<div class="form-group" ng-init="onePrerequsite()">
+	<label for="code">Asset Code <sup class="danger-color">*</sup></label>
+	<input type="text" placeholder="Code" name="code"
+		ng-model="updateAsset.pentaBaseAssetCode" uib-popover="Asset Code"
+		popover-trigger="'mouseenter'" ng-pattern="/^[a-zA-Z0-9-\s]+$/"
+		class="form-control common-control" required />
+</div>
+<div class="commonValidate" ng-show="updateForm.code.$error.pattern">
+	<strong>Field must start with an alphabet (character limit :
+		2-40) and special Characters are not allowed.!</strong>
+</div>
+<div class="commonValidate"
+	ng-show="updateForm.code.$touched && updateForm.code.$invalid">
+	<strong>Required field* (Limit : 1-40)</strong>
+</div>
+<!-- add new field -->
+<div class="form-group">
+	<label for="code">GL Account</label> <input type="text"
+		placeholder="GL Account" name="glac"
+		ng-model="updateAsset.pentaBaseGLAccount" uib-popover="GL Account"
+		popover-trigger="'mouseenter'" class="form-control common-control"
+		ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/" />
+</div>
+<div class="commonValidate" ng-show="updateForm.glac.$error.pattern">
+	<strong>Field must start with an alphabet (character limit :
+		2-40) and special Characters are not allowed.!</strong>
+</div>
+<!-- End -->
+<!-- add new field -->
+<div class="form-group">
+	<label for="code">Serial Number</label> <input type="text"
+		placeholder="Serial Number" name="serialno"
+		ng-model="updateAsset.pentaBaseSerialNumber"
+		uib-popover="Serial Number" popover-trigger="'mouseenter'"
+		class="form-control common-control"
+		ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/" />
+</div>
+<div class="commonValidate" ng-show="updateForm.serialno.$error.pattern">
+	<strong>Field must start with an alphabet (character limit :
+		2-40) and special Characters are not allowed.!</strong>
+</div>
+<!-- End -->
+<!-- add new field -->
+<div class="form-group">
+	<label for="code">Select Asset Usage<sup class="danger-color">*</sup></label>
+	<select class="form-control common-control select-type"
+		uib-popover="Asset Usage " popover-trigger="'mouseenter'" name="usage"
+		ng-model="updateAsset.pentaBaseAssetUsage" required>
+		<option value="" selected>---Select Asset Usage ---</option>
+		<option value="{{assetUsage.usageDescription}}"
+			ng-repeat="assetUsage in AssetUsageList">{{assetUsage.usageDescription}}</option>
+	</select>
+
+</div>
+<div class="commonValidate"
+	ng-show="updateForm.usage.$touched && updateForm.usage.$invalid">
+	<strong>Asset usage is required</strong>
+</div>
+<!-- End -->
+<!-- Asset Type -->
+<div class="form-group">
+	<label for="code">Select Asset Type</label>
+	<select class="form-control common-control select-type"
+		uib-popover="Asset Type " popover-trigger="'mouseenter'" name="region"
+		ng-model="updateAsset.pentaBaseAssetType">
+		<option value="" selected>---Select Type ---</option>
+		<option
+			value="{{assetType.pentaBaseAssetTableTypesStatusDescription}}"
+			ng-repeat="assetType in assetTypeList">{{assetType.pentaBaseAssetTableTypesStatusDescription}}</option>
+	</select>
+
+</div>
+<div class="commonValidate"
+	ng-show="updateForm.type.$touched && updateForm.type.$invalid">
+	<strong>Asset type is required</strong>
+</div>
+<!-- End -->
+<div class="form-group">
+	<label for="code">Asset Base <sup class="danger-color">*</sup></label>
+	<input type="text" placeholder="Base" name="base"
+		ng-model="updateAsset.pentaBaseAssetBase" uib-popover="Asset Base"
+		popover-trigger="'mouseenter'"
+		ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/" maxlength="40"
+		class="form-control common-control" required />
+</div>
+<div class="commonValidate" ng-show="updateForm.base.$error.pattern">
+	<strong>Field must start with an alphabet (character limit :
+		2-40) and special Characters are not allowed.!</strong>
+</div>
+<div class="commonValidate"
+	ng-show="updateForm.base.$touched && updateForm.base.$invalid">
+	<strong>Required field* (Limit : 1-40)</strong>
+</div>
+<!-- <div class="form-group">
+	<label for="code">Unit <sup class="danger-color">*</sup></label> <input
+		type="text" placeholder="Unit" uib-popover="Asset Unit"
+		popover-trigger="'mouseenter'"
+		ng-model="updateAsset.pentaBaseAssetUnit" name="unit"
+		class="form-control common-control"
+		ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/" required />
+</div>
+<div class="commonValidate" ng-show="updateForm.unit.$error.pattern">
+	<strong>Field must start with an alphabet (character limit :
+		2-40) and special Characters are not allowed.!</strong>
+</div>
+<div class="commonValidate"
+	ng-show="updateForm.unit.$touched && updateForm.unit.$invalid">
+	<strong>Required field* (Limit : 1-20)</strong>
+</div> -->
+<div class="form-group">
+	<label for="code">Select Asset Unit<sup class="danger-color">*</sup></label>
+	<select class="form-control common-control select-type"
+		uib-popover="Asset Unit" popover-trigger="'mouseenter'" name="unit"
+		ng-model="updateAsset.pentaBaseAssetUnit" required>
+		<option
+			value="{{unit.pentaBaseAssetUnitName}}"
+			ng-repeat="unit in UnitLists">{{unit.pentaBaseAssetUnitName}}</option>
+		<!-- <option value="{{assetUsage.usageDescription}}"
+			ng-repeat="assetUsage in AssetUsageList">{{assetUsage.usageDescription}}</option> -->
+	</select>
+
+</div>
+<div class="commonValidate"
+	ng-show="updateAssetForm.unit.$touched && updateAssetForm.unit.$invalid">
+	<strong>Required field* (Limit : 1-40)</strong>
+</div>
+<!-- End -->
+<div class="col-xs-12 nopadding">
+	<div id="wizard-navigation-container">
+		<!-- 	<button ng-disabled="currentAddAssetStep < 1" class="login-btn pull-left nextBtn default-radius"
+								name="previous" type="button"
+								ng-click="gotoAddAssetStep(currentAddAssetStep - 1)">
+								Previous
+							</button> -->
+		<!-- <button class="login-btn pull-left default-radius clearBtn"
+			ng-click="clearFormLevelOne()">Back</button> -->
+		<button
+			ng-disabled="currentUpdateAssetStep >= assetUpdatesteps.length || updateForm.code.$invalid || updateForm.base.$invalid || updateForm.unit.$invalid || updateForm.price.$invalid || updateForm.defaultDescription.$invalid || updateForm.defaultRemark.$invalid || updateForm.usage.$invalid ||updateForm.type.$invalid"
+			class="login-btn pull-right nextBtn default-radius" name="next"
+			type="button"
+			ng-click="gotoUpdateAssetStep(currentUpdateAssetStep + 1);twoPrerequsite()">
+			Next</button>
+	</div>
+</div>

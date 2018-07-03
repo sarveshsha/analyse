@@ -1,0 +1,134 @@
+<h1></h1>
+
+<div class="form-group">
+	<label for="code">Select Company</label> <select
+		class="form-control common-control select-type" uib-popover="Company "
+		popover-trigger="'mouseenter'" id="companySelect" name="company"
+		ng-model="asset.pentaBaseCompany"
+		ng-options="company.pentaBaseLegalName for company in companyLists track by company.pentaBaseComCode"
+		ng-change="getAddCurrenciesById(asset.pentaBaseCompany.pentaBaseComCode)"
+		>
+		<option value="" selected>---Select Company ---</option>
+	</select>
+</div>
+
+<!-- default currency div start -->
+<div class="row" id="defaultCurrencyDiv">
+	<div class="col-xs-12 langDescrip">
+		<div class="form-group">
+			<label for="code">Default Currency</label> <select
+				class="form-control common-control select-type" name="currencyName"
+				uib-popover="Currency" popover-trigger="'mouseenter'"
+				name="selectCurr"
+				id="{{currency.pentaBaseCurrency.pentaBaseCurCode}}"
+				disabled="disabled" required>
+				<option ng-repeat="currency in defaultCurrencyList"
+					ng-selected="currency.pentaBaseDefaultCur == true ? currency.pentaBaseCurName : 0"
+					ng-value="currency.pentaBaseCurName">{{currency.pentaBaseCurName}}</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="code">Sell Price <sup class="danger-color">*</sup></label>
+			<input type="number" maxlength="20"
+				ng-model="defaultCurrencyNew.pentaBaseAssetCurSellPrice" name="sell"
+				id="{{currency.pentaBaseCurrency.pentaBaseCreatedDate}}"
+				uib-popover="Sell Price" popover-trigger="'mouseenter'"
+				class="form-control common-control" placeholder="Sell Price"
+				ng-pattern="/^[0-9]+$/" required>
+		</div>
+		<div class="commonValidate" ng-show="assetForm.sell.$error.pattern">
+			<strong>Negative value is not allowed..!</strong>
+		</div>
+		<div class="commonValidate"
+			ng-show="(isPriceNextClicked || assetForm.sell.$touched) && assetForm.sell.$invalid">
+			<strong>Required field* (Limit : 1-20)</strong>
+		</div>
+		<div class="form-group">
+			<label for="code">Cost Price<sup class="danger-color">*</sup></label>
+			<input type="number"
+				ng-model="defaultCurrencyNew.pentaBaseAssetCurCostPrice" maxlength="20"
+				id="{{currency.pentaBaseCurrency.pentaBaseCurName}}" name="cost"
+				uib-popover="Cost Price" popover-trigger="'mouseenter'"
+				class="form-control common-control" placeholder="Cost Price"
+				ng-pattern="/^[0-9]+$/" required="required">
+		</div>
+
+		<div class="commonValidate" ng-show="assetForm.cost.$error.pattern">
+			<strong>Negative value is not allowed..!</strong>
+		</div>
+		<div class="commonValidate"
+			ng-show="(isPriceNextClicked || assetForm.cost.$touched) && assetForm.cost.$invalid">
+			<strong>Required field* (Limit : 1-20)</strong>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div data-ng-repeat="currency in asset.pentaBaseCurrency">
+		<div class="col-xs-12 langDescrip">
+			<div class="form-group">
+				<label for="code">Select Currency</label> <select
+					class="form-control common-control select-type" name="currencyName"
+					uib-popover="Currency" popover-trigger="'mouseenter'"
+					name="selectCurr"
+					id="{{currency.pentaBaseCurrency.pentaBaseCurCode}}"
+					ng-model="currency.pentaBaseCurrency"
+					ng-change="onAddCurrencyChange(currency.pentaBaseCurrency)"
+					ng-options="currency.pentaBaseCurName for currency in currencyListCompany | filter:{ pentaBaseDefaultCur:false}"
+					required>
+				</select><small id="{{currency.pentaBaseCurrency.pentaBaseCurCode}}"
+					style="color: red;">{{currencyWarning}}</small>
+			</div>
+			<div class="form-group">
+				<label for="code">Sell Price <sup class="danger-color">*</sup></label>
+				<input type="number" ng-model="currency.pentaBaseSellPrice"
+					ng-pattern="/^[0-9]+$/" name="sell1"
+					id="{{currency.pentaBaseCurrency.pentaBaseCreatedDate}}"
+					uib-popover="Sell Price" popover-trigger="'mouseenter'"
+					class="form-control common-control" placeholder="Sell Price"
+					required>
+			</div>
+			<div class="commonValidate" ng-show="assetForm.sell1.$error.pattern">
+				<strong>Negative value is not allowed..!</strong>
+			</div>
+			<div class="form-group">
+				<label for="code">Cost Price<sup class="danger-color">*</sup></label>
+				<input type="number" ng-model="currency.pentaBaseCostPrice"
+					id="{{currency.pentaBaseCurrency.pentaBaseCurName}}" name="cost1"
+					uib-popover="Cost Price" popover-trigger="'mouseenter'"
+					ng-pattern="/^[0-9]+$/" class="form-control common-control"
+					placeholder="Cost Price" required="required">
+			</div>
+			<div class="commonValidate" ng-show="assetForm.cost1.$error.pattern">
+				<strong>Negative value is not allowed..!</strong>
+			</div>
+			<button class="remove commonAddRem removePosi " ng-show="$last" ng-click="removeAddCurrency()">
+				<span>Remove Currency</span><img src="img/remove.png" alt="remove" />
+			</button>
+		</div>
+	</div>
+</div>
+<button class="addfields commonAddRem pull-right"
+	ng-disabled="assetForm.cost1.$invalid || assetForm.sell1.$invalid || assetForm.selectCurr.$touched || assetForm.cost.$invalid || assetForm.sell.$invalid || assetForm.company.$invalid || assetForm.selectCurr.$touched || endCount"
+	ng-click="addNewAddCurrency()">
+	<img src="img/add.png" alt="add" /><span>Add Currency</span>
+</button>
+<!-- default currency div end -->
+
+<div class="col-xs-12 nopadding">
+	<div id="wizard-navigation-container">
+		<button
+			ng-disabled="currentAddAssetStep < 1 || assetForm.price.$invalid"
+			class="login-btn pull-left nextBtn default-radius" name="previous"
+			type="button" ng-click="gotoAddAssetStep(currentAddAssetStep - 1)">
+			Previous</button>
+			<!-- prefer ng-disable for sell1 and cost1 -->
+		<button
+			
+			class="login-btn pull-right nextBtn default-radius" name="next"
+			ng-disabled="assetForm.cost1.$invalid || assetForm.sell1.$invalid"
+			type="button" ng-click="checkPriceValidation(assetForm,currentAddAssetStep)">
+			Next</button>
+
+	</div>
+</div>

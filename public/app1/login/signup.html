@@ -1,0 +1,58 @@
+<!-- Add Data -->
+<div class="col-xs-12">
+
+	<!--  -->
+	<!-- <div class="row">
+		<div class="container"> -->
+			<div class="Signup">
+				<h4>Add Region</h4>
+				<button type="button" class="btn addBtnPopup" data-toggle="modal"
+					data-target="#myModal">
+					<img src="img/add.png" alt="add">
+				</button>
+			</div>
+			<div class="searchAssets">
+				<div custom-select="t as t.name for t in searchAsync($searchTerm)"
+					custom-select-options="searchOptions" ng-model="selectedAsset">
+					<div class="pull-left">
+						<strong>{{ t.pentaBaseAssetCode }}</strong><br /> <span>{{
+							t.pentaBaseAssetDescription }}</span>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+
+				<!--  -->
+			</div>
+		<!-- </div>
+	</div> -->
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Add Region</h4>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/ng-template" id="chips-template">
+      <div class="bootstrap">
+        <div>
+         <span>{{$getDisplayText()}}</span>
+		<span>{{data.pentaBaseAssetPropertyValue}}</span>
+          <a class="remove-button" ng-click="$removeTag()">&#10006;</a>
+        </div>
+      </div>
+    </script>
+<script type="text/ng-template" id="auto-complete-template">
+      <div class="left-panel">
+		<span ng-bind-html="$highlight($getDisplayText())"></span>
+		<span ng-bind-html="$highlight(data.pentaBaseAssetPropertyValue)"></span>
+      </div>
+    </script>

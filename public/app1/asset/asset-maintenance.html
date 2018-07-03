@@ -1,0 +1,240 @@
+<div class="col-xs-12"
+	ng-init="getAllMaintenanceStatuses();getAllMaintenanceResultCode()">
+	<h3></h3>
+	<form>
+		<div class="form-group checkboxFive">
+			<input type="checkbox" class="styled-checkbox" id="AddMaint"
+				ng-model="asset.maintenanceRequired"
+				ng-click="onMaintenanceCheckClick()" /> <label for="AddMaint">Add
+				maintenance</label>
+		</div>
+		<div
+			ng-show="asset.maintenanceRequired != undefined && asset.maintenanceRequired">
+			<!-- <div class="form-group">
+				<label for="code">Maintenance Type<sup class="danger-color">*</sup></label>
+				<input type="text" placeholder="Maintenance Type" name="maintType"
+					uib-popover="Maintenance Type" popover-trigger="'mouseenter'"
+					ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/"
+					ng-model="asset.pentaBaseMaintenance.pentaBaseMaintType"
+					class="form-control common-control"
+					ng-required="asset.maintenanceRequired" />
+			</div>
+			<div class="commonValidate"
+				ng-show="assetForm.maintType.$error.pattern">
+				<strong>Field must starts with a letter and no special
+					Characters are allowed.!</strong>
+			</div>
+			<div class="commonValidate"
+				ng-show="(isMaintClicked || assetForm.maintType.$touched) && assetForm.maintType.$invalid">
+				<strong>Maintenance Type is required field !</strong>
+			</div> -->
+			<!-- Asset Unit -->
+			<div class="form-group">
+				<label for="assetType">Maintenance Type<sup class="danger-color">*</sup></label> <select
+					class="form-control common-control select-type"
+					uib-popover="Asset Maintenance Type" popover-trigger="'mouseenter'" name="maintType"
+					 ng-model="asset.pentaBaseMaintenance.pentaBaseMaintType" ng-required="asset.maintenanceRequired">
+					<option value="" selected>---Select Maintenance Type ---</option>
+					<option value="{{maintenanceType.pentaBaseMaintenanceTypeName}}"
+						ng-repeat="maintenanceType in maintenanceTypeList">{{maintenanceType.pentaBaseMaintenanceTypeName}}</option>
+				</select>
+
+			</div>
+			<div class="commonValidate"
+				ng-show="(isMaintClicked || assetForm.maintType.$touched) && assetForm.maintType.$invalid">
+				<strong>Maintenance Type is required field !</strong>
+			</div>
+			
+			<!-- End -->
+			<div class="form-group">
+				<label for="code">Maintenance Description <sup
+					class="danger-color">*</sup></label> <input type="text"
+					placeholder="Maintenance Description"
+					uib-popover="Maintenance Description"
+					popover-trigger="'mouseenter'" name="mainDescription"
+					ng-model="asset.pentaBaseMaintenance.pentaBaseMainDesc"
+					ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/"
+					class="form-control common-control"
+					ng-required="asset.maintenanceRequired" />
+			</div>
+			<div class="commonValidate"
+				ng-show="assetForm.mainDescription.$error.pattern">
+				<strong>Field must starts with a letter and no special
+					Characters are allowed.!</strong>
+			</div>
+			<div class="commonValidate"
+				ng-show="(isMaintClicked || assetForm.mainDescription.$touched) && assetForm.mainDescription.$invalid">
+				<strong> Maintenance Description is required field!</strong>
+			</div>
+			<!-- add new field -->
+			<div class="form-group">
+				<label for="code">Select Status <sup class="danger-color">*</sup></label>
+				<select class="form-control common-control select-type"
+					uib-popover="Maintenance Status" popover-trigger="'mouseenter'"
+					name="status" ng-model="asset.pentaBaseMaintenance.status"
+					ng-required="asset.maintenanceRequired">
+					<option value="" selected>---Select Status ---</option>
+					<option
+						value="{{maintenanceStatus.pentaBaseAssetMaintenanceDescription}}"
+						ng-repeat="maintenanceStatus in maintenanceStatusesList">{{maintenanceStatus.pentaBaseAssetMaintenanceDescription}}</option>
+				</select>
+
+			</div>
+			<div class="commonValidate"
+				ng-show="(isMaintClicked || assetForm.status.$touched )&& assetForm.status.$invalid">
+				<strong>Required field*</strong>
+			</div>
+			<!-- End -->
+			<!-- add code for user entity -->
+			<div class="form-group">
+				<label for="code">Lead Engineer<sup class="danger-color">*</sup></label>
+				<select class="form-control common-control select-type"
+					uib-popover="Lead Engineer" popover-trigger="'mouseenter'" name="user"
+					ng-model="asset.pentaBaseMaintenance.pentaBaseUser"
+					ng-required="asset.maintenanceRequired">
+					<option value="" selected>--- Select Lead Engineer ---</option>
+					<option value="{{user}}" ng-repeat="user in userList">{{user.pentaBaseFullName}}</option>
+				</select>
+
+			</div>
+			<div class="commonValidate"
+				ng-show="(isMaintClicked || assetForm.user.$touched) && assetForm.user.$invalid">
+				<strong>Required field*</strong>
+			</div>
+			<!-- End User Code -->
+			<!-- add code for other user entity -->
+			<div class="form-group">
+				<label for="code">Other Engineers<sup class="danger-color">*</sup></label>
+				<select class="form-control common-control select-type"
+					uib-popover="Other Engineer" popover-trigger="'mouseenter'" name="otherUser"
+					ng-model="asset.pentaBaseMaintenance.pentaBaseOtherUser"
+					ng-required="asset.maintenanceRequired">
+					<option value="" selected>--- Select Other Engineers ---</option>
+					<option value="{{user}}" ng-repeat="user in userList">{{user.pentaBaseFullName}}</option>
+				</select>
+
+			</div>
+			<div class="commonValidate"
+				ng-show="(isMaintClicked || assetForm.otherUser.$touched) && assetForm.otherUser.$invalid">
+				<strong>Required field*</strong>
+			</div>
+			<!-- End User Code -->
+			<!-- add new field for result code-->
+			<div class="form-group">
+				<label for="code">Select Result Code <sup
+					class="danger-color">*</sup></label> <select
+					class="form-control common-control select-type"
+					uib-popover="Maintenance Result Code"
+					popover-trigger="'mouseenter'" name="resultCode"
+					ng-model="asset.pentaBaseMaintenance.pentaBaseResultCode"
+					ng-required="asset.maintenanceRequired">
+					<option value="" selected>---Select Result Code ---</option>
+					<option
+						value="{{maintenanceResultCode.pentaBaseAssetMaintenanceResultCode}}"
+						ng-repeat="maintenanceResultCode in maintenanceResultCodeList">{{maintenanceResultCode.pentaBaseAssetMaintenanceResultStatus}}</option>
+				</select>
+			</div>
+			<div class="commonValidate"
+				ng-show="(isMaintClicked || assetForm.resultCode.$touched )&& assetForm.resultCode.$invalid">
+				<strong>Result Code is required field!</strong>
+			</div>
+			<!-- End -->
+			<div class="form-group">
+				<label for="code">Result Description <sup
+					class="danger-color">*</sup></label> <input type="text"
+					placeholder="Result Description" name="resultDescription"
+					uib-popover="Result Description" popover-trigger="'mouseenter'"
+					ng-model="asset.pentaBaseMaintenance.pentaBaseResultDesc"
+					ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/"
+					class="form-control common-control"
+					ng-required="asset.maintenanceRequired" />
+			</div>
+			<div class="commonValidate"
+				ng-show="assetForm.resultDescription.$error.pattern">
+				<strong>Field must starts with a letter and no special
+					Characters are allowed.!</strong>
+			</div>
+			<div class="commonValidate"
+				ng-show="(isMaintClicked || assetForm.resultDescription.$touched) && assetForm.resultDescription.$invalid">
+				<strong> Result Description is required field!</strong>
+			</div>
+			<div class="form-group">
+				<label for="code">Start Date <sup class="danger-color">*</sup></label>
+				<!-- <input type="text" class="form-control common-control"
+					name="maintStartDate" placeholder="Start Date"
+					ng-click="openStart()"
+					ng-model="asset.pentaBaseMaintenance.pentaBaseMaintStartDate"
+					uib-datepicker-popup="dd-MMMM-yyyy" is-open="popup1.opened"
+					datepicker-options="dateOptions"
+					ng-change="checkdate(asset.pentaBaseMaintenance.pentaBaseMaintStartDate,asset.pentaBaseMaintenance.pentaBaseMaintEndDate)"
+					ng-required="asset.maintenanceRequired" close-text="Close"
+					alt-input-formats="mm/dd/yyyy" id="startDate" /> -->
+					<input  type="text" class="form-control common-control"
+					name="maintStartDate" placeholder="Start Date"
+					datetime-picker="dd-MMMM-yyyy HH:mm"
+					ng-model="asset.pentaBaseMaintenance.pentaBaseMaintStartDate" 
+					uib-popover="Start Date"
+					popover-trigger="'mouseenter'"
+					placeholder="Start Date"  
+					id="startDate" 
+					ng-change="checkdate(asset.pentaBaseMaintenance.pentaBaseMaintStartDate,asset.pentaBaseMaintenance.pentaBaseMaintEndDate)"
+					is-open="picker3.open" 
+					ng-click="openCalendar()" 
+					ng-required="asset.maintenanceRequired"/>
+			</div>
+			<div class="commonValidate"
+				ng-show="(isMaintClicked || assetForm.maintStartDate.$touched) && assetForm.maintStartDate.$invalid">
+				<strong>Maintenance Start Date is required field!</strong>
+			</div>
+			<div class="commonValidate" ng-show="error1">
+				<strong> {{ErrMessage}} </strong>
+			</div>
+
+			<div class="form-group">
+				<label for="code">End Date <sup class="danger-color">*</sup></label>
+				<!-- <input type="text" class="form-control common-control"
+					name="maintEndDate" placeholder="End Date" id="endDate"
+					ng-click="openEnd()"
+					ng-model="asset.pentaBaseMaintenance.pentaBaseMaintEndDate"
+					uib-datepicker-popup="dd-MMMM-yyyy" is-open="popup2.opened"
+					ng-change="checkdate(asset.pentaBaseMaintenance.pentaBaseMaintStartDate,asset.pentaBaseMaintenance.pentaBaseMaintEndDate)"
+					datepicker-options="dateOptions"
+					ng-required="asset.maintenanceRequired" close-text="Close"
+					alt-input-formats="mm/dd/yyyy" /> -->
+					<input  type="text" class="form-control common-control"
+					datetime-picker="dd-MMMM-yyyy HH:mm"
+					name="maintEndDate" placeholder="End Date" id="endDate"
+					ng-model="asset.pentaBaseMaintenance.pentaBaseMaintEndDate" 
+					uib-popover="End Date"
+					popover-trigger="'mouseenter'"
+					placeholder="End Date"  
+					id="endDate" 
+					ng-change="checkdate(asset.pentaBaseMaintenance.pentaBaseMaintStartDate,asset.pentaBaseMaintenance.pentaBaseMaintEndDate)"
+					is-open="picker2.open" 
+					ng-click="openCalendarEnd()" 
+					ng-required="asset.maintenanceRequired"/>
+			</div>
+			<div class="commonValidate"
+				ng-show="(isMaintClicked || assetForm.maintEndDate.$touched )&& assetForm.maintEndDate.$invalid">
+				<strong>Maintenance End Date is required field!</strong>
+			</div>
+			<div class="commonValidate" ng-show="error1">
+				<strong> {{ErrMessage}} </strong>
+			</div>
+
+		</div>
+
+		<div class="col-xs-12 nopadding">
+			<div id="wizard-navigation-container">
+				<button ng-disabled="currentAddAssetStep < 1"
+					class="login-btn pull-left nextBtn default-radius" name="previous"
+					type="button" ng-click="gotoAddAssetStep(currentAddAssetStep - 1)">
+					Previous</button>
+				<button class="pull-right default-radius login-btn" name="next"
+					type="button" id="newSubmit"
+					ng-click="checkMaintValidation(assetForm)">Submit</button>
+			</div>
+
+		</div>
+	</form>
+</div>

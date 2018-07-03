@@ -1,0 +1,256 @@
+
+<div class="container-fluid commonRightbarTop"
+	ng-init="getPrerequisite(); getPrerequisiteLevel2();">
+	<div class="row page-title-div">
+		<div class="col-md-12">
+			<h2 class="title">
+				Add New Asset
+				
+				<button type="button" class="btn pull-right addBtnPopup"
+					ng-click="disableProperty();modalShow()" data-toggle="modal">
+					<!-- <img src="img/add.png" alt="add"> -->
+					<i class="fa fa-plus-circle" aria-hidden="true"></i>
+				</button>
+			</h2>
+			<!-- <p class="sub-title">One stop solution for perfect admin dashboard!</p> -->
+		</div>
+	</div>
+	<!-- /.row -->
+	<div class="row breadcrumb-div">
+		<div class="col-md-6">
+			<ul class="breadcrumb">
+				<li><a href="#/"><i class="fa fa-home"></i> Home</a></li>
+				<li class="active">Asset</li>
+			</ul>
+		</div>
+	</div>
+	<!-- /.row -->
+</div>
+
+<!-- /.container-fluid -->
+<!-- new add form of asset -->
+<div id="NewAddWizard" class="modal fade" role="dialog"
+	data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5)"
+	data-keyboard="false">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					id="addAsset" ng-click="modalClose(assetForm)">&times;</button>
+				<h4 class="modal-title">Add Asset</h4>
+			</div>
+			<div class="modal-body addAsset-modalbody">
+				<div id="wizard-container">
+
+					<div id="wizard-step-container">
+						<ul class="nav nav-pills nav-justified">
+							<li ng-repeat="step in assetAddsteps"
+								ng-class="{'active':step.step == currentAddAssetStep}"><a
+								href=""> {{step.name}}</a></li>
+						</ul>
+					</div>
+					<form role="form" name="assetForm">
+						<div id="wizard-content-container">
+							<ng-include src="getAddAssetStepTemplate()"></ng-include>
+						</div>
+					</form>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!--  -->
+<!-- update -->
+<div data-backdrop="static" data-keyboard="false" id="updateWizard"
+	class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" ng-click="updateModalClose()"
+					data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Update Asset</h4>
+			</div>
+			<div class="modal-body addAsset-modalbody updateWizard-modalbody">
+				<div id="wizard-container">
+
+					<div id="wizard-step-container">
+						<ul class="nav nav-pills nav-justified">
+							<li ng-repeat="step in steps"
+								ng-class="{'active':step.step == currentStep}"><a href="">{{step.name}}</a></li>
+						</ul>
+					</div>
+					<form role="form" name="updateAssetForm">
+						<div id="wizard-content-container">
+							<ng-include src="getStepTemplate()"></ng-include>
+						</div>
+					</form>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- end update -->
+<!-- /.container-fluid -->
+<section class="section listSection">
+	<div class="container-fluid listContFluid">
+		<div class="panel-body">
+		<div class="col-md-12 nopadding">
+			<div class="">
+				<div class="form-group col-md-3 nopadding">
+					<label for="company">Filter by company: </label> <select
+						class="form-control common-control select-type"
+						uib-popover="Filter by company" popover-trigger="'mouseenter'"
+						id="companyFilter" name="company" ng-model="companyFilter"
+						ng-change="onTableFilterChange()"
+						ng-options="company.pentaBaseLegalName for company in companyLists track by company.pentaBaseComCode">
+						<!-- <option value="">---Select Type ---</option>
+						<option value="{{service}}"
+							ng-repeat="service in services">{{service.pentaBasePropertyName}}</option> -->
+					</select>
+				</div>
+				<div class="form-group col-md-3 nopadding"
+					style="margin-left: 10px;">
+					<label for="company">Filter by currency: </label> <select
+						class="form-control common-control select-type"
+						uib-popover="Filter by currency" popover-trigger="'mouseenter'"
+						id="companyFilter" name="company" ng-model="currencyFilter"
+						ng-change="onTableFilterChange()"
+						ng-options="company.pentaBaseCurName for company in currencyLists track by company.pentaBaseCurCode">
+					</select>
+				</div>
+				<div class="form-group col-md-1 nopadding"
+					style="margin-left: 10px;">
+					<label for="company">Clear filter: </label>
+					<button type="button" class="form-control btn addBtnPopup"
+						ng-click="clearFilter()">
+						<!-- <img src="img/add.png" alt="add"> -->
+						<i class="fa fa-refresh" aria-hidden="true"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+		<!-- 	<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="panel">
+					<div class="panel-body p-20">
+												<table id="example"
+							class="display table table-striped table-bordered"
+							cellspacing="0" width="100%">
+							<thead>
+								<tr>
+							    	<th>Base</th>
+									<th>Code</th>
+									<th>Price</th>
+									<th>Unit</th>
+							      <th>Description</th>
+									<th>Remark</th>	
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+								    <th>Base</th>
+									<th>Code</th>
+									<th>Price</th>
+									<th>Unit</th>
+							    	<th>Description</th>	
+									<th>Remark</th>						
+									<th>Actions</th>
+								</tr>
+							</tfoot>
+							<tbody>
+								<tr  ng-class="{'dimasset' : asset.isActive == false}"   ng-repeat="asset in assetnewList"> 
+									<td>{{asset.pentaBaseAssetLevelOne}}</td>
+									<td>{{asset.pentaBaseAssetCode}}</td>
+									<td>{{asset.pentaBaseAssetCurrency[0].pentaBaseAssetCurCostPrice}}</td>
+									<td>{{asset.pentaBaseAssetUnit}}</td>
+									<td ng-show="asset.pentaBaseDescription[0].pentaBaseLanguage.pentaBaseDefaultLang==false || asset.pentaBaseDescription[0].pentaBaseLanguage.pentaBaseDefaultLang==undefined"></td>
+									<td ng-show="asset.pentaBaseDescription[0].pentaBaseLanguage.pentaBaseDefaultLang==true">{{asset.pentaBaseDescription[0].pentaBaseLongDesc}}</td>					
+								   <td>{{asset.pentaBaseDescription[0].pentaBaseAssetRemarks}}</td>
+									<td><button data-toggle="modal" 
+											ng-click="editData(asset)"
+											class="editBtn default-radius">
+											<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+											</button></td>
+								</tr>
+
+							</tbody>
+						</table> 
+
+
+						<table id="data-table-div"
+							class="display table table-striped table-bordered"
+							cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th>Base</th>
+									<th>Code</th>
+									<th>Price</th>
+									<th>Unit</th>
+									<th>Description</th>
+									<th>Remark</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th>Base</th>
+									<th>Code</th>
+									<th>Price</th>
+									<th>Unit</th>
+									<th>Description</th>
+									<th>Remark</th>
+									<th>Actions</th>
+								</tr>
+							</tfoot>
+						</table>
+
+
+						/.col-md-12
+					</div>
+				</div>
+			</div>
+			/.col-md-6
+		</div> -->
+		<!-- /.row -->
+		
+
+		<!-- List of Data in grid view -->
+		<div class="col-xs-12 asset-table-list nopadding">
+			<div class="col-xs-12 nopadding" > <!-- ng-app="pentaWorkflow.asset" ng-controller="AssetController" -->
+				<div id="grid1" ui-grid="gridOptions" ui-grid-pagination
+					ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning
+					ui-grid-selection ui-grid-exporter ui-grid-auto-resize ui-grid-grouping ui-grid-save-state></div>
+				<p>Current page: {{ gridApi.pagination.getPage() }} of {{
+					gridApi.pagination.getTotalPages() }}</p>
+			</div>
+		</div>
+		<!-- end grid view option -->
+		</div>
+	</div>
+	<!-- /.container-fluid -->
+</section>
+<!-- /.section -->
+
+<!-- <script>
+	$(function() {
+		/* $('#example').DataTable(); */
+	});
+	function editData(id) {
+
+		$scope = angular.element(document.getElementById('addAsset')).scope();
+
+		$.get('v1.0/assets/assetById/' + id, function(data, status) {
+			if (data.body !== null && data.body !== undefined) {
+				$scope.editData(data.body);
+			}
+		});
+
+	}
+</script> -->

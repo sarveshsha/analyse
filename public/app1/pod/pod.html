@@ -1,0 +1,296 @@
+
+	<div class="container-fluid commonRightbarTop" >
+		<div class="row page-title-div">
+			<div class="col-md-12">
+				<h2 class="title">Add New POD <button type="button" class="btn pull-right addBtnPopup" data-toggle="modal"
+				data-backdrop="static" data-keyboard="false" data-target="#myModal">
+				<img src="img/add.png" alt="add">
+			</button></h2>
+			</div>
+		</div>
+		<!-- /.row -->
+		<div class="row breadcrumb-div">
+			<div class="col-md-6">
+				<ul class="breadcrumb">
+					<li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
+					<li class="active">POD</li>
+				</ul>
+			</div>
+		</div>
+		<!-- /.row -->
+	</div>
+
+	<!-- Modal -->
+	<div id="myModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" ng-click="modalClose()"
+						data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Add Pod</h4>
+				</div>
+				<div class="modal-body addAsset-modalbody">
+					<form name="podForm">
+						<div class="col-xs-12 common-addform default-form" id="imagingDiv">
+							<div class="row setup-content">
+								<div ng-show="error" class="alert alert-danger" align="center">
+									<strong>Error! </strong>{{message}}
+								</div>
+								<div class="col-xs-12 backgr">
+									<div class="form-group">
+										<label for="js-states"> Select Zone</label> <select
+											class="js-states form-control select-type common-control"
+											id="pentaBaseZoneSelect" name="baseZone"
+											ng-model="pod.pentaBaseZone.pentaBaseZoneCode" required>
+											<option value="">---Select Zone ---</option>
+											<option value="{{zone.pentaBaseZoneCode}}"
+												ng-repeat="zone in zones" onclick="showField(this)">{{zone.pentaBaseName}}</option>
+										</select>
+										<div class="commonValidateSelect"
+											ng-show="podForm.baseZone.$touched && podForm.baseZone.$invalid">
+											<strong>Zone name is required field!</strong>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="base">Pod Name <sup class="danger-color">*</sup></label>
+										<input type="text" placeholder="Pod Name" name="podName"
+											ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/" maxlength="40"
+											ng-model="pod.pentaBasePodName"
+											class="form-control common-control" required />
+									</div>
+									<div class="commonValidate"
+										ng-show="podForm.podName.$error.pattern">
+										<strong>Field must start with an alphabet (min 2
+											characters are required) and special Characters are not
+											allowed.!</strong>
+									</div>
+									<div class="commonValidate"
+										ng-show="podForm.podName.$touched && podForm.podName.$invalid && podForm.podName.$error.required">
+										<strong>POD Name is required field!</strong>
+									</div>
+
+								</div>
+								<div class="form-group centerbtn">
+									<button
+										class="btn btn-primary login-btn pull-right default-radius"
+										ng-disabled="podForm.$invalid " ng-click="addPod(podForm)">Submit</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- List of Data -->
+	<!--  <div class="col-xs-12 asset-table-list" ng-init="getAllPods()">
+	<div class="row">
+		<div class="container">
+			<table class="table table-responsive assets-list" id="page-wrap">
+				<h1 class="table-heading"></h1>
+				<thead>
+					<tr>
+						<th>Pod Name</th>
+						<th>Status</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="pod in podLists">
+						<td>{{pod.pentaBasePodName}}</td>
+						<td>{{pod.status}}</td>
+						<td><a data-toggle="modal" data-target="#edit"
+							ng-click="editData(pod.pentaBasePodCode)"
+							class="editBtn default-radius"><img src="img/edit.png" alt="edit" /></a> <a data-toggle="modal"
+							data-target="#delete" ng-click="deleteData(pod.pentaBasePodCode)"
+							class="editBtn default-radius"><img src="img/delete.png" alt="delete" /></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div> -->
+
+	<!-- List of Data -->
+	<div class="col-xs-12 asset-table-list">
+			<div class="content-wrapper">
+				<div class="content-container">
+					<div class="main-page" ng-init="getAllPods()">	
+						<section class="section">
+							<div class="container-fluid">
+								<div class="row">
+									<div class="col-md-10 col-md-offset-1">
+										<div class="panel">
+											<div class="panel-body p-20">
+												<table id="example"
+													class="display table table-striped table-bordered"
+													cellspacing="0" width="100%">
+													<thead>
+														<tr>
+															<th>Pod Name</th>
+															<th>Status</th>
+															<th>Actions</th>
+														</tr>
+													</thead>
+													<tfoot>
+														<tr>
+															<th>Pod Name</th>
+															<th>Status</th>
+															<th>Actions</th>
+														</tr>
+													</tfoot>
+													<tbody>
+														<tr ng-repeat="pod in podLists">
+															<td>{{pod.pentaBasePodName}}</td>
+															<td>{{pod.status}}</td>
+															<td><a data-toggle="modal" data-target="#edit"
+																ng-click="editData(pod.pentaBasePodCode)"
+																class="editBtn default-radius"><img
+																	src="img/edit.png" alt="edit" /></a> <!-- <a
+																data-toggle="modal" data-target="#delete"
+																ng-click="deleteData(pod.pentaBasePodCode)"
+																class="editBtn default-radius"><img
+																	src="img/delete.png" alt="delete" /></a> --></td>
+														</tr>
+
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									<!-- /.col-md-6 -->
+								</div>
+								<!-- /.row -->
+							</div>
+							<!-- /.container-fluid -->
+						</section>
+						<!-- /.section -->
+
+					</div>
+				</div>
+			</div>
+	</div>
+
+	<!-- Delete Data Start -->
+	<div class="modal fade" id="delete" role="dialog"
+		data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-body addAsset-modalbody">
+					<p class="success-message deleteMsg">Are you sure you wish to
+						delete this pod ?</p>
+				</div>
+				<div class="modal-footer deleteFooter">
+					<button class="btn btn-success default-radius"
+						ng-click="deletePod(deletePodId)" data-dismiss="modal">Ok</button>
+					<button class="btn btn-danger default-radius" ng-click="cancel()"
+						data-dismiss="modal">Cancel</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- Delete Data End -->
+
+	<!-- Edit Data Start -->
+	<div class="modal fade" id="edit" tabindex="-1" role="dialog"
+		data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Edit POD</h4>
+				</div>
+
+				<div class="modal-body addAsset-modalbody">
+					<form name="podForms">
+						<div class="backgr">
+							<div class="form-group">
+								<label for="js-states"> Select Zone</label> <select
+									class="js-states form-control select-type common-control"
+									uib-popover="Pod Zone" type="text"
+									popover-trigger="'mouseenter'"
+									class="form-control select-type common-control"
+									id="pentaBaseZone" name="pentaBaseZone"
+									ng-model="podData.pentaBaseZone.pentaBaseZoneCode" required>
+									<!-- <option ng-repeat="zone in zones"
+								value="{{zone.pentaBaseZoneCode}}">{{zone.pentaBaseName}}</option> -->
+
+									<option
+										ng-selected="podData.pentaBaseZone.pentaBaseZoneCode == zone.pentaBaseZoneCode ? zone.pentaBaseZoneCode : 0"
+										ng-repeat="zone in zones" ng-value="zone.pentaBaseZoneCode">{{zone.pentaBaseName}}</option>
+								</select>
+
+								<div class="commonValidateSelect"
+									ng-show="podForms.pentaBaseZone.$touched && podForms.pentaBaseZone.$invalid">
+									<strong>Zone name is required field!</strong>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="base">Pod Name <sup class="danger-color">*</sup></label>
+								<input uib-popover="Pod Name" type="text"
+									popover-trigger="'mouseenter'" placeholder="Pod Name"
+									name="podName" maxlength="40"
+									ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/"
+									ng-model="podData.pentaBasePodName"
+									class="form-control common-control" required />
+							</div>
+							<div class="commonValidate"
+								ng-show="podForms.podName.$error.pattern">
+								<strong>Field must start with an alphabet (min 2
+									characters are required) and special Characters are not
+									allowed.!</strong>
+							</div>
+							<div class="commonValidate"
+								ng-show="podForms.podName.$touched && podForms.podName.$invalid">
+								<strong>POD Name is required field !</strong>
+							</div>
+
+						</div>
+						<div class="col-xs-12 nopadding">
+							<button
+								class="btn btn-primary login-btn pull-right default-radius"
+								ng-disabled="podForms.$invalid " ng-click="updatePod(podData)" data-dismiss="modal">Submit</button>
+							<button class="btn btn-primary login-btn default-radius"
+								ng-click="cancel()" data-dismiss="modal">Cancel</button>
+
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Edit Delete End -->
+
+
+<script type="text/ng-template" id="chips-template">
+      <div class="bootstrap">
+        <div>
+          <span>{{data.pentaBaseAssetPropertyName}},{{$getDisplayText()}}</span>
+          <a class="remove-button" ng-click="$removeTag()">&#10006;</a>
+        </div>
+      </div>
+    </script>
+<script type="text/ng-template" id="auto-complete-template">
+      <div class="left-panel">
+		<span ng-bind-html="$highlight(data.pentaBaseAssetPropertyName)"></span>
+		<span ng-bind-html="$highlight($getDisplayText())"></span>
+      </div>
+    </script>
+
+<script src="js1/jquery/jquery-2.2.4.min.js"></script>
+<script src="js1/bootstrap/bootstrap.min.js"></script>
+<script src="js1/DataTables/datatables.min.js"></script>
+<script>		
+    $(function(){
+    	$('#example').DataTable();
+    });
+</script>

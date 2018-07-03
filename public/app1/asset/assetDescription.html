@@ -1,0 +1,264 @@
+<h3></h3>
+<div class="form-group">
+	<label for="code">GL Account</label> <input type="text"
+		placeholder="GL Account" name="glac"
+		ng-model="updateAsset.pentaBaseGLAccount" uib-popover="GL Account"
+		popover-trigger="'mouseenter'" class="form-control common-control"
+		ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/" />
+</div>
+<div class="commonValidate" ng-show="updateAssetForm.glac.$error.pattern">
+	<strong>Field must start with an alphabet (character limit :
+		2-40) and special Characters are not allowed.!</strong>
+</div>
+<!-- End -->
+<!-- add new field -->
+<div class="form-group">
+	<label for="code">Serial Number</label> <input type="text"
+		placeholder="Serial Number" name="serialno"
+		ng-model="updateAsset.pentaBaseSerialNumber" uib-popover="Serial Number"
+		popover-trigger="'mouseenter'" class="form-control common-control"
+		ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/" />
+</div>
+<div class="commonValidate" ng-show="updateAssetForm.serialno.$error.pattern">
+	<strong>Field must start with an alphabet (character limit :
+		2-40) and special Characters are not allowed.!</strong>
+</div>
+<!-- End -->
+<!-- add new field -->
+<div class="form-group">
+	<label for="code">Select Asset Usage<sup class="danger-color">*</sup></label>
+	<select class="form-control common-control select-type"
+		uib-popover="Asset Usage " popover-trigger="'mouseenter'" name="usage"
+		ng-model="updateAsset.pentaBaseAssetUsage" required>
+		<option value="{{assetUsage.usageDescription}}"
+			ng-repeat="assetUsage in AssetUsageList">{{assetUsage.usageDescription}}</option>
+	</select>
+
+</div>
+<div class="commonValidate"
+	ng-show="updateAssetForm.usage.$touched && updateAssetForm.usage.$invalid">
+	<strong>Required field* (Limit : 1-40)</strong>
+</div>
+<!-- End -->
+<!-- Asset Type -->
+<div class="form-group">
+	<label for="code">Select Asset Type</label> <select
+		class="form-control common-control select-type"
+		uib-popover="Asset Type " popover-trigger="'mouseenter'" name="region"
+		ng-model="updateAsset.pentaBaseAssetType">
+		<option
+			value="{{assetType.pentaBaseAssetTableTypesStatusDescription}}"
+			ng-repeat="assetType in assetTypeList">{{assetType.pentaBaseAssetTableTypesStatusDescription}}</option>
+	</select>
+
+</div>
+<!-- End -->
+<!-- <div class="form-group">
+	<label for="code">Asset Base <sup class="danger-color">*</sup></label>
+	<input type="text" placeholder="Base" name="base"
+		ng-model="updateAsset.pentaBaseAssetBase" uib-popover="Asset Base"
+		popover-trigger="'mouseenter'"
+		ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/" maxlength="40"
+		class="form-control common-control" required />
+</div> -->
+<div class="commonValidate" ng-show="updateAssetForm.base.$error.pattern">
+	<strong>Field must start with an alphabet (character limit :
+		2-40) and special Characters are not allowed.!</strong>
+</div>
+<div class="commonValidate"
+	ng-show="updateAssetForm.base.$touched && updateAssetForm.base.$invalid">
+	<strong>Required field* (Limit : 1-40)</strong>
+</div>
+<!-- This section for default language -->
+<div class="row">
+	<div>
+		<div class="col-xs-12 langDescrip">
+			<div class="form-group">
+				<label for="code">Default Language <sup class="danger-color">*</sup></label>
+				<select class="form-control select-type common-control"
+					id="editDefaultDescription.pentaBaseLanguage" name="defaultLanguage"
+					title="Default Langauge"
+					ng-model = "editDefaultLanguage" ng-required
+					disabled="disabled">
+					<option
+					value = "language"
+					ng-selected = "language.pentaBaseLanguageName == editDefaultDescription.pentaBaseLanguage.pentaBaseLanguageName ? language : 0"
+					 ng-repeat = "language in languageLists | filter:{ pentaBaseDefaultLang:true}" >{{language.pentaBaseLanguageName}}</option>
+				
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="code">Long Description <sup class="danger-color">*</sup></label>
+				<input type="text" ng-model="editDefaultDescription.pentaBaseLongDesc"
+					ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/" name="defaultDescription1"
+					class="form-control common-control" placeholder="Description"
+					ng-required="isDefaultLanguageAvailable" />
+			</div>
+			<div class="commonValidate"
+				ng-show="updateAssetForm.defaultDescription1.$touched && updateAssetForm.defaultDescription1.$invalid">
+				<strong>Required field* (Limit : 1-40)</strong>
+			</div>
+
+			<div class="commonValidate"
+				ng-show="updateAssetForm.defaultDescription1.$error.pattern">
+				<strong>Field must start with an alphabet (character limit
+					: 2-40) and special Characters are not allowed.!</strong>
+			</div>
+			<div class="form-group">
+				<label for="code">Short Description</label> <input type="text"
+					ng-model="editDefaultDescription.pentaBaseShortDesc"
+					ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/" name="defaultDescription"
+					class="form-control common-control" placeholder="Short Description" />
+			</div>
+			<div class="commonValidate"
+				ng-show="updateAssetForm.editDefaultDescription.$error.pattern">
+				<strong>Field must start with an alphabet (character limit
+					: 2-40) and special Characters are not allowed.!</strong>
+			</div>
+			<div class="form-group">
+				<label for="code">Remark <sup class="danger-color">*</sup></label> <input
+					type="text" ng-model="editDefaultDescription.pentaBaseAssetRemarks" 
+					ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/"
+					name="defaultRemark1" class="form-control common-control"
+					placeholder="Remark" ng-required="isDefaultLanguageAvailable" />
+			</div>
+			<div class="commonValidate"
+				ng-show="updateAssetForm.defaultRemark1.$touched && updateAssetForm.defaultRemark1.$invalid">
+				<strong>Required field* (Limit : 1-40)</strong>
+			</div>
+			<div class="commonValidate"
+				ng-show="updateAssetForm.defaultRemark1.$error.pattern">
+				<strong>Field must start with an alphabet (character limit
+					: 2-40) and special Characters are not allowed.!</strong>
+			</div>
+			<button class="addfields commonAddRem pull-right"
+				ng-show="firstAdd"
+				ng-click="addNewEditLanguage1()"
+				ng-disabled="updateAssetForm.defaultRemark1.$invalid || updateAssetForm.defaultDescription1.$invalid || updateAssetForm.defaultLanguage.$invalid || langEndEditCount ">
+				<img src="img/add.png" alt="add" /><span>Add Language</span>
+			</button>
+
+		</div>
+	</div>
+</div>
+<!-- End Default language Section -->
+
+
+<div class="row">
+	<div data-ng-repeat="description in editLanguageList">
+		<div class="col-xs-12 langDescrip">
+			<div class="form-group">
+				<label for="code">Select Language<sup class="danger-color">*</sup></label>
+				<select class="form-control select-type common-control"
+					id="{{description.pentaBaseLanguage.pentaBaseLanguageName}}" name="language" title="Select Langauge"
+					ng-model="description.pentaBaseLanguage.pentaBaseLanguageName"
+					ng-change="onLanguageEditChange1(description.pentaBaseLanguage.pentaBaseLanguageName,language.pentaBaseLanguageID)"
+					required>
+					<option
+					ng-selected = "language.pentaBaseLanguageID == description.pentaBaseLanguage.pentaBaseLanguageID"
+					 ng-repeat = "language in languageLists | filter:{ pentaBaseDefaultLang:false}" >{{language.pentaBaseLanguageName}}</option>
+				</select><small ng-show="{{description.pentaBaseLanguage.pentaBaseLanguageID}}" 
+					style="color: red;">{{languageWarning}}</small>
+			</div>
+			<div class="form-group">
+				<label for="code">Long Description<sup class="danger-color">*</sup></label>
+				<input type="text" name="lDescription"
+					ng-model="description.pentaBaseLongDesc"
+					class="form-control common-control" placeholder="Description" required>
+
+			</div>
+			<div class="commonValidate"
+				ng-show="updateAssetForm.lDescription.$touched && updateAssetForm.lDescription.$invalid">
+				<strong>Required field* (Limit : 1-40)</strong>
+			</div>
+			<div class="commonValidate"
+				ng-show="updateAssetForm.lDescription.$error.pattern">
+				<strong>Field must start with an alphabet (character limit
+					: 2-40) and special Characters are not allowed.!</strong>
+			</div>
+			<div class="form-group">
+				<label for="code">Short Description</label> <input type="text"
+					name="SDescription" ng-model="description.pentaBaseShortDesc"
+				 class="form-control common-control"
+					placeholder="Short Description" required/>
+			</div>
+			<div class="form-group">
+				<label for="code">Remark<sup class="danger-color">*</sup></label> <input
+					type="text" name="Newremark"
+					ng-model="description.pentaBaseAssetRemarks"
+					class="form-control common-control" placeholder="Remark" required>
+
+			</div>
+			<div class="commonValidate"
+				ng-show="updateAssetForm.Newremark.$touched && updateAssetForm.Newremark.$invalid">
+				<strong>Required field* (Limit : 1-40)</strong>
+			</div>
+			<div class="commonValidate"
+				ng-show="updateAssetForm.Newremark.$error.pattern">
+				<strong>Field must start with an alphabet (character limit
+					: 2-40) and special Characters are not allowed.!</strong>
+			</div>
+			<button class="remove commonAddRem removePosi " ng-show="$last"
+				ng-click="removeEditLanguage1()">
+				<span>Remove Language</span><img src="img/remove.png" alt="remove" />
+			</button>
+			<button class="addfields commonAddRem pull-right"
+				ng-click="addNewEditLanguage1()" ng-show="$last"
+				ng-disabled="updateAssetForm.Newremark.$invalid || updateAssetForm.lDescription.$invalid || updateAssetForm.SDescription.$invalid || langEndEditCount">
+				<img src="img/add.png" alt="add" /><span>Add Language</span>
+			</button>
+		</div>
+	</div>
+</div>
+
+<!-- 
+<div class="form-group">
+		<select class="form-control common-control select-type"
+			uib-popover="Language" popover-trigger="'mouseenter'" id="languageSelect"
+			name="language" ng-model="updateAsset.pentaBasePod"
+			ng-options="language.pentaBaseLanguageName for language in languageLists track by language.pentaBaseLanguageName"
+			ng-required>
+		</select> <span class="login-icon"><img src="img/lang.png"
+			alt="pass icon"></span>
+	</div>
+<div class="commonValidate" ng-show="updateAssetForm.language.$invalid">
+	<strong>Required field*</strong>
+</div>
+<div class="form-group">
+	<input type="text" placeholder="Description" name="description" maxlength="40"
+	uib-popover="Description" popover-trigger="'mouseenter'"
+		ng-model="updateAsset.pentaBaseAssetDescription"
+		class="form-control common-control" required /> <span
+		class="login-icon"><img src="img/description.png" alt="pass icon"></span>
+</div>
+<div class="commonValidate"
+	ng-show="updateAssetForm.description.$touched && updateAssetForm.description.$invalid">
+	<strong>Required field* (Limit : 1-40)</strong>
+</div>
+<div class="form-group">
+	<input type="text" placeholder="Remark" name="remarks" maxlength="40"
+	uib-popover="Remark " popover-trigger="'mouseenter'"
+		ng-model="updateAsset.pentaBaseAssetRemarks"
+		class="form-control common-control" required /> <span
+		class="login-icon"><img src="img/remark.png" alt="pass icon"></span>
+</div>
+<div class="commonValidate"
+	ng-show="updateAssetForm.remarks.$touched && updateAssetForm.remarks.$invalid">
+	<strong>Required field* (Limit : 1-40)</strong>
+</div> -->
+<div class="col-xs-12 nopadding">
+					<div id="wizard-navigation-container">
+							<button ng-disabled="currentStep <= 1 || updateAssetForm.language.$invalid || updateAssetForm.description.$invalid || updateAssetForm.remarks.$invalid || updateAssetForm.Newremark.$invalid || updateAssetForm.lDescription.$invalid || isLanguageSame" class="login-btn pull-left nextBtn default-radius"
+								name="previous" type="button"
+								ng-click="gotoStep(currentStep - 1)">
+								Previous
+							</button>
+							<button ng-disabled="currentStep >= steps.length || updateAssetForm.defaultDescription1.$invalid || updateAssetForm.defaultRemark1.$invalid || updateAssetForm.Newremark.$invalid || updateAssetForm.lDescription.$invalid || isLanguageSame "
+								class="login-btn pull-right nextBtn default-radius" name="next" type="button"
+								ng-click="gotoStep(currentStep + 1)">
+								Next
+							</button>
+							<!-- ng-disabled="currentStep != steps.length" -->
+						
+					</div>
+				</div>

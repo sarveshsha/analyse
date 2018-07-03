@@ -1,0 +1,262 @@
+
+<!-- <div class="row">
+	<div>
+		<div class="col-xs-12 langDescrip">
+			<div class="form-group">
+				<label for="code">Default Language <sup class="danger-color">*</sup></label>
+				<select class="form-control select-type common-control"
+					id="defaultLanguage" name="defaultLanguage"
+					title="Default Langauge"
+					ng-model="defaultDescription.pentaBaseLanguage" disabled="disabled"
+					ng-options="language.pentaBaseLanguageName for language in languageLists">
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="code">Long Description <sup class="danger-color">*</sup></label>
+				<input type="text" ng-model="defaultDescription.pentaBaseLongDesc"
+					name="defaultDescription" class="form-control common-control"
+					placeholder="Description" required />
+				<div class="commonValidate"
+					ng-show="assetForm.defaultDescription.$touched && assetForm.defaultDescription.$invalid">
+					<strong>Description is field</strong>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="code">Short Description</label> <input type="text"
+					ng-model="defaultDescription.pentaBaseShortDesc"
+					name="defaultDescription" class="form-control common-control"
+					placeholder="Short Description" />
+
+			</div>
+			<div class="form-group">
+				<label for="code">Remark <sup class="danger-color">*</sup></label> <input
+					type="text" ng-model="defaultDescription.pentaBaseAssetRemarks"
+					name="defaultRemark" class="form-control common-control"
+					placeholder="Remark" required />
+				<div class="commonValidate"
+					ng-show="assetForm.defaultRemark.$touched && assetForm.defaultRemark.$invalid">
+					<strong>Remark is required</strong>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+ -->
+ 
+<div class="row">
+	<div>
+		<div class="col-xs-12 langDescrip">
+			<div class="form-group">
+				<label for="code">Default Language <sup class="danger-color">*</sup></label>
+				<select class="form-control select-type common-control"
+					id="defaultLanguage" name="defaultLanguage"
+					title="Default Langauge"
+					ng-model="defaultDescription.pentaBaseLanguage" ng-required
+					disabled="disabled">
+					<option
+						ng-selected="language.pentaBaseDefaultLang == true ? language.pentaBaseLanguageName : 0"
+						ng-repeat="language in defaultLangugeList" ng-value="language">{{language.pentaBaseLanguageName}}</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="code">Long Description <sup class="danger-color">*</sup></label>
+				<input type="text" ng-model="defaultDescription.pentaBaseLongDesc"
+					ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/" name="defaultDescription1"
+					class="form-control common-control" placeholder="Description"
+					ng-required="isDefaultLanguageAvailable" />
+			</div>
+
+			<div class="commonValidate"
+				ng-show="assetForm.defaultDescription1.$touched && assetForm.defaultDescription1.$invalid">
+				<strong>Required field* (Limit : 1-40)</strong>
+			</div>
+
+			<div class="commonValidate"
+				ng-show="assetForm.defaultDescription1.$error.pattern">
+				<strong>Field must start with an alphabet (character limit
+					: 2-40) and special Characters are not allowed.!</strong>
+			</div>
+			<div class="form-group">
+				<label for="code">Short Description</label> <input type="text"
+					ng-model="defaultDescription.pentaBaseShortDesc"
+					ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/" name="defaultDescription"
+					class="form-control common-control" placeholder="Short Description" />
+			</div>
+			<div class="commonValidate"
+				ng-show="assetForm.defaultDescription.$touched && assetForm.defaultDescription.$invalid">
+				<strong>Required field* (Limit : 1-20)</strong>
+			</div>
+			<div class="commonValidate"
+				ng-show="assetForm.defaultDescription.$error.pattern">
+				<strong>Field must start with an alphabet (character limit
+					: 2-40) and special Characters are not allowed.!</strong>
+			</div>
+			<div class="form-group">
+				<label for="code">Remark <sup class="danger-color">*</sup></label> <input
+					type="text" ng-model="defaultDescription.pentaBaseAssetRemarks" 
+					ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/"
+					name="defaultRemark1" class="form-control common-control"
+					placeholder="Remark" ng-required="isDefaultLanguageAvailable" />
+			</div>
+			<div class="commonValidate"
+				ng-show="(isDescNextClicked || assetForm.defaultRemark1.$touched )&& assetForm.defaultRemark1.$invalid">
+				<strong>Required field* (Limit : 1-40)</strong>
+			</div>
+			<div class="commonValidate"
+				ng-show="assetForm.defaultRemark1.$error.pattern">
+				<strong>Field must start with an alphabet (character limit
+					: 2-40) and special Characters are not allowed.!</strong>
+			</div>
+			<button ng-show="firstAdd" class="addfields commonAddRem pull-right"
+				ng-click="addNewEditLanguage()"
+				ng-disabled="assetForm.defaultDescription1.$invalid || assetForm.defaultRemark1.$invalid || assetForm.defaultRemark.$invalid ||assetForm.defaultDescription.$invalid || assetForm.defaultLanguage.$invalid">
+				<img src="img/add.png" alt="add" /><span>Add Language</span>
+			</button>
+
+		</div>
+	</div>
+</div>
+
+
+<!-- <div class="row">
+	<div data-ng-repeat="description in asset.pentaBaseDescription">
+		<div class="col-xs-12 langDescrip">
+			<div class="form-group">
+				<label for="code">Select Language<sup class="danger-color">*</sup></label>
+				<select class="form-control select-type common-control"
+					id="languageSelect" name="language{{$index}}"
+					title="Select Langauge" ng-model="description.pentaBaseLanguage"
+					ng-options="language.pentaBaseLanguageName for language in languageLists | filter:{ pentaBaseDefaultLang:false}"
+					required>
+				</select>
+				<div class="commonValidate"
+					ng-show="assetForm.language{{$index}}.$touched && assetForm.language{{$index}}.$invalid">
+					<strong>Language is required</strong>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="code">Description<sup class="danger-color">*</sup></label>
+				<input type="text" name="description{{$index}}"
+					ng-model="description.pentaBaseLongDesc"
+					class="form-control common-control" placeholder="Description">
+				<div class="commonValidate"
+					ng-show="assetForm.description{{$index}}.$touched && assetForm.description{{$index}}.$invalid">
+					<strong>Description is required</strong>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="code">Short Description</label> <input type="text"
+					ng-model="description.pentaBaseShortDesc" name="defaultDescription"
+					class="form-control common-control" placeholder="Short Description" />
+			</div>
+			<div class="form-group">
+				<label for="code">Remark<sup class="danger-color">*</sup></label> <input
+					type="text" name="remark{{$index}}" ng-model="description.pentaBaseAssetRemarks"
+					class="form-control common-control" placeholder="Remark">
+				<div class="commonValidate"
+					ng-show="assetForm.remark{{$index}}.$touched && assetForm.remark{{$index}}.$invalid">
+					<strong>Remark is required</strong>
+				</div>
+
+			</div>
+			<button class="remove commonAddRem removePosi " ng-show="$last"
+				ng-click="removeChoice()">
+				<span>Remove Description</span><img src="img/remove.png"
+					alt="remove" />
+			</button>
+		</div>
+	</div>
+</div>
+
+<button class="addfields commonAddRem pull-right"
+	ng-click="addNewChoice()">
+	<img src="img/add.png" alt="add" /><span>Add Description</span>
+</button>
+
+ -->
+ <div class="row">
+	<div data-ng-repeat="description in asset.pentaBaseDescription track by $index">
+		<div class="col-xs-12 langDescrip">
+			<div class="form-group">
+				<label for="code">Select Language<sup class="danger-color">*</sup></label>
+				<select class="form-control select-type common-control"
+					id="{{description.pentaBaseLanguage.pentaBaseLanguageName}}"
+					name="language" title="Select Langauge"
+					ng-model="description.pentaBaseLanguage"
+					ng-change="onLanguageEditChange(description.pentaBaseLanguage)"
+					ng-options="language.pentaBaseLanguageName for language in languageLists | filter:{ pentaBaseDefaultLang:false}"
+					required>
+				</select><small id="{{language.pentaBaseLanguageName}}" style="color: red;">{{languageWarning}}</small>
+			</div>
+			<div class="form-group">
+				<label for="code">Long Description<sup class="danger-color">*</sup></label>
+				<input type="text" name="lDescription"
+					ng-model="description.pentaBaseLongDesc"
+					ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/"
+					class="form-control common-control" placeholder="Description"
+					required>
+
+			</div>
+			<div class="commonValidate"
+				ng-show="assetForm.lDescription.$error.pattern">
+				<strong>Field must start with an alphabet (character limit
+					: 2-40) and special Characters are not allowed.!</strong>
+			</div>
+			<div class="commonValidate"
+				ng-show="assetForm.lDescription.$touched && assetForm.lDescription.$invalid">
+				<strong>Required field* (Limit : 1-40)</strong>
+			</div>
+			<div class="form-group">
+				<label for="code">Short Description</label> <input type="text"
+					name="SDescription" ng-model="description.pentaBaseShortDesc"
+					class="form-control common-control" placeholder="Short Description"
+					required />
+			</div>
+			<div class="form-group">
+				<label for="code">Remark<sup class="danger-color">*</sup></label> <input
+					type="text" name="Newremark"
+					ng-model="description.pentaBaseAssetRemarks"
+					class="form-control common-control" placeholder="Remark" required>
+
+			</div>
+			<div class="commonValidate"
+				ng-show="assetForm.Newremark.$touched && assetForm.Newremark.$invalid">
+				<strong>Required field* (Limit : 1-40)</strong>
+			</div>
+			<div class="commonValidate"
+				ng-show="assetForm.Newremark.$error.pattern">
+				<strong>Field must start with an alphabet (character limit
+					: 2-40) and special Characters are not allowed.!</strong>
+			</div>
+			<button class="remove commonAddRem removePosi " ng-show="$last"
+				ng-click="removeEditLanguage()">
+				<span>Remove Language</span><img src="img/remove.png" alt="remove" />
+			</button>
+			<button class="addfields commonAddRem pull-right"
+				ng-click="addNewEditLanguage()" ng-show="$last"
+				ng-disabled="assetForm.defaultDescription1.$invalid || assetForm.defaultRemark1.$invalid || assetForm.Newremark.$invalid ||assetForm.lDescription.$invalid || assetForm.SDescription.$invalid || langEndCount ">
+				<img src="img/add.png" alt="add" /><span>Add Language</span>
+			</button>
+		</div>
+	</div>
+</div>
+ 
+ 
+ 
+ <!-- working  -->
+<div class="col-xs-12 nopadding">
+	<div id="wizard-navigation-container">
+		<button ng-disabled="currentAddAssetStep < 1 || isLanguageSame"
+			class="login-btn pull-left nextBtn default-radius" name="previous"
+			type="button" ng-click="gotoAddAssetStep(currentAddAssetStep - 1)">
+			Previous</button>
+		<button
+			ng-disabled="currentAddAssetStep >= assetAddsteps.length || assetForm.defaultDescription1.$invalid || assetForm.defaultRemark1.$invalid || assetForm.code.$invalid || assetForm.base.$invalid || assetForm.unit.$invalid || assetForm.price.$invalid || assetForm.defaultDescription.$invalid || assetForm.defaultRemark.$invalid || assetForm.usage.$invalid || !isDefaultLanguageAvailable || assetForm.Newremark.$invalid || assetForm.lDescription.$invalid || isLanguageSame"
+			class="login-btn pull-right nextBtn default-radius" name="next"
+			type="button"
+			ng-click="gotoAddAssetStep(currentAddAssetStep + 1);prerequisitePrice()">
+			Next</button>
+
+	</div>
+</div>

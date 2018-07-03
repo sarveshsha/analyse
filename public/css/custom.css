@@ -1,0 +1,145 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jun 25, 2018, 7:51:06 PM
+    Author     : Admin
+*/
+section{
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+.row.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+}
+.row.no-gutters > [class^="col-"],
+.row.no-gutters > [class*=" col-"] {
+  padding-right: 0;
+  padding-left: 0;
+}
+.navbar-header, .sidebar, .top-left-part{
+    background: #354872;
+}
+#side-menu li a{
+    color: #fff;
+}
+.tab-content{
+    background: #fff;
+}
+.tab-content{
+    margin-top: 0;
+}
+.maincontent{
+    background: #fff;
+    padding: 25px 15px;
+}
+h2{
+    color: #475A82;
+    font-weight: bold;
+}
+.tab-content h2{
+    margin: 0 0 15px 0;
+    font-size: 20px;
+}
+.nav-tabs{
+    border: none;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover{
+    border: none;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover{
+    color: #A6B6BD;
+    font-weight: bold;
+    font-size: 17px;
+}
+.seltitle{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+select{
+    min-width: 120px;
+    padding: 5px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    background: #eee;
+}
+.box{
+    padding: 20px;
+}
+.boxlgrey{
+    background: #F8FAFB;
+}
+.boxdgrey{
+    background: #F0F2F3;
+}
+.graphcontent h4{
+    color: #78909C;
+    font-weight: 600;
+}
+
+.basic-table th{
+    background: #445880;
+    color: #fff;
+    border: solid 1px #A0A6B2;
+    vertical-align: top;
+    padding: 10px;
+}
+.basic-table td{
+    border: solid 1px #A0A6B2;
+    color: #000;
+    padding: 10px;
+}
+.basic-table td h5{
+    font-weight: bold;
+}
+.bhighlight{
+    color: #3ACAEE;
+    font-weight: 500;
+}
+.table{
+    margin-bottom: 0;
+}
+.nav-tabs.tabs2 > li > a{
+    color: #CFCFCF;
+    font-weight: bold;
+    font-size: 17px;
+}
+.tabs2.tab-content{
+    background: #F3F3F3;
+    padding: 10px;
+}
+.nav-tabs.tabs2 > li.active > a, .nav-tabs.tabs2 > li.active > a:focus, .nav-tabs.tabs2 > li.active > a:hover{
+    color: #A6B6BD;
+    font-weight: bold;
+    font-size: 17px;
+    background: #F3F3F3;
+}
+.table-bare{
+    background: #fff;
+}
+.table.table-bare thead th, .table.table-bare tbody td{
+    padding: 8px;
+}
+.table-bare td{
+    color: #000;
+}
+.table-bare th{
+    color: #8197A2;
+    font-weight: bold;
+}
+.table-bare tfoot td a{
+    color: #22A70D;
+    font-weight: bold;
+}
+.table.table-low thead th, .table.table-low tbody td{
+    padding: 10px;
+}
+.table.table-low thead th{
+    border-top: solid 1px #000 !important;
+    border-bottom-color: #000;
+}

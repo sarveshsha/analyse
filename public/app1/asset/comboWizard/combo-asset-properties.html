@@ -1,0 +1,139 @@
+<div class="form-group" ng-init="onePrerequsite()">
+	<label for="code">Asset Code <sup class="danger-color">*</sup></label>
+	<input type="text" placeholder="Code" name="code"
+		ng-model="asset.pentaBaseAssetCode" uib-popover="Asset Code"
+		popover-trigger="'mouseenter'" ng-pattern="/^[a-zA-Z0-9-\s]+$/"
+		class="form-control common-control" required />
+</div>
+<div class="commonValidate" ng-show="assetForm.code.$error.pattern">
+	<strong>Field must start with an alphabet (character limit :
+		2-40) and special Characters are not allowed.!</strong>
+</div>
+<div class="commonValidate"
+	ng-show="assetForm.code.$touched && assetForm.code.$invalid">
+	<strong>Asset code is required</strong>
+</div>
+<!-- add new field -->
+<div class="form-group">
+	<label for="code">GL Account</label> <input type="text"
+		placeholder="GL Account" name="glac"
+		ng-model="asset.pentaBaseGLAccount" uib-popover="GL Account"
+		popover-trigger="'mouseenter'" class="form-control common-control"
+		ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/" />
+</div>
+<div class="commonValidate" ng-show="assetForm.glac.$error.pattern">
+	<strong>Field must start with an alphabet (character limit :
+		2-40) and special Characters are not allowed.!</strong>
+</div>
+<!-- End -->
+<!-- add new field -->
+<div class="form-group">
+	<label for="code">Serial Number</label> <input type="text"
+		placeholder="Serial Number" name="serialno"
+		ng-model="asset.pentaBaseSerialNumber" uib-popover="Serial Number"
+		popover-trigger="'mouseenter'" class="form-control common-control"
+		ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/" />
+</div>
+<div class="commonValidate" ng-show="assetForm.serialno.$error.pattern">
+	<strong>Field must start with an alphabet (character limit :
+		2-40) and special Characters are not allowed.!</strong>
+</div>
+<!-- End -->
+<!-- add new field -->
+<div class="form-group">
+	<label for="code">Select Asset Usage<sup class="danger-color">*</sup></label>
+	<select class="form-control common-control select-type"
+		uib-popover="Asset Usage " popover-trigger="'mouseenter'" name="usage"
+		ng-model="asset.pentaBaseAssetUsage" required>
+		<option value="" selected>---Select Asset Usage ---</option>
+		<option value="{{assetUsage.usageDescription}}"
+			ng-repeat="assetUsage in AssetUsageList">{{assetUsage.usageDescription}}</option>
+	</select>
+
+</div>
+<div class="commonValidate"
+	ng-show="assetForm.usage.$touched && assetForm.usage.$invalid">
+	<strong>Asset usage is required</strong>
+</div>
+<!-- End -->
+<!-- Asset Type -->
+<div class="form-group">
+	<label for="code">Select Asset Type</label>
+	<select class="form-control common-control select-type"
+		uib-popover="Asset Type " popover-trigger="'mouseenter'" name="region"
+		ng-model="asset.pentaBaseAssetType">
+		<option value="" selected>---Select Type ---</option>
+		<option
+			value="{{assetType.pentaBaseAssetTableTypesStatusDescription}}"
+			ng-repeat="assetType in assetTypeList">{{assetType.pentaBaseAssetTableTypesStatusDescription}}</option>
+	</select>
+
+</div>
+<div class="commonValidate"
+	ng-show="assetForm.type.$touched && assetForm.type.$invalid">
+	<strong>Asset type is required</strong>
+</div>
+<!-- End -->
+<div class="form-group">
+	<label for="code">Asset Base <sup class="danger-color">*</sup></label>
+	<input type="text" placeholder="Base" name="base"
+		ng-model="asset.pentaBaseAssetBase" uib-popover="Asset Base"
+		popover-trigger="'mouseenter'"
+		ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/" maxlength="40"
+		class="form-control common-control" required />
+</div>
+<div class="commonValidate" ng-show="assetForm.base.$error.pattern">
+	<strong>Field must start with an alphabet (character limit :
+		2-40) and special Characters are not allowed.!</strong>
+</div>
+<div class="commonValidate"
+	ng-show="assetForm.base.$touched && assetForm.base.$invalid">
+	<strong>Asset base is required</strong>
+</div>
+<!-- <div class="form-group">
+	<label for="code">Unit <sup class="danger-color">*</sup></label> <input
+		type="text" placeholder="Unit" uib-popover="Asset Unit"
+		popover-trigger="'mouseenter'" ng-model="asset.pentaBaseAssetUnit"
+		name="unit" class="form-control common-control"
+		ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/" required />
+</div>
+<div class="commonValidate" ng-show="assetForm.unit.$error.pattern">
+	<strong>Field must start with an alphabet (character limit :
+		2-40) and special Characters are not allowed.!</strong>
+</div>
+<div class="commonValidate"
+	ng-show="assetForm.unit.$touched && assetForm.unit.$invalid">
+	<strong>Asset unit is required</strong>
+</div> -->
+<!-- Asset Unit -->
+<div class="form-group">
+	<label for="assetType">Select Asset Unit<sup class="danger-color">*</sup></label> <select
+		class="form-control common-control select-type"
+		uib-popover="Asset Unit " popover-trigger="'mouseenter'" name="Unit"
+		ng-model="asset.pentaBaseAssetUnit" required>
+		<option value="" selected>---Select Asset Unit ---</option>
+		<option
+			value="{{unit.pentaBaseAssetUnitName}}"
+			ng-repeat="unit in UnitLists">{{unit.pentaBaseAssetUnitName}}</option>
+	</select>
+
+</div>
+<div class="commonValidate"
+	ng-show="assetForm.Unit.$touched && assetForm.Unit.$invalid">
+	<strong>Required field*</strong>
+</div>
+<!-- End -->
+<div class="col-xs-12 nopadding">
+	<div id="wizard-navigation-container">
+			<button
+			class="login-btn pull-left nextBtn default-radius" name="previous"
+			type="button" ng-click="onAssetSelectPrevious()">
+			Previous</button>
+		<button
+			ng-disabled="currentAddAssetStep >= assetAddsteps.length || assetForm.code.$invalid || assetForm.base.$invalid || assetForm.unit.$invalid || assetForm.defaultDescription.$invalid  || assetForm.usage.$invalid ||assetForm.type.$invalid"
+			class="login-btn pull-right nextBtn default-radius" name="next"
+			type="button"
+			ng-click="gotoAddAssetStep(currentAddAssetStep + 1);twoPrerequsite()">
+			Next</button>
+	</div>
+</div>

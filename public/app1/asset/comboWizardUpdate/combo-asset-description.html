@@ -1,0 +1,161 @@
+ <div class="row">
+	<div>
+		<div class="col-xs-12 langDescrip">
+			<div class="form-group">
+				<label for="code">Default Language <sup class="danger-color">*</sup></label>
+				<select class="form-control select-type common-control"
+					id="editDefaultDescription.pentaBaseLanguage" name="defaultLanguage"
+					title="Default Langauge"
+					ng-model = "editDefaultLanguage" ng-required
+					disabled="disabled">
+					<option
+					value = "language"
+					ng-selected = "language.pentaBaseLanguageName == editDefaultDescription.pentaBaseLanguage.pentaBaseLanguageName ? language : 0"
+					 ng-repeat = "language in languageListEdit | filter:{ pentaBaseDefaultLang:true}" >{{language.pentaBaseLanguageName}}</option>
+				
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="code">Long Description <sup class="danger-color">*</sup></label>
+				<input type="text" ng-model="editDefaultDescription.pentaBaseLongDesc"
+					ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/" name="defaultDescription1"
+					class="form-control common-control" placeholder="Description"
+					required />
+			</div>
+
+			<div class="commonValidate"
+				ng-show="updateForm.defaultDescription1.$touched && updateForm.defaultDescription1.$invalid">
+				<strong>Required field* (Limit : 1-40)</strong>
+			</div>
+
+			<div class="commonValidate"
+				ng-show="updateForm.defaultDescription1.$error.pattern">
+				<strong>Field must start with an alphabet (character limit
+					: 2-40) and special Characters are not allowed.!</strong>
+			</div>
+			<div class="form-group"> 
+				<label for="code">Short Description</label> <input type="text"
+					ng-model="editDefaultDescription.pentaBaseShortDesc"
+					ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/" name="defaultDescription"
+					class="form-control common-control" placeholder="Short Description" />
+			</div>
+			<div class="commonValidate"
+				ng-show="updateForm.editDefaultDescription.$error.pattern">
+				<strong>Field must start with an alphabet (character limit
+					: 2-40) and special Characters are not allowed.!</strong>
+			</div>
+			<div class="form-group">
+				<label for="code">Remark <sup class="danger-color">*</sup></label> <input
+					type="text" ng-model="editDefaultDescription.pentaBaseAssetRemarks" 
+					ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/"
+					name="defaultRemark1" class="form-control common-control"
+					placeholder="Remark" required />
+			</div>
+			<div class="commonValidate"
+				ng-show="updateForm.defaultRemark1.$touched && updateForm.defaultRemark1.$invalid">
+				<strong>Required field* (Limit : 1-40)</strong>
+			</div>
+			<div class="commonValidate"
+				ng-show="updateForm.defaultRemark1.$error.pattern">
+				<strong>Field must start with an alphabet (character limit
+					: 2-40) and special Characters are not allowed.!</strong>
+			</div>
+			<button class="addfields commonAddRem pull-right"
+				ng-show="firstAdd"
+				ng-click="addNewEditLanguage1()"
+				ng-disabled="updateForm.defaultRemark1.$invalid || updateForm.defaultDescription1.$invalid || updateForm.defaultLanguage.$invalid">
+				<img src="img/add.png" alt="add" /><span>Add Language</span>
+			</button>
+
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div data-ng-repeat="description in editLanguageList">
+		<div class="col-xs-12 langDescrip">
+			<div class="form-group">
+				<label for="code">Select Language<sup class="danger-color">*</sup></label>
+				<select class="form-control select-type common-control"
+					id="{{description.pentaBaseLanguage.pentaBaseLanguageName}}" name="language" title="Select Langauge"
+					ng-model="description.pentaBaseLanguage.pentaBaseLanguageName"
+					ng-change="onLanguageEditChange1(description.pentaBaseLanguage.pentaBaseLanguageName,language.pentaBaseLanguageID)"
+					required>
+					<option
+					ng-selected = "language.pentaBaseLanguageID == description.pentaBaseLanguage.pentaBaseLanguageID"
+					 ng-repeat = "language in languageListEdit | filter:{ pentaBaseDefaultLang:false}" >{{language.pentaBaseLanguageName}}</option>
+				</select><small ng-show="{{description.pentaBaseLanguage.pentaBaseLanguageID}}" 
+					style="color: red;">{{languageWarning}}</small>
+			</div>
+			<div class="form-group">
+				<label for="code">Long Description<sup class="danger-color">*</sup></label>
+				<input type="text" name="lDescription"
+					ng-model="description.pentaBaseLongDesc"
+					class="form-control common-control" placeholder="Description" ng-required>
+
+			</div>
+			<div class="commonValidate"
+				ng-show="updateForm.lDescription.$touched && updateForm.lDescription.$invalid">
+				<strong>Required field* (Limit : 1-40)</strong>
+			</div>
+			<div class="commonValidate"
+				ng-show="updateForm.lDescription.$error.pattern">
+				<strong>Field must start with an alphabet (character limit
+					: 2-40) and special Characters are not allowed.!</strong>
+			</div>
+			<div class="form-group">
+				<label for="code">Short Description</label> <input type="text"
+					name="SDescription" ng-model="description.pentaBaseShortDesc"
+				 class="form-control common-control"
+					placeholder="Short Description" required/>
+			</div>
+			<div class="commonValidate"
+				ng-show="updateForm.SDescription.$error.pattern">
+				<strong>Field must start with an alphabet (character limit
+					: 2-40) and special Characters are not allowed.!</strong>
+			</div>
+			<div class="form-group">
+				<label for="code">Remark<sup class="danger-color">*</sup></label> <input
+					type="text" name="Newremark"
+					ng-model="description.pentaBaseAssetRemarks"
+					class="form-control common-control" placeholder="Remark" required>
+
+			</div>
+			<div class="commonValidate"
+				ng-show="updateForm.Newremark.$touched && updateForm.Newremark.$invalid">
+				<strong>Required field* (Limit : 1-40)</strong>
+			</div>
+			<div class="commonValidate"
+				ng-show="updateForm.Newremark.$error.pattern">
+				<strong>Field must start with an alphabet (character limit
+					: 2-40) and special Characters are not allowed.!</strong>
+			</div>
+			<button class="remove commonAddRem removePosi " ng-show="$last"
+				ng-click="removeEditLanguage1()">
+				<span>Remove Language</span><img src="img/remove.png" alt="remove" />
+			</button>
+			<button class="addfields commonAddRem pull-right"
+				ng-click="addNewEditLanguage1()" ng-show="$last"
+				ng-disabled="updateForm.Newremark.$invalid || updateForm.lDescription.$invalid || langEndEditCount">
+				<img src="img/add.png" alt="add" /><span>Add Language</span>
+			</button>
+		</div>
+	</div>
+</div>
+
+ 
+<!-- working  -->
+<div class="col-xs-12 nopadding">
+	<div id="wizard-navigation-container">
+		<button ng-disabled="currentAddAssetStep < 1 || isLanguageEditSame"
+			class="login-btn pull-left nextBtn default-radius" name="previous"
+			type="button"
+			ng-click="gotoUpdateAssetStep(currentUpdateAssetStep - 1)">
+			Previous</button>
+		<button class="login-btn pull-right nextBtn default-radius"
+			ng-disabled="updateForm.language.$invalid || updateForm.Newremark.$invalid || updateForm.lDescription.$invalid || updateForm.defaultDescription1.$invalid || updateForm.defaultRemark1.$invalid || updateForm.remark.$invalid || isLanguageEditSame"
+			name="next" type="button"
+			ng-click="gotoUpdateAssetStep(currentUpdateAssetStep + 1);prerequisiteUpdatePrice()">
+			Next</button>
+	</div>
+</div>

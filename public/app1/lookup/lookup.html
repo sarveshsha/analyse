@@ -1,0 +1,1271 @@
+<div class="container-fluid commonRightbarTop">
+	<div class="row page-title-div">
+		<div class="col-md-12">
+			<h2 class="title">
+				Add New Lookup
+				<button type="button" class="btn pull-right addBtnPopup" id="levels"
+					ng-click="disableProperty()">
+					<!-- <img src="img/add.png" alt="add"> -->
+					<i class="fa fa-plus-circle" aria-hidden="true"></i>
+				</button>
+			</h2>
+		</div>
+	</div>
+	<!-- /.row -->
+	<div class="row breadcrumb-div">
+		<div class="col-md-6">
+			<ul class="breadcrumb">
+				<li><a href="#/"><i class="fa fa-home"></i> Home</a></li>
+				<li class="active">Lookup</li>
+			</ul>
+		</div>
+	</div>
+	<!-- /.row -->
+</div>
+
+<!-- /.container-fluid -->
+<!-- new add form of lookup -->
+<div id="NewAddWizard" class="modal fade" role="dialog"
+	data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5)"
+	data-keyboard="false">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					ng-click="modalClose()">&times;</button>
+				<h4 class="modal-title">Add Lookup</h4>
+			</div>
+			<div class="modal-body addAsset-modalbody">
+
+				<div class="form-group" id="levelShow">
+					<select id="selectLookLevel" ng-change="onServiceTypeSelect()"
+						class="form-control select-type common-control"
+						ng-model="lookup.pentaBaseAssetLevelOrder" required>
+						<option value="">Select Level</option>
+						<option value="level1">Level 1</option>
+						<option value="level2">Level 2</option>
+						<option value="level3">Level 3</option>
+						<option value="level4">Level 4</option>
+					</select>
+				</div>
+				<div id="level1" class="col-xs-12 nopadding lookupLevelOne">
+					<form name="lookupForm">
+						<div ng-show="error" class="alert alert-danger" align="center">
+							<strong>Error! </strong>{{message}}
+						</div>
+						<div class="col-xs-12 nopadding levelpadding">
+							<div class="form-group">
+								<label for="name">Property Name <sup
+									class="danger-color">*</sup></label> <input type="text"
+									placeholder="Property Name" name="propertyName"
+									ng-model="lookup.pentaBasePropertyName"
+									ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+									class="form-control common-control" required />
+							</div>
+							<div class="commonValidateSelect"
+								ng-show="lookupForm.propertyName.$touched && lookupForm.propertyName.$invalid && lookupForm.propertyName.$error.required">
+								<strong>Property Name is required field!</strong>
+							</div>
+							<div class="commonValidate"
+								ng-show="lookupForm.propertyName.$error.pattern">
+								<strong>No special Characters are allowed.!</strong>
+							</div>
+							<div class="form-group">
+								<label for="value">Property Value <sup
+									class="danger-color">*</sup></label> <input type="text"
+									placeholder="Property Value" name="propertyValue"
+									ng-model="lookup.pentaBasePropertyValue"
+									ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+									class="form-control common-control" required />
+							</div>
+							<div class="commonValidateSelect"
+								ng-show="lookupForm.propertyValue.$touched && lookupForm.propertyValue.$invalid && lookupForm.propertyValue.$error.required">
+								<strong>Property Value is required field!</strong>
+							</div>
+							<div class="commonValidate"
+								ng-show="lookupForm.propertyValue.$error.pattern">
+								<strong>No special Characters are allowed.!</strong>
+							</div>
+							<div class="form-group">
+								<label for="description">Description <sup
+									class="danger-color">*</sup></label> <input type="text"
+									placeholder="Description"
+									ng-model="lookup.pentaBasePropertyDesc" name="description"
+									ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+									class="form-control common-control" required />
+							</div>
+							<div class="commonValidateSelect"
+								ng-show="lookupForm.description.$touched && lookupForm.description.$invalid && lookupForm.description.$error.required">
+								<strong>Property Description is required field!</strong>
+							</div>
+							<div class="commonValidate"
+								ng-show="lookupForm.description.$error.pattern">
+								<strong>No special Characters are allowed.!</strong>
+							</div>
+							<div class="form-group col-md-12">
+								<div class="checkboxFive" id="service">
+									<input type="checkbox" id="Isfree" class="styled-checkbox"
+										name="service" ng-model="lookup.isFreeService"> <label
+										for="Isfree">Is Free service</label>
+								</div>
+							</div>
+							<div class="commonValidateSelect"
+								ng-show="lookupForm.service.$touched && lookupForm.service.$invalid">
+								<strong> Service is required field!</strong>
+							</div>
+						</div>
+						<div class="form-group centerbtn">
+							<button
+								class="btn btn-primary login-btn pull-right default-radius"
+								ng-disabled="lookupForm.$invalid" data-dismiss="modal"
+								ng-click="addLookUpLevelOne(lookupForm)">Submit</button>
+						</div>
+					</form>
+
+				</div>
+				<!-- 	</div> -->
+				<div id="level2" class="col-xs-12 nopadding lookupLevelOne">
+					<form name="lookupForm2">
+						<div ng-show="error" class="alert alert-danger" align="center">
+							<strong>Error! </strong>{{message}}
+						</div>
+						<div class="col-xs-12 nopadding levelpadding">
+							<div class="form-group">
+								<label for="select"> Select Level Type</label> <select
+									class="js-states form-control" name="reportsSelect"
+									id="reportsSelect" ng-model="lookup2.parentId" required>
+									<option value="">---Select Type ---</option>
+									<option value="{{levelDatas}}"
+										ng-repeat="levelDatas in levelData">{{levelDatas.pentaBasePropertyName}}</option>
+								</select>
+								<div class="commonValidateSelect"
+									ng-show="lookupForm2.reportsSelect.$touched && lookupForm2.reportsSelect.$invalid">
+									<strong> Select type is required field!</strong>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="name">Property Name <sup
+									class="danger-color">*</sup></label> <input type="text"
+									placeholder="Property Name" name="propertyName"
+									ng-model="lookup2.pentaBasePropertyName"
+									ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+									class="form-control common-control" required />
+							</div>
+							<div class="commonValidateSelect"
+								ng-show="lookupForm2.propertyName.$touched && lookupForm2.propertyName.$invalid && lookupForm2.propertyName.$error.required">
+								<strong>Property Name is required field!</strong>
+							</div>
+							<div class="commonValidate"
+								ng-show="lookupForm2.propertyName.$error.pattern">
+								<strong>No special Characters are allowed.!</strong>
+							</div>
+							<div class="form-group">
+								<label for="value">Property Value <sup
+									class="danger-color">*</sup></label> <input type="text"
+									placeholder="Property Value" name="propertyValue"
+									ng-model="lookup2.pentaBasePropertyValue"
+									ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+									class="form-control common-control" required />
+							</div>
+							<div class="commonValidateSelect"
+								ng-show="lookupForm2.propertyValue.$touched && lookupForm2.propertyValue.$invalid && lookupForm2.propertyValue.$error.required">
+								<strong>Property Value is required field!</strong>
+							</div>
+							<div class="commonValidate"
+								ng-show="lookupForm2.propertyValue.$error.pattern">
+								<strong>No special Characters are allowed.!</strong>
+							</div>
+							<div class="form-group">
+								<label for="description">Description <sup
+									class="danger-color">*</sup></label> <input type="text"
+									placeholder="Description"
+									ng-model="lookup2.pentaBasePropertyDesc" name="description"
+									ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+									class="form-control common-control" required />
+							</div>
+							<div class="commonValidateSelect"
+								ng-show="lookupForm2.description.$touched && lookupForm2.description.$invalid && lookupForm2.description.$error.required">
+								<strong>Property Description is required field!</strong>
+							</div>
+							<div class="commonValidate"
+								ng-show="lookupForm2.description.$error.pattern">
+								<strong>No special Characters are allowed.!</strong>
+							</div>
+						</div>
+
+						<div class="form-group centerbtn">
+							<button
+								class="btn btn-primary login-btn pull-right default-radius"
+								ng-disabled="lookupForm2.$invalid"
+								ng-click="addLookUpLevelTwo(lookupForm2)">Submit</button>
+						</div>
+					</form>
+
+				</div>
+				<div id="level3" class="col-xs-12 nopadding lookupLevelOne">
+					<form name="lookupForm3">
+						<div ng-show="error" class="alert alert-danger" align="center">
+							<strong>Error! </strong>{{message}}
+						</div>
+						<div class="col-xs-12 nopadding levelpadding">
+							<div class="form-group">
+								<label for="level"> Select Level Type</label> <select
+									class="js-states form-control" name="reportsSelect"
+									id="reportsSelect" ng-model="lookup3.parentId" required>
+									<option value="">---Select Type ---</option>
+									<option value="{{levelDatas}}"
+										ng-repeat="levelDatas in levelData">{{levelDatas.pentaBasePropertyName}}</option>
+								</select>
+								<div class="commonValidateSelect"
+									ng-show="lookupForm3.reportsSelect.$touched && lookupForm3.reportsSelect.$invalid">
+									<strong> Select type is required field!</strong>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="name">Property Name <sup
+									class="danger-color">*</sup></label> <input type="text"
+									placeholder="Property Name" name="propertyName"
+									ng-model="lookup3.pentaBasePropertyName"
+									ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+									class="form-control common-control" required />
+							</div>
+							<div class="commonValidateSelect"
+								ng-show="lookupForm3.propertyName.$touched && lookupForm3.propertyName.$invalid && lookupForm3.description.$error.required">
+								<strong>Property Name is required field!</strong>
+							</div>
+							<div class="commonValidate"
+								ng-show="lookupForm3.description.$error.pattern">
+								<strong>No special Characters are allowed.!</strong>
+							</div>
+							<div class="form-group">
+								<label for="value">Property Value <sup
+									class="danger-color">*</sup></label> <input type="text"
+									placeholder="Property Value" name="propertyValue"
+									ng-model="lookup3.pentaBasePropertyValue"
+									ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+									class="form-control common-control" required />
+							</div>
+							<div class="commonValidateSelect"
+								ng-show="lookupForm3.propertyValue.$touched && lookupForm3.propertyValue.$invalid && lookupForm3.propertyValue.$error.required">
+								<strong>Property Value is required field!</strong>
+							</div>
+							<div class="commonValidate"
+								ng-show="lookupForm3.propertyValue.$error.pattern">
+								<strong>No special Characters are allowed.!</strong>
+							</div>
+							<div class="form-group">
+								<label for="description">Description <sup
+									class="danger-color">*</sup></label> <input type="text"
+									placeholder="Description"
+									ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+									ng-model="lookup3.pentaBasePropertyDesc" name="description"
+									class="form-control common-control" required />
+							</div>
+							<div class="commonValidateSelect"
+								ng-show="lookupForm3.description.$touched && lookupForm3.description.$invalid && lookupForm3.description.$error.required">
+								<strong>Property Description is required field!</strong>
+							</div>
+							<div class="commonValidate"
+								ng-show="lookupForm3.description.$error.pattern">
+								<strong>No special Characters are allowed.!</strong>
+							</div>
+						</div>
+						<div class="form-group centerbtn">
+							<button
+								class="btn btn-primary login-btn pull-right default-radius"
+								ng-disabled="lookupForm3.$invalid"
+								ng-click="addLookUpLevelThree(lookupForm3)">Submit</button>
+						</div>
+					</form>
+				</div>
+				<div id="level4" class="col-xs-12 nopadding lookupLevelOne">
+					<form name="lookupForm4">
+						<div ng-show="error" class="alert alert-danger" align="center">
+							<strong>Error! </strong>{{message}}
+						</div>
+						<div class="col-xs-12 nopadding levelpadding">
+							<div class="form-group">
+								<label for="level"> Select Level Type</label> <select
+									class="js-states form-control" name="reportsSelect"
+									id="reportsSelect" ng-model="lookup4.parentId" required>
+									<option value="">---Select Type ---</option>
+									<option value="{{levelDatas}}"
+										ng-repeat="levelDatas in levelData">{{levelDatas.pentaBasePropertyName}}</option>
+								</select>
+								<div class="commonValidateSelect"
+									ng-show="lookupForm4.reportsSelect.$touched && lookupForm4.reportsSelect.$invalid">
+									<strong> Select type is required field!</strong>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="name">Property Name <sup
+									class="danger-color">*</sup></label> <input type="text"
+									placeholder="Property Name"
+									ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+									name="propertyName" ng-model="lookup4.pentaBasePropertyName"
+									class="form-control common-control" required />
+							</div>
+							<div class="commonValidateSelect"
+								ng-show="lookupForm4.propertyName.$touched && lookupForm4.propertyName.$invalid">
+								<strong>Property Name is required field!</strong>
+							</div>
+							<div class="commonValidate"
+								ng-show="lookupForm4.propertyName.$error.pattern">
+								<strong>No special Characters are allowed.!</strong>
+							</div>
+							<div class="form-group">
+								<label for="value">Property Value <sup
+									class="danger-color">*</sup></label> <input type="text"
+									placeholder="Property Value"
+									ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+									name="propertyValue" ng-model="lookup4.pentaBasePropertyValue"
+									class="form-control common-control" required />
+							</div>
+							<div class="commonValidateSelect"
+								ng-show="lookupForm4.propertyValue.$touched && lookupForm4.propertyValue.$invalid && lookupForm4.propertyValue.$error.required">
+								<strong>Property Value is required field!</strong>
+							</div>
+							<div class="commonValidate"
+								ng-show="lookupForm4.propertyValue.$error.pattern">
+								<strong>No special Characters are allowed.!</strong>
+							</div>
+							<div class="form-group">
+								<label for="description">Description <sup
+									class="danger-color">*</sup></label> <input type="text"
+									placeholder="Description"
+									ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+									ng-model="lookup4.pentaBasePropertyDesc" name="description"
+									class="form-control common-control" required />
+							</div>
+							<div class="commonValidateSelect"
+								ng-show="lookupForm4.description.$touched && lookupForm4.description.$invalid && lookupForm4.description.$error.required">
+								<strong>Property Description is required field!</strong>
+							</div>
+							<div class="commonValidate"
+								ng-show="lookupForm4.description.$error.pattern">
+								<strong>No special Characters are allowed.!</strong>
+							</div>
+						</div>
+						<div class="form-group centerbtn">
+							<button
+								class="btn btn-primary login-btn pull-right default-radius"
+								ng-disabled="lookupForm4.$invalid"
+								ng-click="addLookUpLevelFour(lookupForm4)">Submit</button>
+						</div>
+					</form>
+
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<!-- Edit Data Start One -->
+<div id="edit1" tabindex="-1" class="modal fade" role="dialog"
+	data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5)"
+	data-keyboard="false">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					id="closeBtnOne" ng-click="modalClose()">&times;</button>
+				<h4 class="modal-title">Edit Look Level One</h4>
+			</div>
+			<div class="modal-body addAsset-modalbody">
+				<div id="wizard-container">
+					<div id="wizard-step-container">
+						<form name="lookupForm1">
+							<div class="col-xs-12 nopadding">
+								<div class="form-group">
+									<label for="name">Property Name <sup
+										class="danger-color">*</sup></label> <input type="text"
+										placeholder="Property Name" name="propertyName"
+										ng-model="lookupData.pentaBasePropertyName"
+										ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+										class="form-control common-control" required />
+								</div>
+								<div class="commonValidateSelect"
+									ng-show="lookupForm1.propertyName.$touched && lookupForm1.propertyName.$invalid">
+									<strong>Property Name is required field!</strong>
+								</div>
+								<div class="commonValidate"
+									ng-show="lookupForm1.propertyName.$error.pattern">
+									<strong>No special Characters are allowed.!</strong>
+								</div>
+								<div class="form-group">
+									<label for="value">Property Value <sup
+										class="danger-color">*</sup></label> <input type="text"
+										placeholder="Property Value" name="propertyValue"
+										ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+										ng-model="lookupData.pentaBasePropertyValue"
+										class="form-control common-control" required />
+								</div>
+								<div class="commonValidateSelect"
+									ng-show="lookupForm1.propertyValue.$touched && lookupForm1.propertyValue.$invalid">
+									<strong>Property Value is required field!</strong>
+								</div>
+								<div class="commonValidate"
+									ng-show="lookupForm1.propertyValue.$error.pattern">
+									<strong>No special Characters are allowed.!</strong>
+								</div>
+								<div class="form-group">
+									<label for="description">Description <sup
+										class="danger-color">*</sup></label> <input type="text"
+										placeholder="Description"
+										ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+										ng-model="lookupData.pentaBasePropertyDesc" name="description"
+										class="form-control common-control" required />
+								</div>
+								<div class="commonValidateSelect"
+									ng-show="lookupForm1.description.$touched && lookupForm1.description.$invalid">
+									<strong>Description is required field!</strong>
+								</div>
+								<div class="commonValidate"
+									ng-show="lookupForm1.description.$error.pattern">
+									<strong>No special Characters are allowed.!</strong>
+								</div>
+								<div class="form-group">
+									<div class="checkboxFive" id="service">
+										<input type="checkbox" id="selectSers" class="styled-checkbox"
+											name="isFreeService" ng-model="lookupData.isFreeService">
+										<label for="selectSers">Is Free Service</label>
+									</div>
+								</div>
+								<div class="commonValidateSelect"
+									ng-show="lookupForm1.isFreeService.$touched && lookupForm1.isFreeService.$invalid">
+									<strong>Free service is required field!</strong>
+								</div>
+
+							</div>
+							<div class="col-xs-12 nopadding">
+								<button
+									class="btn btn-primary login-btn  pull-right default-radius"
+									ng-click="updateLookupLevelOne(lookupData,1)"
+									data-dismiss="modal">Submit</button>
+								<button class="btn btn-primary login-btn  default-radius"
+									ng-click="cancel()" data-dismiss="modal">Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- Edit Data End  One-->
+
+<!-- Edit Data Start Two -->
+<div id="edit2" tabindex="-1" class="modal fade" role="dialog"
+	data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5)"
+	data-keyboard="false">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					ng-click="modalClose()">&times;</button>
+				<h4 class="modal-title">Edit Look Level Two</h4>
+			</div>
+			<div class="modal-body addAsset-modalbody">
+				<div id="wizard-container">
+
+					<div id="wizard-step-container">
+						<form name="lookupLevelForm2">
+							<div class="col-xs-12 nopadding">
+
+								<div class="form-group">
+									<label for="name">Property Name <sup
+										class="danger-color">*</sup></label> <input type="text"
+										placeholder="Property Name"
+										ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+										name="propertyName"
+										ng-model="lookupData.pentaBasePropertyName"
+										class="form-control common-control" required />
+								</div>
+								<div class="commonValidateSelect"
+									ng-show="lookupLevelForm2.propertyName.$touched && lookupLevelForm2.propertyName.$invalid">
+									<strong>Property Name is required field!</strong>
+								</div>
+								<div class="commonValidate"
+									ng-show="lookupLevelForm2.propertyName.$error.pattern">
+									<strong>No special Characters are allowed.!</strong>
+								</div>
+								<div class="form-group">
+									<label for="value">Property Value<sup
+										class="danger-color">*</sup></label> <input type="text"
+										placeholder="Property Value" name="propertyValue"
+										ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+										ng-model="lookupData.pentaBasePropertyValue"
+										class="form-control common-control" required />
+								</div>
+								<div class="commonValidateSelect"
+									ng-show="lookupLevelForm2.propertyValue.$touched && lookupLevelForm2.propertyValue.$invalid">
+									<strong>Property Value is required field!</strong>
+								</div>
+								<div class="commonValidate"
+									ng-show="lookupLevelForm2.propertyValue.$error.pattern">
+									<strong>No special Characters are allowed.!</strong>
+								</div>
+								<div class="form-group">
+									<label for="description">Description<sup
+										class="danger-color">*</sup></label> <input type="text"
+										placeholder="Description"
+										ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+										ng-model="lookupData.pentaBasePropertyDesc" name="description"
+										class="form-control common-control" required />
+								</div>
+								<div class="commonValidateSelect"
+									ng-show="lookupLevelForm2.description.$touched && lookupLevelForm2.description.$invalid">
+									<strong>Description is required field!</strong>
+								</div>
+								<div class="commonValidate"
+									ng-show="lookupLevelForm2.description.$error.pattern">
+									<strong>No special Characters are allowed.!</strong>
+								</div>
+
+							</div>
+							<div class="col-xs-12 nopadding">
+								<button
+									class="btn btn-primary login-btn pull-right  default-radius"
+									ng-click="updateLookupLevelTwo(lookupData,2)"
+									data-dismiss="modal">Submit</button>
+								<button class="btn btn-primary login-btn default-radius"
+									ng-click="cancel()" data-dismiss="modal">Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- Edit Data End  Two-->
+
+<!-- Edit Data Start Three -->
+<div id="edit3" tabindex="-1" class="modal fade" role="dialog"
+	data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5)"
+	data-keyboard="false">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					ng-click="modalClose()">&times;</button>
+				<h4 class="modal-title">Edit Look Level Three</h4>
+			</div>
+			<div class="modal-body addAsset-modalbody">
+				<div id="wizard-container">
+
+					<div id="wizard-step-container">
+						<form name="lookupLevelForm3">
+							<div class="col-xs-12 nopadding">
+								<div class="form-group">
+									<label for="name">Property Name <sup
+										class="danger-color">*</sup></label> <input type="text"
+										placeholder="Property Name"
+										ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+										name="propertyName"
+										ng-model="lookupData.pentaBasePropertyName"
+										class="form-control common-control" required />
+								</div>
+								<div class="commonValidateSelect"
+									ng-show="lookupLevelForm3.propertyName.$touched &&lookupLevelForm3.propertyName.$invalid">
+									<strong>Property Name is required field!</strong>
+								</div>
+								<div class="commonValidate"
+									ng-show="lookupLevelForm3.propertyName.$error.pattern">
+									<strong>No special Characters are allowed.!</strong>
+								</div>
+								<div class="form-group">
+									<label for="value">Propert Value <sup
+										class="danger-color">*</sup></label> <input type="text"
+										placeholder="Property Value" name="propertyValue"
+										ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+										ng-model="lookupData.pentaBasePropertyValue"
+										class="form-control common-control" required />
+								</div>
+								<div class="commonValidateSelect"
+									ng-show="lookupLevelForm3.propertyValue.$touched && lookupLevelForm3.propertyValue.$invalid">
+									<strong>Property Value is required field!</strong>
+								</div>
+								<div class="commonValidate"
+									ng-show="lookupLevelForm3.propertyValue.$error.pattern">
+									<strong>No special Characters are allowed.!</strong>
+								</div>
+								<div class="form-group">
+									<label for="description">Description<sup
+										class="danger-color">*</sup></label> <input type="text"
+										placeholder="Description"
+										ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+										ng-model="lookupData.pentaBasePropertyDesc" name="description"
+										class="form-control common-control" required />
+								</div>
+								<div class="commonValidateSelect"
+									ng-show="lookupLevelForm3.description.$touched && lookupLevelForm3.description.$invalid">
+									<strong>Description is required field!</strong>
+								</div>
+								<div class="commonValidate"
+									ng-show="lookupLevelForm3.description.$error.pattern">
+									<strong>No special Characters are allowed.!</strong>
+								</div>
+
+							</div>
+							<div class="col-xs-12 nopadding">
+								<button
+									class="btn btn-primary login-btn  pull-right default-radius"
+									ng-click="updateLookupLevelThree(lookupData,3)"
+									data-dismiss="modal">Submit</button>
+								<button class="btn btn-primary login-btn  default-radius"
+									ng-click="cancel()" data-dismiss="modal">Cancel</button>
+
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- Edit Data End  Three-->
+
+<!-- Edit Data Start Four -->
+<div id="edit4" tabindex="-1" class="modal fade" role="dialog"
+	data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5)"
+	data-keyboard="false">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					ng-click="modalClose()">&times;</button>
+				<h4 class="modal-title">Edit Look Level Four</h4>
+			</div>
+			<div class="modal-body addAsset-modalbody">
+				<div id="wizard-container">
+
+					<div id="wizard-step-container">
+						<form name="lookupLevelForm4">
+							<div class="col-xs-12 nopadding">
+								<div class="form-group">
+									<label for="name">Property Name <sup
+										class="danger-color">*</sup></label> <input type="text"
+										placeholder="Property Name"
+										ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+										name="propertyName"
+										ng-model="lookupData.pentaBasePropertyName"
+										class="form-control common-control" required />
+								</div>
+								<div class="commonValidateSelect"
+									ng-show="lookupLevelForm4.propertyName.$touched && lookupLevelForm4.propertyName.$invalid">
+									<strong>Property Name is required field!</strong>
+								</div>
+								<div class="commonValidate"
+									ng-show="lookupLevelForm4.propertyName.$error.pattern">
+									<strong>No special Characters are allowed.!</strong>
+								</div>
+								<div class="form-group">
+									<label for="value">Property Value <sup
+										class="danger-color">*</sup></label> <input type="text"
+										placeholder="Property Value" name="propertyValue"
+										ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+										ng-model="lookupData.pentaBasePropertyValue"
+										class="form-control common-control" required />
+								</div>
+								<div class="commonValidateSelect"
+									ng-show="lookupLevelForm4.propertyValue.$touched && lookupLevelForm4.propertyValue.$invalid">
+									<strong>Property Value is required field!</strong>
+								</div>
+								<div class="commonValidate"
+									ng-show="lookupLevelForm4.propertyValue.$error.pattern">
+									<strong>No special Characters are allowed.!</strong>
+								</div>
+								<div class="form-group">
+									<label for="description">Description <sup
+										class="danger-color">*</sup></label> <input type="text"
+										placeholder="Description"
+										ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9.()\/&\-\s]*$/"
+										ng-model="lookupData.pentaBasePropertyDesc" name="description"
+										class="form-control common-control" required />
+								</div>
+								<div class="commonValidateSelect"
+									ng-show="lookupLevelForm4.description.$touched && lookupLevelForm4.description.$invalid">
+									<strong>Description is required field!</strong>
+								</div>
+								<div class="commonValidate"
+									ng-show="lookupLevelForm4.description.$error.pattern">
+									<strong>No special Characters are allowed.!</strong>
+								</div>
+
+							</div>
+							<div class="col-xs-12 nopadding">
+								<button
+									class="btn btn-primary login-btn pull-right  default-radius"
+									ng-click="updateLookupLevelFour(lookupData,4)"
+									data-dismiss="modal">Submit</button>
+								<button class="btn btn-primary login-btn default-radius"
+									ng-click="cancel()" data-dismiss="modal">Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- Edit Data End  Four-->
+
+<!-- Delete Data start One -->
+<div id="deleteOne" class="modal fade" role="dialog"
+	data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5)"
+	data-keyboard="false">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+
+			<div class="modal-body addAsset-modalbody">
+				<div id="wizard-container">
+
+					<div id="wizard-step-container">
+						<div class="modal-body addAsset-modalbody">
+							<p class="success-message deleteMsg">Are you sure you wish to
+								delete this Level ?</p>
+						</div>
+						<div class="modal-footer deleteFooter">
+							<button class="btn deletePopBtn default-radius"
+								ng-click="deleteLookupLevelOne()" data-dismiss="modal">
+								<img src="img/right.png" alt="yes" />
+							</button>
+							<button class="btn deletePopBtn default-radius"
+								ng-click="cancel()" data-dismiss="modal">
+								<img src="img/cross.png" alt="no" />
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- Delete Data End One -->
+
+<!-- Delete Data start Two -->
+<div id="deleteTwo" class="modal fade" role="dialog"
+	data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5)"
+	data-keyboard="false">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+
+			<div class="modal-body addAsset-modalbody">
+				<div id="wizard-container">
+
+					<div id="wizard-step-container">
+						<div class="modal-body addAsset-modalbody">
+							<p class="success-message deleteMsg">Are you sure you wish to
+								delete this Level ?</p>
+						</div>
+						<div class="modal-footer deleteFooter">
+							<button class="btn deletePopBtn default-radius"
+								ng-click="deleteLookupLevelTwo()" data-dismiss="modal">
+								<img src="img/right.png" alt="yes" />
+							</button>
+							<button class="btn deletePopBtn default-radius"
+								ng-click="cancel()" data-dismiss="modal">
+								<img src="img/cross.png" alt="no" />
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- Delete Data End Two -->
+
+<!-- Delete Data start Three -->
+<div id="deleteThree" class="modal fade" role="dialog"
+	data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5)"
+	data-keyboard="false">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+
+			<div class="modal-body addAsset-modalbody">
+				<div id="wizard-container">
+
+					<div id="wizard-step-container">
+						<div class="modal-body addAsset-modalbody">
+							<p class="success-message deleteMsg">Are you sure you wish to
+								delete this Level ?</p>
+						</div>
+						<div class="modal-footer deleteFooter">
+							<button class="btn deletePopBtn default-radius"
+								ng-click="deleteLookupLevelThree()" data-dismiss="modal">
+								<img src="img/right.png" alt="yes" />
+							</button>
+							<button class="btn deletePopBtn default-radius"
+								ng-click="cancel()" data-dismiss="modal">
+								<img src="img/cross.png" alt="no" />
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- Delete Data End Three -->
+
+<!-- Delete Data start Four -->
+<div id="deleteFour" class="modal fade" role="dialog"
+	data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5)"
+	data-keyboard="false">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+
+			<div class="modal-body addAsset-modalbody">
+				<div id="wizard-container">
+
+					<div id="wizard-step-container">
+						<div class="modal-body addAsset-modalbody">
+							<p class="success-message deleteMsg">Are you sure you wish to
+								delete this Level ?</p>
+						</div>
+						<div class="modal-footer deleteFooter">
+							<button class="btn deletePopBtn default-radius"
+								ng-click="deleteLookupLevelFour()" data-dismiss="modal">
+								<img src="img/right.png" alt="yes" />
+							</button>
+							<button class="btn deletePopBtn default-radius"
+								ng-click="cancel()" data-dismiss="modal">
+								<img src="img/cross.png" alt="no" />
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- Delete Data End Four -->
+
+<!-- List Data Start -->
+<section class="section listSection">
+	<div class="col-xs-12 asset-table-list nopadding">	
+	<div class="container-fluid listContFluid">
+		<div class="panel-body">
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs col-md-12 customNavTab" role="tablist">
+			<li role="presentation" class="active"><a href
+				data-target="#LookupLevel1" aria-controls="level1" role="tab"
+				data-toggle="tab">Level 1</a></li>
+			<li role="presentation"><a href data-target="#LookupLevel2"
+				aria-controls="level2" role="tab" data-toggle="tab">Level 2</a></li>
+			<li role="presentation"><a href data-target="#LookupLevel3"
+				aria-controls="level3" role="tab" data-toggle="tab">Level 3</a></li>
+			<li role="presentation"><a href data-target="#LookupLevel4"
+				aria-controls="level4" role="tab" data-toggle="tab">Level 4</a></li>
+		</ul>
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="LookupLevel1">
+				<!-- List of Data in grid view -->
+				<section class="section" ng-init="getAllRegionsForGrid()">
+					<div class="container-fluid listContFluid">
+						<div class="col-xs-12 asset-table-list nopadding">
+							<div class="col-xs-12 nopadding">
+								<!-- ng-app="pentaWorkflow.asset" ng-controller="AssetController" -->
+								<div id="grid1" ui-grid="gridOptions" ui-grid-pagination
+									ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning
+									ui-grid-selection ui-grid-exporter ui-grid-auto-resize
+									ui-grid-grouping ui-grid-save-state></div>
+								<p>Current page: {{ gridApi.pagination.getPage() }} of {{
+									gridApi.pagination.getTotalPages() }}</p>
+							</div>
+						</div>
+						<!-- end grid view option -->
+					</div>
+					<!-- /.container-fluid -->
+				</section>
+				<!-- End Grid option -->
+				<!-- <section class="section">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="panel">
+									<div class="panel-body p-20">
+										<table id="example1"
+											class="display table table-striped table-bordered"
+											cellspacing="0" width="100%">
+											<thead>
+												<tr>
+													<th>Property Name</th>
+													<th>Property Description</th>
+													<th>Property Value</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tfoot>
+												<tr>
+													<th>Property Name</th>
+													<th>Property Description</th>
+													<th>Property Value</th>
+													<th>Actions</th>
+												</tr>
+											</tfoot>
+											<tbody>
+												<tr ng-repeat="zone in zoneLists">
+												<tr ng-repeat="levelOne in lookupLevelOne">
+													<td>{{levelOne.pentaBasePropertyName}}</td>
+													<td>{{levelOne.pentaBasePropertyDesc}}</td>
+													<td>{{levelOne.pentaBasePropertyValue}}</td>
+													<td><button
+															ng-click="editDataOne(levelOne.pentaBaseLookupLevelID)"
+															class="editBtn default-radius">
+															<img src="img/edit.png" alt="edit" />
+															<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+														</button> <button															
+														ng-click="deleteDataOne(levelOne.pentaBaseLookupLevelID)"
+														class="editBtn default-radius"><img
+															src="img/delete.png" alt="deleteOne" /></button></td>
+												</tr>
+											</tbody>
+										</table>
+										<table id="data-table-div1"
+											class="display table table-striped table-bordered"
+											cellspacing="0" width="100%">
+											<thead>
+												<tr>
+													<th>Property Name</th>
+													<th>Property Description</th>
+													<th>Property Value</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section> -->
+			</div>
+
+			<div role="tabpanel" class="tab-pane" id="LookupLevel2">
+				<!-- List of Data in grid view -->
+				<section class="section" ng-init="getAllRegionsForGrid()">
+					<div class="container-fluid listContFluid">
+						<div class="col-xs-12 asset-table-list nopadding">
+							<div class="col-xs-12 nopadding">
+								<!-- ng-app="pentaWorkflow.asset" ng-controller="AssetController" -->
+								<div id="grid1" ui-grid="gridOptions1" ui-grid-pagination
+									ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning
+									ui-grid-selection ui-grid-exporter ui-grid-auto-resize
+									ui-grid-grouping ui-grid-save-state></div>
+								<p>Current page: {{ gridApi.pagination.getPage() }} of {{
+									gridApi.pagination.getTotalPages() }}</p>
+							</div>
+						</div>
+						<!-- end grid view option -->
+					</div>
+					<!-- /.container-fluid -->
+				</section>
+				<!-- End Grid option -->
+				<!-- <section class="section">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="panel">
+									<div class="panel-body p-20">
+										<table id="example4"
+											class="display table table-striped table-bordered"
+											cellspacing="0" width="100%">
+											<thead>
+												<tr>
+													<th>Property Name</th>
+													<th>Property Description</th>
+													<th>Property Value</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tfoot>
+												<tr>
+													<th>Property Name</th>
+													<th>Property Description</th>
+													<th>Property Value</th>
+													<th>Actions</th>
+												</tr>
+											</tfoot>
+											<tbody>
+												<tr ng-repeat="levelTwo in lookupLevelTwo">
+													<td>{{levelTwo.pentaBasePropertyName}}</td>
+													<td>{{levelTwo.pentaBasePropertyDesc}}</td>
+													<td>{{levelTwo.pentaBasePropertyValue}}</td>
+													<td><button
+															ng-click="editDataTwo(levelTwo.pentaBaseLookupLevelID)"
+															class="editBtn default-radius">
+															<img src="img/edit.png" alt="edit" />
+															<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+														</button> <button																
+														ng-click="deleteDataTwo(levelTwo.pentaBaseLookupLevelID)"
+														class="editBtn default-radius"><img
+															src="img/delete.png" alt="deleteTwo" /></button></td>
+												</tr>
+											</tbody>
+										</table>
+										<table id="data-table-div2"
+											class="display table table-striped table-bordered"
+											cellspacing="0" width="100%">
+											<thead>
+												<tr>
+													<th>Property Name</th>
+													<th>Property Description</th>
+													<th>Property Value</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+ -->
+			</div>
+
+			<div role="tabpanel" class="tab-pane" id="LookupLevel3">
+				<!-- <section class="section">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="panel">
+									<div class="panel-body p-20">
+															<table id="example3"
+											class="display table table-striped table-bordered"
+											cellspacing="0" width="100%">
+											<thead>
+												<tr>
+													<th>Property Name</th>
+													<th>Property Description</th>
+													<th>Property Value</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tfoot>
+												<tr>
+													<th>Property Name</th>
+													<th>Property Description</th>
+													<th>Property Value</th>
+													<th>Actions</th>
+												</tr>
+											</tfoot>
+											<tbody>
+												<tr ng-repeat="levelThree in lookupLevelThree">
+													<td>{{levelThree.pentaBasePropertyName}}</td>
+													<td>{{levelThree.pentaBasePropertyDesc}}</td>
+													<td>{{levelThree.pentaBasePropertyValue}}</td>
+													<td><button
+															ng-click="editDataThree(levelThree.pentaBaseLookupLevelID)"
+															class="editBtn default-radius">
+															<img src="img/edit.png" alt="edit" />
+															<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+														</button> <button
+													
+														ng-click="deleteDataThree(levelThree.pentaBaseLookupLevelID)"
+														class="editBtn default-radius"><img
+															src="img/delete.png" alt="deleteThree" /></button></td>
+												</tr>
+											</tbody>
+										</table>
+
+										<table id="data-table-div3"
+											class="display table table-striped table-bordered"
+											cellspacing="0" width="100%">
+											<thead>
+												<tr>
+													<th>Property Name</th>
+													<th>Property Description</th>
+													<th>Property Value</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+				</section> -->
+				<!-- List of Data in grid view -->
+				<section class="section" ng-init="getPrerequisiteForGrid()">
+					<div class="container-fluid listContFluid">
+						<div class="col-xs-12 asset-table-list nopadding">
+							<div class="col-xs-12 nopadding">
+								<!-- ng-app="pentaWorkflow.asset" ng-controller="AssetController" -->
+								<div id="grid1" ui-grid="gridOptions2" ui-grid-pagination
+									ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning
+									ui-grid-selection ui-grid-exporter ui-grid-auto-resize
+									ui-grid-grouping ui-grid-save-state></div>
+								<p>Current page: {{ gridApi.pagination.getPage() }} of {{
+									gridApi.pagination.getTotalPages() }}</p>
+							</div>
+						</div>
+						<!-- end grid view option -->
+					</div>
+					<!-- /.container-fluid -->
+				</section>
+				<!-- End Grid option -->
+			
+			</div>
+
+			<div role="tabpanel" class="tab-pane" id="LookupLevel4">
+				<!-- <section class="section">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="panel">
+									<div class="panel-body p-20">
+													<table id="example4"
+											class="display table table-striped table-bordered"
+											cellspacing="0" width="100%">
+											<thead>
+												<tr>
+													<th>Property Name</th>
+													<th>Property Description</th>
+													<th>Property Value</th>											
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tfoot>
+												<tr>
+													<th>Property Name</th>
+													<th>Property Description</th>
+													<th>Property Value</th>
+													<th>Actions</th>
+												</tr>
+											</tfoot>
+											<tbody>
+												<tr ng-repeat="levelFour in lookupLevelFour">
+													<td>{{levelFour.pentaBasePropertyName}}</td>
+													<td>{{levelFour.pentaBasePropertyDesc}}</td>
+													<td>{{levelFour.pentaBasePropertyValue}}</td>
+													<td><button
+															ng-click="editDataFour(levelFour.pentaBaseLookupLevelID)"
+															class="editBtn default-radius">
+															<img src="img/edit.png" alt="edit" />
+															<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+														</button> <button
+													
+														ng-click="deleteDataFour(levelFour.pentaBaseLookupLevelID)"
+														class="editBtn default-radius"><img
+															src="img/delete.png" alt="deleteFour" /></button></td>
+												</tr>
+											</tbody>
+										</table>
+
+										<table id="data-table-div4"
+											class="display table table-striped table-bordered"
+											cellspacing="0" width="100%">
+											<thead>
+												<tr>
+													<th>Property Name</th>
+													<th>Property Description</th>
+													<th>Property Value</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+				</section>
+ -->
+				<!-- List of Data in grid view -->
+				<section class="section" ng-init="getAllRegionsForGrid()">
+					<div class="container-fluid listContFluid">
+						<div class="col-xs-12 asset-table-list nopadding">
+							<div class="col-xs-12 nopadding">
+								<!-- ng-app="pentaWorkflow.asset" ng-controller="AssetController" -->
+								<div id="grid1" ui-grid="gridOptions3" ui-grid-pagination
+									ui-grid-resize-columns ui-grid-move-columns ui-grid-pinning
+									ui-grid-selection ui-grid-exporter ui-grid-auto-resize
+									ui-grid-grouping ui-grid-save-state></div>
+								<p>Current page: {{ gridApi.pagination.getPage() }} of {{
+									gridApi.pagination.getTotalPages() }}</p>
+							</div>
+						</div>
+						<!-- end grid view option -->
+					</div>
+					<!-- /.container-fluid -->
+				</section>
+				<!-- End Grid option -->
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
+<!-- List Data End -->
+</section>
+
+<script>
+	$(function() {
+		$('#example1').DataTable();
+	});
+	function editDataOne(id) {
+		$scope = angular.element(document.getElementById('levels')).scope();
+		$scope.editDataOne(id);
+
+	}
+</script>
+<script>
+	$(function() {
+		$('#example2').DataTable();
+	});
+	function editDataTwo(id) {
+		$scope = angular.element(document.getElementById('levels')).scope();
+		$scope.editDataTwo(id);
+
+	}
+</script>
+<script>
+	$(function() {
+		$('#example3').DataTable();
+	});
+	function editDataThree(id) {
+		$scope = angular.element(document.getElementById('levels')).scope();
+		$scope.editDataThree(id);
+
+	}
+</script>
+<script>
+	$(function() {
+		$('#example4').DataTable();
+	});
+	function editDataFour(id) {
+		$scope = angular.element(document.getElementById('levels')).scope();
+		$scope.editDataFour(id);
+
+	}
+</script>

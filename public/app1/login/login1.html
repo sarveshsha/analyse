@@ -1,0 +1,48 @@
+
+
+            <div class="login-bg-color bg-black-300">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <div class="panel login-box">
+                            <div class="panel-heading">
+                                <div class="panel-title text-center">
+                                    <img src="images1/blogo.png" alt="logo" />
+                                </div>
+                            </div>
+                            <div class="panel-body p-20">
+
+                                <form>
+                                	<div class="form-group">
+                                		<label for="exampleInputEmail1">Email address</label>
+                                        <input type="text" ng-model="user.username" class="form-control" id="exampleInputEmail1" placeholder="Username" autocomplete="off" >
+                                	</div>
+                                	<div class="form-group">
+                                		<label for="exampleInputPassword1">Password</label>
+                                		<input type="password"  ng-model="user.password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                	</div>
+                                    <!-- <div class="checkbox op-check">
+                                        <label>
+                                            <input type="checkbox" name="remember" class="flat-blue-style"> <span class="ml-10">Remember me</span>
+                                        </label>
+                                    </div> -->
+									<div class="alert alert-danger form-group" ng-show="loginError">
+								<strong>Error!</strong> Username or password incorrect
+							</div>
+                                    <div class="form-group mt-20">
+                                        <div class="">
+                                            <!-- <a href="#" class="form-link"><small class="muted-text">Forgot Password?</small></a> -->
+                                            <button type="submit" ng-click="login()" class="btn btn-success btn-labeled pull-right">Sign in<span class="btn-label btn-label-right"><i class="fa fa-check"></i></span></button>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                </form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.col-md-6 col-md-offset-3 -->
+                </div>
+                <!-- /.row -->
+            </div>
+

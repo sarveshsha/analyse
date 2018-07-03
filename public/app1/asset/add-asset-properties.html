@@ -1,0 +1,97 @@
+
+<h3 ></h3>
+<div ng-init="resetPropertyWizard()" class="form-group onClickTrans"
+	ng-show="asset.isFreeService==undefined" >
+	<label class="">Select type of service :</label>
+	<div class="btn-group" name="isFreeService">
+		<label class="btn btn-primary serviceBtn default-radius"
+			ng-model="asset.isFreeService" uib-btn-radio="true"
+			ng-click="onServiceTypeSelect(); resetPropertyWizard()">Free service</label> <label
+			class="btn btn-primary serviceBtn default-radius"
+			ng-model="asset.isFreeService" uib-btn-radio="false"
+			ng-click="onServiceTypeSelect(); resetPropertyWizard()">Paid service</label>
+	</div>
+</div>
+<div class="form-group commonTransition" ng-init="resetPropertyWizard()"
+	ng-show="asset.isFreeService==true || asset.isFreeService==false" >
+	<label for="code">Select Base<sup class="danger-color">*</sup></label> 
+	<select class="form-control common-control select-type"
+		uib-popover="Category Type " popover-trigger="'mouseenter'"
+		id="selectType" id="reportsSelect" name="categories"
+		ng-model="selectedCategory" ng-change="onLevel1Select(selectedCategory)"
+		ng-options="assetCategory.pentaBasePropertyName for assetCategory in assetCategories"
+		required>
+		<option value="" selected="selected">--- Select Base ---</option>
+	</select>
+	<!-- <h1>{{selectCategory}}</h1> -->
+	<div class="commonValidateSelect"
+		ng-show="assetForm.categories.$touched && assetForm.categories.$invalid">
+		<strong>Service is required field!</strong>
+	</div>
+</div>
+<div class="form-group RamCore"
+	ng-repeat="subLevel in subLevels | filter:{ pentaBaseAssetLevelOrder: 2 }">
+	<label for="code">Select Property <sup class="danger-color">*</sup></label>
+	<input type="text" ng-model="newObject[2]"	
+		typeahead-on-select="onSelect($item, $model, $label,subLevel)"
+		placeholder="Select {{subLevel.pentaBasePropertyName}}"
+		name="levelTwo"
+		uib-typeahead="country as country.pentaBasePropertyValue for country in search($viewValue,subLevel.pentaBasePropertyName)"
+		typeahead-loading="loadingLocations" typeahead-no-results="noResults"
+		typeahead-min-length="0" class="form-control common-control" required>
+	<div class="commonValidateSelect"
+		ng-show="(isPropertiesNextClicked || assetForm.levelTwo.$touched ) && assetForm.levelTwo.$invalid">
+		<strong>Property is required field!</strong>
+	</div>
+</div>
+<div class="form-group RamCore"
+	ng-repeat="subLevel in subLevels | filter:{ pentaBaseAssetLevelOrder: 3 }">
+	<label for="code">Select Property <sup class="danger-color">*</sup></label>
+	<input type="text" ng-model="newObject[3]"
+		typeahead-on-select="onSelect($item, $model, $label,subLevel)"
+		placeholder="Select {{subLevel.pentaBasePropertyName}}"
+		name="levelThree"
+		uib-typeahead="country as country.pentaBasePropertyValue for country in search($viewValue,subLevel.pentaBasePropertyName)"
+		typeahead-loading="loadingLocations" typeahead-no-results="noResults"
+		typeahead-min-length="0" class="form-control common-control" required>
+	<div class="commonValidateSelect"
+		ng-show="(isPropertiesNextClicked || assetForm.levelThree.$touched )&& assetForm.levelThree.$invalid">
+		<strong>Property is required field!</strong>
+	</div>
+</div>
+<div class="form-group RamCore"
+	ng-repeat="subLevel in subLevels | filter:{ pentaBaseAssetLevelOrder: 4 }">
+	<label for="code">Select Property <sup class="danger-color">*</sup></label>
+	<input type="text" ng-model="newObject[4]"	
+		typeahead-on-select="onSelect($item, $model, $label,subLevel)"
+		placeholder="Select {{subLevel.pentaBasePropertyName}}"
+		name="levelFour"
+		uib-typeahead="country as country.pentaBasePropertyValue for country in search($viewValue,subLevel.pentaBasePropertyName)"
+		typeahead-loading="loadingLocations" typeahead-no-results="noResults"
+		typeahead-min-length="0" class="form-control common-control" required>
+	<div class="commonValidateSelect"
+		ng-show="(isPropertiesNextClicked || assetForm.levelFour.$touched )&& assetForm.levelFour.$invalid">
+		<strong>Property is required field!</strong>
+	</div>
+</div>
+<div class="col-xs-12 nopadding">
+	<div id="wizard-navigation-container">
+		<!-- 	<button ng-disabled="currentAddAssetStep < 1" class="login-btn pull-left nextBtn default-radius"
+								name="previous" type="button"
+								ng-click="gotoAddAssetStep(currentAddAssetStep - 1)">
+								Previous
+							</button> -->
+		<button class="login-btn pull-left default-radius clearBtn"
+			ng-click="clearFormLevelOne(assetForm)"
+			ng-show="asset.isFreeService==true || asset.isFreeService==false">
+			Back</button>
+		<button
+				class="login-btn pull-right nextBtn default-radius" name="next"
+			type="button"
+			ng-disabled="assetForm.categories.$invalid"
+			ng-click="checkPropertiesValidation(assetForm,currentAddAssetStep);getPrerequisiteLevel2()"
+			ng-show="asset.isFreeService==true || asset.isFreeService==false">
+			Next</button>
+
+	</div>
+</div>

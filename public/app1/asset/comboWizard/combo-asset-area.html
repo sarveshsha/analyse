@@ -1,0 +1,62 @@
+
+<div class="form-group">
+	<label for="code">Select Region</label> <select
+		class="form-control common-control select-type" uib-popover="Region "
+		popover-trigger="'mouseenter'" id="regionSelect" name="region"
+		ng-model="asset.pentaBaseRegion"
+		ng-options="region.pentaBaseRegionName for region in regionList track by region.pentaBaseRegionCode"
+		ng-change="onAddRegionChange()" required>
+	</select>
+</div>
+<div class="form-group">
+	<label for="code">Select Zone</label> <select
+		ng-disabled="zoneDisabled"
+		class="form-control common-control select-type" uib-popover="Zone "
+		popover-trigger="'mouseenter'" id="zoneSelect" name="zone"
+		ng-model="asset.pentaBaseZone"
+		ng-options="zone.pentaBaseName for zone in regionZoneList track by zone.pentaBaseZoneCode"
+		ng-change="onAddZoneChange()">
+	</select>
+	<div>
+		<small style="color: red;" >{{zoneNotFound}}</small>
+	</div>
+</div>
+
+<div class="form-group">
+	<label for="code">Pod</label> <input type="text"
+		ng-disabled="podDisabled" placeholder="pod" name="pod" maxlength="40"
+		uib-popover="Pod " popover-trigger="'mouseenter'" id="podSelect"
+		ng-model="podName" class="form-control common-control"
+		ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/" />
+</div>
+<div class="commonValidate" ng-show="assetForm.pod.$error.pattern">
+	<strong>Field must start with an alphabet (character limit :
+		2-40) and special Characters are not allowed.!</strong>
+</div>
+<!-- Add new field for asset Area -->
+<div class="form-group">
+	<label for="code">Area</label> <input type="text" id="podSelect"
+		placeholder="Area" name="area" maxlength="50" uib-popover="Area "
+		popover-trigger="'mouseenter'" id="podSelect"
+		ng-model="asset.pentaBaseArea"
+		ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/"
+		class="form-control common-control" />
+</div>
+<div class="commonValidate" ng-show="assetForm.area.$error.pattern">
+	<strong>Field must start with an alphabet (character limit :
+		2-40) and special Characters are not allowed.!</strong>
+</div>
+<!-- End Area Field -->
+<div class="col-xs-12 nopadding">
+	<div id="wizard-navigation-container">
+		<button ng-disabled="currentAddAssetStep < 1"
+			class="login-btn pull-left nextBtn default-radius" name="previous"
+			type="button" ng-click="gotoAddAssetStep(currentAddAssetStep - 1);threePrerequisite(podName)">
+			Previous</button>
+		<button ng-disabled="currentAddAssetStep >= assetAddsteps.length"
+			class="login-btn pull-right nextBtn default-radius" name="next"
+			type="button"
+			ng-click="gotoAddAssetStep(currentAddAssetStep + 1);threePrerequisite(podName)">
+			Next</button>
+	</div>
+</div>

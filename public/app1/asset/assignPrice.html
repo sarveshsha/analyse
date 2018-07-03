@@ -1,0 +1,73 @@
+<h1></h1>
+<div class="form-group"
+	ng-show="updateAsset.pentaBaseAssetCompanyCode != null">
+	<label for="code">Company Name<sup class="danger-color">*</sup></label>
+	<input type="text" placeholder="Company Name" name="maintType"
+		uib-popover="Company Name" popover-trigger="'mouseenter'"
+		ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/" ng-model="companyName"
+		class="form-control common-control" disabled="disabled" />
+</div>
+<div class="row">
+	<div data-ng-repeat="currency in updateAsset.pentaBaseAssetCurrency">
+		<div class="col-xs-12 langDescrip">
+			<div class="form-group">
+				<label for="code">Currency Name</label> <input type="text"
+					placeholder="Currency Name" name="Currency Name" maxlength="40"
+					uib-popover="Currency Name" popover-trigger="'mouseenter'"
+					ng-model="currency.pentaBaseCurrency.pentaBaseCurName"
+					class="form-control common-control" disabled="disabled" />
+			</div>
+			<div class="form-group">
+				<label for="code">Sell Price <sup class="danger-color">*</sup></label>
+				<input type="number" ng-model="currency.pentaBaseAssetCurSellPrice"
+					ng-pattern="/^[0-9]+$/" name="sell1" maxlength="20"
+					id="{{currency.pentaBaseCurrency.pentaBaseCreatedDate}}"
+					uib-popover="Sell Price" popover-trigger="'mouseenter'"
+					class="form-control common-control" placeholder="Sell Price"
+					required>
+			</div>
+			<div class="commonValidate"
+				ng-show="updateAssetForm.sell1.$touched && updateAssetForm.sell1.$invalid">
+				<strong>Required field* (Limit : 1-20)</strong>
+			</div>
+			<div class="commonValidate"
+				ng-show="updateAssetForm.sell1.$error.pattern">
+				<strong>Negative value is not allowed..!</strong>
+			</div>
+			<div class="form-group">
+				<label for="code">Cost Price<sup class="danger-color">*</sup></label>
+				<input type="number" ng-model="currency.pentaBaseAssetCurCostPrice"
+					id="{{currency.pentaBaseCurrency.pentaBaseCurName}}" name="cost1"
+					uib-popover="Cost Price" popover-trigger="'mouseenter'"
+					maxlength="20" ng-pattern="/^[0-9]+$/"
+					class="form-control common-control" placeholder="Cost Price"
+					required="required">
+			</div>
+			<div class="commonValidate"
+				ng-show="updateAssetForm.cost1.$error.pattern">
+				<strong>Negative value is not allowed..!</strong>
+			</div>
+			<div class="commonValidate"
+				ng-show="updateAssetForm.cost1.$touched && updateAssetForm.cost1.$invalid">
+				<strong>Required field* (Limit : 1-20)</strong>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<div class="col-xs-12 nopadding">
+	<div id="wizard-navigation-container">
+		<button
+			ng-disabled="currentStep <= 1 || updateAssetForm.sell1.$invalid || updateAssetForm.cost1.$invalid"
+			class="login-btn pull-left nextBtn default-radius" name="previous"
+			type="button" ng-click="gotoStep(currentStep - 1)">Previous
+		</button>
+		<button
+			ng-disabled="currentStep >= steps.length || updateAssetForm.sell1.$invalid || updateAssetForm.cost1.$invalid"
+			class="login-btn pull-right nextBtn default-radius" name="next"
+			type="button" ng-click="gotoStep(currentStep + 1)">Next</button>
+		<!-- ng-disabled="currentStep != steps.length" -->
+
+	</div>
+</div>

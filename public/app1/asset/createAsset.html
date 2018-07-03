@@ -1,0 +1,118 @@
+<div class="form-group">
+<label for="code">Code<sup class="danger-color">*</sup></label>
+	<input type="text" placeholder="Code" name="code" maxlength="40"
+		uib-popover="Code " popover-trigger="'mouseenter'"
+		ng-model="updateAsset.pentaBaseAssetCode"
+		ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/"
+		class="form-control common-control" required />
+</div>
+<div class="commonValidate"
+	ng-show="updateAssetForm.code.$error.pattern">
+	<strong>Field must start with an alphabet (character limit :
+		2-40) and special Characters are not allowed.!</strong>
+</div>
+<div class="commonValidate"
+	ng-show="updateAssetForm.code.$touched && updateAssetForm.code.$invalid">
+	<strong>Required field* (Limit : 1-40)</strong>
+</div>
+<div class="form-group">
+<label for="base">Asset Base<sup class="danger-color">*</sup></label>
+	<input type="text" placeholder="Base" name="base" maxlength="40"
+		uib-popover="Asset Base" popover-trigger="'mouseenter'"
+		ng-model="updateAsset.pentaBaseAssetBase"
+		ng-pattern="/^[a-zA-Z][a-zA-Z0-9-\s]+$/"
+		class="form-control common-control" disabled="disabled" required />
+</div>
+<div class="commonValidate"
+	ng-show="updateAssetForm.base.$error.pattern">
+	<strong>Field must start with an alphabet (character limit :
+		2-40) and special Characters are not allowed.!</strong>
+</div>
+<div class="commonValidate"
+	ng-show="updateAssetForm.base.$touched && updateAssetForm.base.$invalid">
+	<strong>Required field* (Limit : 1-40)</strong>
+</div>
+<!-- <div class="form-group">
+<label for="unit">Unit<sup class="danger-color">*</sup></label>
+	<input type="text" placeholder="Unit" maxlength="40"
+		uib-popover="Asset unit " popover-trigger="'mouseenter'"
+		ng-model="updateAsset.pentaBaseAssetUnit" name="unit"
+		class="form-control common-control" required />
+</div>
+<div class="commonValidate"
+	ng-show="updateAssetForm.unit.$touched && updateAssetForm.unit.$invalid">
+	<strong>Required field* (Limit : 1-40)</strong>
+</div> -->
+<!-- add new field -->
+<div class="form-group">
+	<label for="code">Select Asset Unit<sup class="danger-color">*</sup></label>
+	<select class="form-control common-control select-type"
+		uib-popover="Asset Unit" popover-trigger="'mouseenter'" name="unit"
+		ng-model="updateAsset.pentaBaseAssetUnit" required>
+		<option
+			value="{{unit.pentaBaseAssetUnitName}}"
+			ng-repeat="unit in UnitLists">{{unit.pentaBaseAssetUnitName}}</option>
+		<!-- <option value="{{assetUsage.usageDescription}}"
+			ng-repeat="assetUsage in AssetUsageList">{{assetUsage.usageDescription}}</option> -->
+	</select>
+
+</div>
+<div class="commonValidate"
+	ng-show="updateAssetForm.unit.$touched && updateAssetForm.unit.$invalid">
+	<strong>Required field* (Limit : 1-40)</strong>
+</div>
+<!-- End -->
+<div class="form-group"
+	ng-repeat="subLevel in updateAsset.pentaBaseAssetProperty | filter:{ pentaBaseAssetLevel: 2 }">
+	<label for="level1">Level-2 Property<sup class="danger-color">*</sup></label>
+	<input type="text" ng-model="subLevel.pentaBaseAssetPropertyValue"
+		uib-popover="{{subLevel.pentaBaseAssetPropertyName}}"
+		popover-trigger="'mouseenter'"
+		typeahead-on-select="onUpdateSelect($item, $model, $label,subLevel)"
+		placeholder="Select {{subLevel.pentaBaseAssetPropertyName}}"
+		uib-typeahead="country as country.pentaBasePropertyValue for country in searchUpdateAsset($viewValue,subLevel.pentaBaseAssetPropertyName)"
+		typeahead-loading="loadingLocations" typeahead-no-results="noResults"
+		typeahead-min-length="0" class="form-control common-control"
+		readonly="readonly">
+</div>
+<div class="form-group"
+	ng-repeat="subLevel in updateAsset.pentaBaseAssetProperty | filter:{ pentaBaseAssetLevel: 3 }">
+	<label for="level2">Level-3 Property<sup class="danger-color">*</sup></label>
+	<input type="text" ng-model="subLevel.pentaBaseAssetPropertyValue"
+		uib-popover="{{subLevel.pentaBaseAssetPropertyName}}"
+		popover-trigger="'mouseenter'"
+		typeahead-on-select="onUpdateSelect($item, $model, $label,subLevel)"
+		placeholder="Select {{subLevel.pentaBaseAssetPropertyName}}"
+		uib-typeahead="country as country.pentaBasePropertyValue for country in searchUpdateAsset($viewValue,subLevel.pentaBaseAssetPropertyName)"
+		typeahead-loading="loadingLocations" typeahead-no-results="noResults"
+		typeahead-min-length="0" class="form-control common-control"
+		readonly="readonly">
+</div>
+<div class="form-group"
+	ng-repeat="subLevel in updateAsset.pentaBaseAssetProperty | filter:{ pentaBaseAssetLevel: 4 }">
+	<label for="level3">Level-4 Property<sup class="danger-color">*</sup></label>
+	<input type="text" ng-model="subLevel.pentaBaseAssetPropertyValue"
+		uib-popover="{{subLevel.pentaBasePropertyName}}"
+		popover-trigger="'mouseenter'"
+		typeahead-on-select="onUpdateSelect($item, $model, $label,subLevel)"
+		placeholder="Select {{subLevel.pentaBasePropertyName}}"
+		uib-typeahead="country as country.pentaBasePropertyValue for country in searchUpdateAsset($viewValue,subLevel.pentaBaseAssetPropertyName)"
+		typeahead-loading="loadingLocations" typeahead-no-results="noResults"
+		typeahead-min-length="0" class="form-control common-control"
+		readonly="readonly">
+</div>
+
+<div class="col-xs-12 nopadding">
+	<div id="wizard-navigation-container">
+		<button
+			ng-disabled="currentStep <= 1 || updateAssetForm.code.$invalid || updateAssetForm.base.$invalid || updateAssetForm.unit.$invalid"
+			class="login-btn pull-left nextBtn default-radius" name="previous"
+			type="button" ng-click="gotoStep(currentStep - 1)">Previous
+		</button>
+		<button
+			ng-disabled="currentStep >= steps.length || updateAssetForm.code.$invalid || updateAssetForm.base.$invalid || updateAssetForm.unit.$invalid"
+			class="login-btn pull-right nextBtn default-radius" name="next"
+			type="button" ng-click="gotoStep(currentStep + 1)">Next</button>
+		<!-- ng-disabled="currentStep != steps.length" -->
+	</div>
+</div>
