@@ -4,63 +4,172 @@
 
 	function LifeCycleController($http, $scope, $rootScope, $cookieStore,
 			$window, $location, $routeParams) {
-		
-		
-		
-		
-				var file = 'data/bar2.json';
-						angular.extend($scope, {
-              options: {
-                axis: {
-                  stroke: 'red',
-                },
-                bar: {
-                  colorInterpolator: d3.interpolateRgb
-                },
-                x: {
-                  label: 'Store'
-                },
+		$scope.data = [
+            {
+                key: "Visitors",
+                y: 5
+            },
+            {
+                key: "News Letters Only",
+                y: 2
+            },
+            {
+                key: "New",
+                y: 9
+            },
+            {
+                key: "Active",
+                y: 7
+            },
+            {
+                key: "One Timer",
+                y: 4
+            },
+            {
+                key: "ReActivated",
+                y: 3
+            },
+            {
+                key: "Churn",
+                y: .5
+            }
+        ];
+		$scope.optionsPie = {
+        chart: {
+            type: 'pieChart',
+            height: 450,
+            donut: true,
+            x: function(d){return d.key;},
+            y: function(d){return d.y;},
+            showLabels: true,
 
-                y: {
-									position: 'left',
-					        orient: 'axisLeft',
-					        direction: 'btt',
-                  label: 'Products'
+
+           
+            transitionDuration: 500,
+            legend: {
+                margin: {
+                    top: 5,
+                    right: 70,
+                    bottom: 5,
+                    left: 0
                 }
-              },
+            },
+            title: ""
+        },
+        title: {
+          text: "Hello"
+        }
+    };
+		
+		
+	$scope.datan = [{
+    key: "Avg. Future Value",
+    values: [
+        { "label" : "Visitors" , "value" : 29.765957771107 },
+        { "label" :"News Letters Only", "value" : 0 },
+        { "label" : "New" , "value" : 32.807804682612 },
+        { "label" : "Active" , "value" : 196.45946739256 },
+        { "label" : "One Timer" , "value" : 0.19434030906893 },
+        { "label" : "ReActivate" , "value" : 98.079782601442 },
+        { "label" : "Churn" , "value" : 13.925743130903 },
+        { "label" : "Dump" , "value" : 5.1387322875705 }
+    ]
+}];
+		$scope.options = {
+    chart: {
+        type: 'discreteBarChart',
+        height: 450,
+		scale :100,
+        margin : {
+            top: 20,
+            right: 20,
+            bottom: 60,
+            left: 55
+        },
+        x: function(d){ return d.label; },
+        y: function(d){ return d.value; },
+        showValues: true,
+        valueFormat: function(d){
+            return d3.format(',.4f')(d);
+        },
+        transitionDuration: 500,
+        xAxis: {
+            axisLabel: 'X Axis'
+        },
+        yAxis: {
+            axisLabel: 'Y Axis',
+            axisLabelDistance: 30
+        }
+    }
+};
+	$scope.optionsHor = {
+            chart: {
+                type: 'multiBarHorizontalChart',
+                height: 250,
+                x: function(d){return d.label;},
+                y: function(d){return d.value;},
+                showControls: false,
+                showValues: true,
+                stacked: true,
+                showLegend: false,
+                transitionDuration: 250,
+                xAxis: {
+                    showMaxMin: false
+                },
+                yAxis: {
+                    axisLabel: 'Values',
+                    tickFormat: function(d){
+                        return d3.format(',:00')(d+6);
+                    }
+                }
+            }
+        };
 
-              values: [{
-                id: 1,
-                x: 'Fruits',
-                y: [ 54, 0, 879 ],
-                tooltip: 'Fruits tooltip'
-              }, {
-                id: 2,
-                x: 'Vegetables',
-                y: [ 12, 34, 15 ],
-                tooltip: 'Vegetables tooltip'
-              }, {
-                id: 3,
-                x: 'Meet',
-                y: [ 154, 432, 234 ],
-                tooltip: 'Meet tooltip'
-              }],
-
-							changeValues: function() {
-								$http.get(file = file === 'data/bar2.json'? 'data/bar.json':'data/bar2.json')
-									.then(function(res) {
-										$scope.values = res.data
-									}, function(err) {
-										
-									});
-              }
-            });
-					$http.get('data/bar2.json')
-						.then(function(res) {
-							$scope.values = res.data
-						}, function(err) {
-						
-						});
+        $scope.dataHor =[
+  {
+    "key": "Series 1",
+    "color": "#d67777",
+    "values": [
+      { 
+        "label" : "Group A" ,
+        "value" : 1.8746444827653
+      } , 
+      { 
+        "label" : "Group B" ,
+        "value" : 8.0961543492239
+      } , 
+      { 
+        "label" : "Group C" ,
+        "value" : 0.57072943117674
+      } , 
+      { 
+        "label" : "Group D" ,
+        "value" : 2.4174010336624
+      } , 
+      {
+        "label" : "Group E" ,
+        "value" : 0.72009071426284
+      } , 
+      { 
+        "label" : "Group F" ,
+        "value" : 0.77154485523777
+      } , 
+      { 
+        "label" : "Group G" ,
+        "value" : 0.90152097798131
+      } , 
+      {
+        "label" : "Group H" ,
+        "value" : 0.91445417330854
+      } , 
+      { 
+        "label" : "Group I" ,
+        "value" : 0.055746319141851
+      }
+    ]
+  }
+  
+]
 	};
 	LifeCycleController.$inject = [ '$http', '$scope', '$rootScope',
 			'$cookieStore', '$window', '$location', '$routeParams'

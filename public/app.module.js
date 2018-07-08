@@ -4,12 +4,412 @@
 
 	var app = angular.module(
 			'tangelo',
-			[ 'ngRoute','ngCookies','tangelo.lifecycle','taira-multiselect','btorfs.multiselect'] )
+			[ 'ngRoute','ngCookies','tangelo.lifecycle','tangelo.company','taira-multiselect','btorfs.multiselect','nvd3'] )
 			.constant('apiVersion', {
 				version : 'v1.0'
 			}).constant('apiDomain', {
 				domain : 'http://localhost:8080'
-			}).config(Configure).directive('a3bar', function ($log, d3Helpers, svgHelpers, barHelpers, barDefaults) {
+			}).config(Configure).directive('a3pie', function ($log, d3Helpers, svgHelpers, pieHelpers, pieDefaults) {
+	return {
+		restrict: 'EA',
+		replace: true,
+		scope: {
+			options: '=options',
+			data: '=data'
+		},
+		template: '<div class="angular-a3pie"></div>',
+		controller: function($scope) {
+			$log.info('[Angular - D3] Pie scope controller', $scope);
+		},
+		link: function(scope, element, attrs) {
+			if(!jQuery) {
+				$log.error('JQuery is not loaded');
+				return;
+			}
+			scope.container = element;
+			scope.type = 'pie';
+			scope.classPrefix = 'a3pie';
+			var options = pieDefaults.setDefaults(scope.options, attrs.id);
+
+			d3Helpers.setSize(element, options, attrs);
+
+			svgHelpers.addSVG(scope, element.get(0), options);
+			var w = options.width + options.margin.left + options.margin.right;
+			w -= options.legend.show? options.legend.width:0;
+			scope.svg.attr('transform', 'translate(' + w / 2 + ',' + options.height / 2 + ')');
+
+			element.width(options.containerWidth);
+
+			pieHelpers.addArc(scope, options);
+			//svgHelpers.updateStyles(scope, options);
+
+			//pieHelpers.updateData(scope, options);
+
+			scope.$watch('data', function() {
+				pieHelpers.updateData(scope, options);
+			});
+		}
+	};
+}).factory('pieHelpers', function ($log, d3Helpers, svgHelpers) {
+
+	function _tweenPie($this, scope, options, b) {
+		b.innerRadius = 100;
+		var start = null;
+		switch(options.pieAnimation) {
+			case 'inverse':
+				start = {startAngle: 2*Math.PI, endAngle: 2*Math.PI};
+				break;
+			case 'crossfade':
+				start = {startAngle: 2*Math.PI, endAngle: 0};
+				break;
+			case 'crossfade-inverse':
+				start = {startAngle: 0, endAngle: 2*Math.PI};
+				break;
+			default:
+				if(!d3Helpers.isDefined(options.pieAnimation) || options.pieAnimation === '') {
+					$log.warn('[Angular - D3] The option "pieAnimation" is undefined or it has a invalid value. Setting to "normal"');
+					options.pieAnimation = 'normal';
+				}
+				start = {startAngle: 0, endAngle: 0};
+				break;
+		}
+		if($this._current) {
+			start = $this._current;
+		}
+		var i = d3.interpolate(start, b);
+		$this._current = i(0);
+		return function(t) {
+			return scope.arc(i(t));
+		};
+	}
+
+	// Find the element in data0 that joins the highest preceding element in data1.
+	function findPreceding(i, data0, data1, key) {
+		var m = data0.length;
+		while (--i >= 0) {
+			var k = key(data1[i]);
+			for (var j = 0; j < m; ++j) {
+				if (key(data0[j]) === k) {
+					return data0[j];
+				}
+			}
+		}
+	}
+
+	// Find the element in data0 that joins the lowest following element in data1.
+	function findFollowing(i, data0, data1, key) {
+		var n = data1.length, m = data0.length;
+		while (++i < n) {
+			var k = key(data1[i]);
+			for (var j = 0; j < m; ++j) {
+				if (key(data0[j]) === k) {
+					return data0[j];
+				}
+			}
+		}
+	}
+
+	function findNeighborArc(i, data0, data1, key) {
+    var d;
+		var obj;
+    if(d = findPreceding(i, data0, data1, key)) {
+      obj = angular.copy(d);
+      obj.startAngle = d.endAngle;
+      return obj;
+    } else if(d = findFollowing(i, data0, data1, key)) {
+      obj = angular.copy(d);
+      obj.endAngle = d.startAngle;
+      return obj;
+    }
+    return null;
+  }
+
+	var pathAnim = function(path, dir, options) {
+		switch(dir) {
+			case 0:
+				path
+					.style('stroke', null)
+					.transition('pie-animation')
+					.duration(500)
+					.ease(d3.easeBounce)
+					.style('stroke-opacity', 0)
+					.style('stroke-width', 0)
+					.attr('d', d3.arc()
+						.outerRadius(options.radius)
+					);
+				break;
+			case 1:
+				path
+					.style('stroke', function() {
+						return d3.color(d3.select(this).attr('fill')).darker();
+					})
+					.style('stroke-opacity', 0)
+					.style('stroke-width', 0)
+					.transition('pie-animation')
+					.style('stroke-opacity', 1)
+					.style('stroke-width', 1)
+					.attr('d', d3.arc()
+						.outerRadius(options.radius * 1.06)
+					);
+				break;
+		}
+	};
+
+	return {
+		addArc: function(scope, options) {
+			var w = options.width - options.margin.left - options.margin.right;
+			if(options.legend.show) {
+				w -= options.legend.width;
+			}
+			var h = options.height - options.margin.top - options.margin.bottom;
+			options.radius = Math.min(w, h) / 2;
+			scope.arc = d3.arc()
+		    .outerRadius(options.radius);
+
+			scope.pie = d3.pie()
+				.value(function(d) { return d[options.y.key]; })
+		    .sort(null);
+
+			// ===========================================================================================
+	    // g elements to keep elements within svg modular
+			scope.svg.append('g').attr('class', scope.classPrefix + '-slices');
+			scope.svg.append('g').attr('class', scope.classPrefix + '-labelName');
+	    scope.svg.append('g').attr('class', scope.classPrefix + '-lines');
+	    // ===========================================================================================
+		},
+
+		updateData: function(scope, options) {
+			$log.debug('Update data');
+			// var percentFormat = d3.format(',.2%');
+			var colors = d3Helpers.setColors(options.pie.colors);
+			var data = d3Helpers.getDataFromScope(scope, options);
+			if(d3Helpers.isUndefinedOrEmpty(data)) {
+				$log.warn('[Angular - D3] No data for pie');
+				return;
+			}
+
+			// Key function for get data.
+			var key = function(d) {
+				if(angular.isUndefined(d)) {
+					return d;
+				}
+				if(angular.isUndefined(d.data)) {
+					return d.data;
+				}
+				return d.data[options.idKey];
+			};
+
+			var arcTween = function() {
+				return _tweenPie(this, scope, options, d3.select(this).data()[0]);
+			};
+
+			//scope.svg.selectAll('.' + scope.classPrefix + '-arc').remove();
+
+			// ===========================================================================================
+			// add and colour the pie slices
+			scope.slices = scope.svg.selectAll('.' + scope.classPrefix + '-slices');
+			var path = scope.slices.selectAll('path');
+			var dataSlices = path.data();
+			var pieData = scope.pie(data);
+
+			var arcs = path.data(pieData, key);
+
+			arcs
+				.on('mouseout', null)
+				.on('mouseover', null)
+				.transition()
+				.duration(options.animations.time)
+				.ease(options.animations.ease)
+				.on('end', function() {
+					d3.select(this).on('mouseover', function() {
+						pathAnim(d3.select(this), 1, options);
+					})
+					.on('mouseout', function() {
+						pathAnim(d3.select(this), 0, options);
+					});
+				})
+				.attr('fill', function(d) {
+					if(angular.isDefined(options.colorKey) && angular.isDefined(d.data[options.colorKey])) {
+						return d.data[options.colorKey];
+					}
+					return colors(d.data[options.x.key]);
+				})
+				.attrTween('d', arcTween);
+
+			arcs.enter()
+				.append('path')
+				.each(function(d, i) {
+					var narc = findNeighborArc(i, dataSlices, pieData, key);
+					if(narc) {
+						this._current = narc;
+						this._previous = narc;
+					} else {
+						this._current = d;
+					}
+				})
+				.attr('fill', function(d) {
+					if(angular.isDefined(options.colorKey) && angular.isDefined(d.data[options.colorKey])) {
+						return d.data[options.colorKey];
+					}
+					return colors(d.data[options.x.key]);
+				})
+				.transition('pie-enter')
+				.duration(options.animations.time)
+				.ease(options.animations.ease)
+				.on('end', function() {
+					d3.select(this).on('mouseover', function() {
+						pathAnim(d3.select(this), 1, options);
+					})
+					.on('mouseout', function() {
+						pathAnim(d3.select(this), 0, options);
+					});
+				})
+				.attrTween('d', arcTween);
+
+			arcs
+				.exit()
+				.each(function() {
+					d3.select(this)
+					.on('mouseout', null)
+					.on('mouseover', null);
+				})
+				.transition()
+				.duration(options.animations.time)
+				.ease(options.animations.ease)
+				.attrTween('d', function(d, idx) {
+					var previous = this._previous? this._previous:findNeighborArc(idx, pieData, dataSlices, key);
+					var i = d3.interpolateObject(d, previous);
+					return function(t) {
+						return scope.arc(i(t));
+					};
+				})
+				.remove();
+
+			// ===========================================================================================
+
+			this.setStyles(scope, options);
+
+			if(options.legend.show) {
+				this.createLegend(scope, options, colors);
+			}
+		},
+
+		createLegend: function(scope, options, colors) {
+			var percentFormat = d3.format(',.2%');
+			var data = d3Helpers.getDataFromScope(scope, options);
+
+			var total = d3.sum(data, function(d) {
+				return d[options.y.key];
+			});
+
+			// Key function for get data.
+			var key = function(d) {
+				if(angular.isUndefined(d)) {
+					return d;
+				}
+				return d[options.idKey];
+			};
+
+
+			if(!scope.legend) {
+				var left = options.radius*1.1;
+				var top = -options.radius*0.9;
+				scope.legend = scope.svg
+					.append('g')
+					.attr('class', 'legend')
+					.attr('transform', 'translate(' + left  +', ' + top + ')');
+			}
+
+			var items = scope.legend
+				.selectAll('.legend-item')
+				.data(data, key);
+
+			items
+				.selectAll('text')
+				.html(function() {
+					var d = d3.select(this.parentNode).data()[0];
+					return d[options.x.key] + ' (' + percentFormat(d[options.y.key]/total) + ')';
+				})
+				.each(function() {
+					svgHelpers.wrap(this, options.legend.width - 20);
+				});
+
+			items
+				.selectAll('rect')
+				.attr('fill', function() {
+					var d = d3.select(this.parentNode).data()[0];
+					return colors(d[options.x.key]);
+				});
+
+			var item = items.enter()
+				.append('g')
+				.attr('class', 'legend-item')
+				.attr('transform', function(d, i) {
+					return 'translate(0, ' + (i*25) + ')';
+				});
+
+			item
+				.append('rect')
+				.attr('width', 18)
+				.attr('height', 18)
+				.attr('transform', 'translate(0, -13)')
+				.attr('fill', function() {
+					var d = d3.select(this.parentNode).data()[0];
+					return colors(d[options.x.key]);
+				});
+
+			item
+				.append('text')
+				.attr('x', '25px')
+				.attr('y', 0)
+				.attr('dy', '0')
+				.attr('dx', '25px')
+				.html(function() {
+					var d = d3.select(this.parentNode).data()[0];
+					return d[options.x.key] + ' (' + percentFormat(d[options.y.key]/total) + ')';
+				})
+				.each(function() {
+					svgHelpers.wrap(this, options.legend.width - 20);
+				});
+
+			items
+				.exit()
+				.remove();
+
+			var currentY = 0;
+			scope.legend
+				.selectAll('.legend-item')
+				.attr('transform', function(d, i) {
+					var oldY = Math.max(currentY, 20*i);
+					currentY += d3.select(this).select('text').node().getBoundingClientRect().height + 10;
+
+					return 'translate(0, ' + oldY + ')';
+				});
+		},
+
+		wrapLabels: function(scope, options) {
+			scope.svg.selectAll('.' + scope.classPrefix + '-labelName text')
+				.each(function() {
+					var rect = this.getBoundingClientRect();
+					if(rect.left < 0) {
+						svgHelpers.wrap(this, rect.right);
+					} else if(rect.right > options.width) {
+						svgHelpers.wrap(this, options.width - rect.left);
+					}
+				});
+		},
+
+		setStyles: function(scope, options) {
+			scope.svg.selectAll('.' + scope.classPrefix + '-labelName text')
+				.style('fill', options.axis.color)
+				.style('font-weight', options.axis.fontWeight);
+
+			scope.svg
+				.style('font-family', options.fontFamily)
+				.style('font-size', options.fontSize);
+		}
+	};
+}).directive('a3bar', function ($log, d3Helpers, svgHelpers, barHelpers, barDefaults) {
 	return {
 		restrict: 'EA',
 		replace: true,
@@ -561,6 +961,97 @@
 
 			// As per definition values e and f are the ones for the translation.
 			return [matrix.e, matrix.f];
+		}
+	};
+}).factory('pieDefaults', function (d3Helpers) {
+	function _getDefaults() {
+		var commonDefaults = d3Helpers.getCommonDefaults();
+		angular.extend(commonDefaults, {
+			pie: {
+				colors: d3.scaleOrdinal(d3.schemeCategory20)
+			},
+			radius: 0,
+			x: {
+				key: 'x',
+				label: 'x',
+				show: true
+			},
+			y: {
+				key: 'y',
+				label: 'y'
+			},
+			defaultData: [{
+				id: 1,
+				x: 'Fruits',
+				y: 54,
+				tooltip: 'Fruits tooltip'
+			}, {
+				id: 2,
+				x: 'Vegetables',
+				y: 23,
+				tooltip: 'Vegetables tooltip'
+			}, {
+				id: 3,
+				x: 'Meet',
+				y: 41,
+				tooltip: 'Meet tooltip'
+			}],
+			showPercent: false,
+			borderColor: '#FFF',
+			pieAnimation: 'normal'
+		});
+		return commonDefaults;
+	}
+
+	var isDefined = d3Helpers.isDefined,
+		obtainEffectiveChartId = d3Helpers.obtainEffectiveChartId,
+		defaults = {};
+
+	return {
+		getDefaults: function (scopeId) {
+			var pieId = obtainEffectiveChartId(defaults, scopeId);
+			return defaults[pieId];
+		},
+
+		getCreationDefaults: function (scopeId) {
+			var d = this.getDefaults(scopeId);
+
+			var pieDefaults = {};
+			angular.extend(pieDefaults, d);
+			return pieDefaults;
+		},
+
+		setDefaults: function(userDefaults, scopeId) {
+			var newDefaults = _getDefaults();
+
+			if (isDefined(userDefaults)) {
+				d3Helpers.setDefaults(newDefaults, userDefaults);
+
+				newDefaults.radius = d3Helpers.isDefined(userDefaults.radius)?  userDefaults.radius:newDefaults.radius;
+				newDefaults.showPercent = d3Helpers.isDefined(userDefaults.showPercent)?  userDefaults.showPercent:newDefaults.showPercent;
+				newDefaults.borderColor = d3Helpers.isDefined(userDefaults.borderColor)?  userDefaults.borderColor:newDefaults.borderColor;
+				newDefaults.pieAnimation = d3Helpers.isDefined(userDefaults.pieAnimation)?  userDefaults.pieAnimation:newDefaults.pieAnimation;
+
+				if(isDefined(userDefaults.pie)) {
+					angular.extend(newDefaults.pie, userDefaults.pie);
+				}
+
+				if(isDefined(userDefaults.x)) {
+					angular.extend(newDefaults.x, userDefaults.x);
+				}
+
+				if(isDefined(userDefaults.y)) {
+					angular.extend(newDefaults.y, userDefaults.y);
+				}
+
+				if(isDefined(newDefaults.defaultData)) {
+					angular.extend(newDefaults.defaultData, newDefaults.defaultData);
+				}
+			}
+
+			var pieId = obtainEffectiveChartId(defaults, scopeId);
+			defaults[pieId] = newDefaults;
+			return newDefaults;
 		}
 	};
 }).factory('barHelpers', function ($log, d3Helpers, svgHelpers) {
@@ -1205,6 +1696,10 @@
 			templateUrl : "app/lifecycle/lifecycle.html"
 		}).when('/companyOverview', {
 			templateUrl : "app/company/company-overview.html"
+		}).when('/advertisingDashBoard', {
+			templateUrl : "app/company/advertisingDashBoard.html"
+		}).when('/campaignDashBoard', {
+			templateUrl : "app/company/campaignDashBoard.html"
 		});
 	}
 })(window.angular);

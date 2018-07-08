@@ -7,24 +7,62 @@ and open the template in the editor.
     Created on : Jun 25, 2018, 7:51:06 PM
     Author     : Admin
 */
+ul{
+    padding: 0;
+}
 section{
-    margin-top: 25px;
+    margin-top: 15px;
     margin-bottom: 10px;
 }
 .row.no-gutters {
-  margin-right: 0;
-  margin-left: 0;
+    margin-right: 0;
+    margin-left: 0;
 }
 .row.no-gutters > [class^="col-"],
 .row.no-gutters > [class*=" col-"] {
-  padding-right: 0;
-  padding-left: 0;
+    padding-right: 0;
+    padding-left: 0;
+}
+.container-fluid{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.row {
+    margin-right: -5px;
+    margin-left: -5px;
+}
+.row > [class^="col-"],
+.row > [class*=" col-"] {
+    padding-right: 5px;
+    padding-left: 5px;
 }
 .navbar-header, .sidebar, .top-left-part{
     background: #354872;
 }
+.navbar-header, .top-left-part{
+    background-image: url('../images/border.png');
+}
+#side-menu{
+   margin-top: 15px;
+}
 #side-menu li a{
     color: #fff;
+    padding: 10px 10px;
+    width: 220px;
+    font-size: 13px;
+}
+#side-menu li ul li a{
+ list-style-type: circle;
+}
+#side-menu li ul li a{
+    color: #fff;
+    padding: 5px;
+    width: 220px;
+    padding-left: 35px;
+}
+#side-menu li{
+    
 }
 .tab-content{
     background: #fff;
@@ -109,6 +147,7 @@ select{
     font-weight: bold;
     font-size: 17px;
 }
+
 .tabs2.tab-content{
     background: #F3F3F3;
     padding: 10px;
@@ -118,6 +157,18 @@ select{
     font-weight: bold;
     font-size: 17px;
     background: #F3F3F3;
+}
+.nav-tabs.tabs3 > li > a{
+    color: #A6B6BE;
+    font-weight: bold;
+    font-size: 17px;
+    background: #78909C;
+}
+.nav-tabs.tabs3 > li.active > a, .nav-tabs.tabs3 > li.active > a:focus, .nav-tabs.tabs3 > li.active > a:hover{
+    color: #A6B6BD;
+    font-weight: bold;
+    font-size: 17px;
+    background: #fff;
 }
 .table-bare{
     background: #fff;
@@ -143,3 +194,623 @@ select{
     border-top: solid 1px #000 !important;
     border-bottom-color: #000;
 }
+.boxfull{
+
+}
+.boxwhite{
+    background: #fff;
+}
+.boxwhite .box-title{
+    padding: 5px 15px;
+    background: #F5F5F5;
+}
+.boxwhite .box-body{
+    padding: 5px 15px;
+}
+.boxgrey{
+    background: #FBFBFB;
+}
+.boxgrey .box-title{
+    padding: 5px 15px;
+    background: #F2F2F2;
+}
+.boxgrey .box-body{
+    padding: 5px 15px;
+}
+.table-boot th{
+    color: #9C9C9C;
+    font-weight: bold;
+    font-size: 16px;
+}
+h3{
+    color: #979797;
+    font-weight: bold;
+    font-size: 17px;
+}
+h5{
+    font-size: 20px;
+    font-weight: bold;
+}
+h5 small{
+    font-size: 13px;
+}
+.metrics h3{
+    margin-bottom: 0px;
+}
+.social h5{
+    margin-bottom: 20px
+}
+.social i{
+    display: block;
+    margin-bottom: 20px;
+    font-size: 25px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #000;
+    text-align: center;
+    color: #fff;
+    padding-top: 12px;
+}
+.social .fa-facebook{
+    background: #6179AC;
+}
+.social .fa-twitter{
+    background: #55ACEE;
+}
+.social .fa-youtube{
+    background: #D22215;
+}
+.social .fa-linkedin{
+    background: #007AB9;
+}
+.datablocks .dblock{
+    border: solid 1px #ddd;
+    padding: 10px 15px;
+}
+.datablocks h2{
+    color: #959595;
+}
+.dblock p, .dblock h2, .dblock h3{
+    margin: 0;
+    padding: 0;
+}
+.dblock h2{
+    color: #30D6FF;
+    line-height: 24px;
+}
+.dblock h3{
+    color: #727185;
+    font-size: 14px;
+}
+.dblock h2 span{
+    font-size: 15px;
+    /*color: #EC5358;*/
+}
+.dblock p span{
+    color: #b5b5b5;
+    font-weight: bold;
+}
+.datablocks h6{
+    font-size: 14px;
+    font-weight: 500;
+    color: #aaa;
+    padding-top: 5px;
+}
+.datablocks .table-low th{
+    color: #8F8F8F;
+    font-weight: 600;
+    font-size: 13px;
+}
+.datablocks .table-low td{
+    color: #555;
+    font-weight: 600;
+    font-size: 12px;
+}
+.bg-teal{
+    background: #78909C;
+}
+.table-bordered.table-color{
+    border: none;
+}
+.table-color th{
+    color: #B5C2C9;
+    font-weight: bold;
+    background: #fff;
+    border-color: #9bbac9 !important;
+    border-top: 8px solid #78909C !important;
+    border-right: 8px solid #78909C !important;
+    border-left: none;
+}
+.table-color th:first-child{
+    background: #78909C;
+    color: #fff;
+    font-size: 17px;
+    font-weight: bold;  
+    border-left: none;
+}
+.table-color td:first-child{
+    background: #78909C;
+    color: #fff;
+    font-size: 14px;
+    border-left: none;
+}
+.table-color td{
+    background: #fff;
+    border-color: #9bbac9 !important;
+    border-right: 8px solid #78909C !important;
+}
+.table-color tbody tr:first-child{
+    color: #555;
+    font-weight: bold;
+}
+.text-green{
+    color: #56BA46 !important;
+}
+.datablocks .table-low.table-striped td{
+    font-weight: 500;
+}
+.table-low i{
+    font-size: 18px;
+}
+#cdash  h6 {
+    color: #000;
+}
+#cdash  h5.bhighlight {
+    font-size: 16px;    
+}
+label{
+    color: #A2B2BA
+}
+input[type="text"].form-control {
+    border-radius: 20px;
+    background: #ECEFF1;
+    border: none;
+    outline: none;
+    box-shadow: none
+}
+.table.table-head th{
+    background: #E3E3E3;
+    padding: 8px;
+    color: #000;
+}
+.table.table-head td{
+    padding: 8px;
+}
+.table.table-head p{
+    margin: 0;
+    padding: 0;
+}
+.table-head .dropdown-toggle{
+    width: 100%; text-align: left; padding: 0;
+}
+.tabselect{
+    border: none;
+    padding: 0;
+    border-radius: 0;
+    width: 100%;
+    background: #fff;
+}
+.fa-sm{
+    font-size: 12px;
+}
+.flow {
+    padding: 10px 25px;
+}
+.flow h4{
+    font-size: 14px;
+    font-weight: bold;
+    color: #9AACB5;
+    padding: 0;
+    margin: 0;
+}
+.flow p{
+    padding: 0;
+    margin: 0;
+}
+.creport h4{
+    font-size: 14px;
+    font-weight: bold;
+    color: #9AACB5;
+    padding: 0;
+    margin: 0;
+}
+.durd{
+    margin-bottom: 10px;
+}
+.fa-fill{
+    background: #A8A8A8;
+    padding: 5px;
+    color: #fff;
+    border-radius: 3px;
+    border: solid 1px #A8A8A8;
+}
+.fa-blank{
+    padding: 5px;
+    color: #A8A8A8;
+    border: solid 1px #A8A8A8;
+    border-radius: 3px;
+}
+.creport .btn-link{
+    color: #3ACAEE;
+    font-weight: bold;
+}
+.creport .btn{
+    min-width: 100px;
+}
+.fa-color-blue{
+    background: #3ACAEE;
+    border: solid 1px #3ACAEE;
+}
+.fa-border-blue{
+    border-color: #3ACAEE;
+    color: #3ACAEE;
+}
+.nav-tabs.tabs4 > li > a{
+    color: #A6B6BE;
+    font-weight: bold;
+    font-size: 17px;
+    background: #78909C;
+}
+.nav-tabs.tabs4 > li.active > a, .nav-tabs.tabs4 > li.active > a:focus, .nav-tabs.tabs4 > li.active > a:hover{
+    color: #A6B6BD;
+    font-weight: bold;
+    font-size: 17px;
+    background: #F3F3F3;
+}
+.tab-content.tab-dark{
+    background: #F3F3F3;
+}
+.btn-info.btn-bordered{
+    color: #3ACAEE;
+    background: none;
+    border-color: #3ACAEE;
+}
+.btn-primary{
+   background: #445880;
+   border-color: #445880;
+}
+.tab-dark .btn{
+    min-width: 150px;
+}
+.p10{
+    padding: 10px;
+}
+.p20{
+    padding: 20px;
+}
+.filterrow ul{
+    padding: 0;
+}
+.filterrow li{
+    list-style-type: none;
+    float: left;
+    margin-right: 15px;
+}
+.filterrow li:after{
+    padding-left:15px; 
+    content: "|"
+}
+.filterrow li:last-child:after{
+    content: " "
+}
+.cmplan .dblock{
+    padding: 10px;
+    min-height: 100px;
+}
+.cmplan .dblock h3{
+    font-size: 12px;
+}
+.cmplan .dblock h2{
+    font-size: 18px;
+    color: #78909B;
+}
+.calhead div{
+    float: left;
+    background: #C8C8C8;
+    margin-right: .3%;
+    padding: 10px 5px;
+    width: 12.5%;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.calhead div:first-child{
+    background: none;
+    width: 10%;
+    font-size: 11px;
+    font-weight: bold;
+}
+.calbody div{
+    float: left;
+    background: none;
+    margin-right: .3%;
+    width: 10.9%;
+    font-size: 12px;
+    height: 150px;
+    position: relative;
+    margin-bottom: 5px;
+    background: #EEEEEE;
+}
+.calbody div i{
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+.calbody div:first-child{
+    background: #C8C8C8;
+    width: 10%;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 5px;
+}
+.calbody div:first-child i{
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+}
+.calbody div.yello{
+    background: #FEF0B6;
+    font-weight: normal;
+}
+.calbody div.yello p{
+    background: #FEE586;
+    padding: 5px;
+}
+.calbody div.blue{
+    background: #BDF2FE;
+    font-weight: normal;
+}
+.calbody div.blue p{
+    background: #90E9FD;
+    padding: 5px;
+}
+.font-bold{
+    font-weight: bold;
+}
+.calbody p span{
+    float: right;
+}
+.tags{
+    background: #E3E3E3;
+    padding: 2px;
+    color: #9A9A9A;
+    font-size: 13px;
+}
+.cmplist{
+    border: solid 1px #ddd;
+    margin-top:10px;
+    height: 400px;
+    overflow: auto;
+   
+}
+.cmplist li{
+    list-style-type: none;
+    border-bottom: solid 1px #ddd;
+    padding: 5px;
+    color: #666;
+}
+.cmplist li:before{
+     font-family: FontAwesome; 
+     content: "\f07b";
+     padding-right: 10px;
+}
+.cmplist li:last-child{
+    border-bottom: none;
+}
+.cmplistpr li{
+    list-style-type: none;
+    color: #666;
+    border-bottom: solid 1px #aaa;
+    padding: 0;
+    margin: 0;
+}
+.cmplistpr li span{
+    background: #E3E3E3
+}
+.cmplistpr label{
+    background: #E3E3E3;
+    padding: 5px;
+    display: block;
+    margin: 0;
+}
+.cmplistpr label input{
+    padding: 0 3px;
+}
+.cmplistpr li p{
+    padding-top: 8px;
+    margin: 0;
+}
+.cmplistpr li p i{
+    padding-right: 10px;
+    padding-left: 10px;
+}
+.rounded-search{
+    border-radius: 20px;
+    border: solid 1px #aaa;
+    padding:5px;
+}
+.cmplist .rounded-search, .cmplistpr .rounded-search{
+    width: 100%;
+}
+.srchround{
+    position: relative;
+}
+.srchround span{
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    color: #aaa;
+}
+#wizard .steps{
+    background: #78909C;
+    padding: 5px;
+}
+#circtab.nav-tabs > li{
+    margin-right: 5px;
+}
+#circtab li a{
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+}
+#circtab li a{
+    background: #97AAB3;
+    color: #fff;
+    font-weight: bold;
+    padding: 6px 13px;
+}
+#circtab li.active > a {
+    background: #00ccff;
+}
+.tabheads{
+    background: #78909C;
+    padding: 7px 15px;
+}
+.tabheads h3{
+    margin: 0;
+    padding: 0;
+    color: #fff;
+}
+.cmpcreate h2{
+    color: #78909C;
+    font-size: 18px;
+}
+.cmpcreate .dblock{
+    border: solid 1px #ddd;
+    padding: 10px;
+    color: #78909C;
+    font-size: 14px;
+    min-height: 55px;
+}
+.rounded-input{
+    border: solid 1px #ddd;
+    border-radius: 20px;
+    padding: 5px;
+}
+.cmpcreate label{
+    margin-top: 5px;
+}
+.cmpcreate .rounded-input{
+    width: 100%;
+}
+.dblock .social{
+    margin-left: 25px;
+    margin-top: 15px;
+}
+.dblock .social p{
+    float: left;
+    margin-right: 15px;
+    font-size: 11px;
+    text-align: center;
+    font-weight: bold;
+    color: #aaa;
+}
+
+.dblock .social i{
+    background: none;
+    border: solid 1px #ddd;
+    color: #aaa;
+    font-size: 18px;
+    margin-bottom: 0;
+}
+
+/*gajendra-css*/
+
+.bro-int
+{
+    font-size:14px;
+    color:#7E95A1;
+    margin-top: 10px;
+}
+
+/* The container */
+.holder {
+display: inline-block;    
+    position: relative;
+    padding-left:20px;
+    margin-bottom: 5px;
+    margin-left: 15px;
+    margin-right: 0px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    
+     
+    
+}
+
+/* Hide the browser's default checkbox */
+.holder input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 16px;
+    width: 16px;
+    border : 2px solid #666666;
+    border-radius: 200px;
+    
+}
+
+/* On mouse-over, add a grey background color */
+.holder:hover input ~ .checkmark {
+    background-color: #ccc;
+    border : 2px solid #666666;
+    border-radius: 200px;
+}
+
+/* When the checkbox is checked, add a blue background */
+.holder input:checked ~ .checkmark {
+    
+    
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.holder input:checked ~ .checkmark:after {
+    display: inline;
+}
+
+/* Style the checkmark/indicator */
+.holder .checkmark:after {
+    left: 4px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid black;    
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.div-cls
+{  
+    text-align: center;
+    border:1px solid #cccccc;
+}
+.div-cls img
+{
+    width:100%;
+}
+.h4-cls
+{
+    font-size: 14px;
+}
+
+/* gajendra css end here */

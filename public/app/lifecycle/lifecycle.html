@@ -1,4 +1,4 @@
-  <div id="page-wrapper">
+  <div id="page-wrapper" ng-controller="LifeCycleController">
                 <div class="container-fluid">
                     <section>
                         <div class="row">
@@ -16,6 +16,9 @@
                                                     <span class="seltitle">Filter by Region </span> &nbsp;
                                                     <select class="customsel">
                                                         <option value="">All</option>
+														 <option value="">Europe</option>
+														 <option value="">North America</option>
+														 <option value="">Asia</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -24,18 +27,18 @@
                                                     <div class="col-md-6">
                                                         <div class="box boxdgrey">
                                                             <h4>Distribution</h4>
- <div ng-controller="LifeCycleController" class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                        <a3bar width="300px" height="300px" options="options" data="values"></a3bar>
-					<button ng-click="changeValues()">Change Values</button>
+	  
+	 
+    <nvd3 options="optionsPie" data="data"></nvd3>                                  
+				
                                         <!-- /.dashboard-stat -->
                                     </div>
-                                                            <canvas id="chart-area"></canvas>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="box boxlgrey">
-                                                            <h4>Avg. Future Value (1 Year Forward)</h4>
-                                                            <p>Graph</p>
+															
+																		   <nvd3 options='options' data='datan'></nvd3>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -198,7 +201,7 @@
                                                     </table>  
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <p>Graph</p>
+                                                     <nvd3 options="optionsHor" data="dataHor"></nvd3>
                                                 </div>
                                             </div>
                                         </div>

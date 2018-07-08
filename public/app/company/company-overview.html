@@ -1,16 +1,16 @@
-  <div id="page-wrapper">
+  <div id="page-wrapper" ng-controller="CompanyController">
                 <div class="container-fluid">
                     <section>
                         <div class="row">
                             <div class="col-md-12">
                                 <div>
                                     <ul class="nav nav-tabs tabs3" role="tablist">
-                                        <li role="presentation" class="active"><a href="#dash" aria-controls="dash" role="tab" data-toggle="tab">Dashboard</a></li>
-                                        <li role="presentation"><a href="#adash" aria-controls="adash" role="tab" data-toggle="tab">Advertising Dashboard</a></li>
-                                        <li role="presentation"><a href="#cdash" aria-controls="cdash" role="tab" data-toggle="tab">Campaign Dashboard</a></li>
-                                    </ul>
+                                        <li role="presentation" class="active"><a href="#/companyOverview" aria-controls="dash" role="tab" data-toggle="tab">Dashboard</a></li>
+                                        <li role="presentation"><a href="#/advertisingDashBoard" aria-controls="adash" role="tab" data-toggle="tab">Advertising Dashboard</a></li>
+                                        <li role="presentation"><a href="#/campaignDashBoard" aria-controls="cdash" role="tab" data-toggle="tab">Campaign Dashboard</a></li>
+                            </ul>
                                     <div class="tab-content">
-                                        <div role="tabpanel" class="tab-pane active" id="home">
+                                       <div role="tabpanel" class="tab-pane active" id="dash">
                                             <div class="maincontent" >
                                                 <div class="graphcontent">
                                                     <section style="margin-top: 0">
@@ -20,8 +20,9 @@
                                                                     <div class="box-title">
                                                                         <h4>Lead Breakdown (Today)</h4>
                                                                     </div>
-                                                                    <div class="box-body">
-                                                                        <p>Graph</p>
+                                                                     <div class="box-body">
+																		   <nvd3 options='options' data='datan'></nvd3>
+                                                                   
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -30,8 +31,8 @@
                                                                     <div class="box-title">
                                                                         <h4>Today Lead by Program</h4>
                                                                     </div>
-                                                                    <div class="box-body">
-                                                                        <p>Graph</p>
+                                                                     <div class="box-body">
+                                                                     <nvd3 options='options' data='datanz'></nvd3>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -44,9 +45,8 @@
                                                                     <div class="box-title">
                                                                         <h4>Lead This Month</h4>
                                                                     </div>
-                                                                    <div class="box-body">
-                                                                        <p>Graph</p>
-                                                                    </div>
+                                                                  <div class="box-body">
+ <nvd3 options='leadsByToday' data='leadsByTodayData'></nvd3>                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -72,6 +72,8 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr>
+																					
+																					<svg width="500" height="200"></svg>
                                                                                     <td>Organic</td>
                                                                                     <td>Graph</td>
                                                                                     <td class="text-right">86,954</td>
@@ -207,13 +209,17 @@
                                                     </section>
                                                 </div>
                                             </div>
-
                                         </div>
-                                    </div>
+                                        <!--Advertising Dashboard Content  -->
 
-                                </div>
-                            </div>
-                        </div>
+</div>
+                               
+							</div>
+							</div>
+							</div>
                     </section>
                 </div>
             </div>
+     
+      
+     
