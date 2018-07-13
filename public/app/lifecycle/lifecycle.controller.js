@@ -90,7 +90,7 @@
         y: function(d){ return d.value; },
         showValues: true,
         valueFormat: function(d){
-            return d3.format(',.4f')(d);
+            return d3.format(',.2f')(d);
         },
         transitionDuration: 500,
         xAxis: {
@@ -105,16 +105,18 @@
 	$scope.optionsHor = {
             chart: {
                 type: 'multiBarHorizontalChart',
-                height: 250,
+                height: 350,
                 x: function(d){return d.label;},
                 y: function(d){return d.value;},
-                showControls: false,
-                showValues: true,
-                stacked: true,
-                showLegend: false,
-                transitionDuration: 250,
+                 showControls: false,
+                showValues: false,
+				showXAxis: false ,	
+				showYAxis: false,
+               
+                duration: 500,
                 xAxis: {
-                    showMaxMin: false
+                    showMaxMin: false,
+					
                 },
                 yAxis: {
                     axisLabel: 'Values',
@@ -127,8 +129,8 @@
 
         $scope.dataHor =[
   {
-    "key": "Series 1",
-    "color": "#d67777",
+    "key": "Customers",
+    "color": "#04e2e8",
     "values": [
       { 
         "label" : "Group A" ,
@@ -167,7 +169,50 @@
         "value" : 0.055746319141851
       }
     ]
-  }
+  },
+  {
+			 "key": "Avg. Future Value",
+    "color": "#a4b4b4",
+    "values": [
+      { 
+        "label" : "Group A" ,
+        "value" : 8.8746444827653
+      } , 
+      { 
+        "label" : "Group B" ,
+        "value" : 18.0961543492239
+      } , 
+      { 
+        "label" : "Group C" ,
+        "value" : 2.57072943117674
+      } , 
+      { 
+        "label" : "Group D" ,
+        "value" : 6.4174010336624
+      } , 
+      {
+        "label" : "Group E" ,
+        "value" : 5.72009071426284
+      } , 
+      { 
+        "label" : "Group F" ,
+        "value" : 8.77154485523777
+      } , 
+      { 
+        "label" : "Group G" ,
+        "value" : 2.90152097798131
+      } , 
+      {
+        "label" : "Group H" ,
+        "value" : 6.91445417330854
+      } , 
+      { 
+        "label" : "Group I" ,
+        "value" : 4.055746319141851
+      }
+					]
+			
+		}
   
 ]
 	};

@@ -6,8 +6,8 @@ module.exports = function(app) {
 	var apiAuth = require('../controllers/api.authorization.server.controller');
 
 	app.route('/categories')
-		.get(apiAuth, users.requiresLogin, categories.list)
-		.post(apiAuth, users.requiresLogin, categories.create);
+		.get(apiAuth,  categories.list)
+		.post(apiAuth, categories.create);
 
 	app.route('/categories/:categoryId')
 		.get(apiAuth, users.requiresLogin, categories.read)

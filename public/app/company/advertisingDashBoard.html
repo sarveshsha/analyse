@@ -1,4 +1,5 @@
   <div id="page-wrapper" ng-controller="CompanyController">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css"/>
                 <div class="container-fluid">
                     <section>
                         <div class="row">
@@ -199,19 +200,19 @@
                                                             <div class="col-md-4">
                                                                 <div class="box boxlgrey">
                                                                     <h2>Advertise Spend</h2>
-                                                                       <nvd3 options="compareLineChartOptions" data="advertiseSpent"></nvd3>
+                                                                       <nvd3 options="compareLineChartForAdvertiseSpent" data="advertiseSpent"></nvd3>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="box boxlgrey">
                                                                     <h2>Cost of Sales</h2>
-                                                                    <p>Graph</p>
+                                                                    <nvd3 options="compareLineChartForCostofSales" data="costofSales"></nvd3>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="box boxlgrey">
                                                                     <h2>Revenue</h2>
-                                                                    <p>Graph</p>
+                                                                    <nvd3 options="compareLineChartForRevenue" data="revenue"></nvd3>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -221,15 +222,21 @@
                                                     <div class="graphcontent">
                                                         <div class="row">
                                                             <div class="col-md-6">
-                                                                <div class="box boxlgrey">
-                                                                    <h2>Advertising Spend</h2>
-                                                                    <p>Graph</p>
+                                                                <div  class="box boxlgrey">
+                                                                    <h2 >Advertising Spend</h2>
+                                                                     <nvd3 options="compareLineChartForAdvertisingSpend" data="AdvertisingSpend"></nvd3>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-3">
                                                                 <div class="box boxlgrey">
-                                                                    <h2>Advertising Channels</h2>
-                                                                    <p>Graph</p>
+                                                                    <h2 align='right'>Advertising</h2>
+                                                                     <nvd3 options="compareLineChartForAdvertisingChannelsCost" data="AdvertisingChannelsCost"></nvd3>
+															     </div>
+															</div>
+															 <div class="col-md-3">
+                                                                <div class="box boxlgrey">    
+																  <h2 align='left'>Channels</h2>
+                                                                    <nvd3 options="compareLineChartForAdvertisingChannelsSales" data="AdvertisingChannelsSales"></nvd3>
                                                                 </div>
                                                             </div>
                                                         </div>

@@ -62,7 +62,7 @@ module.exports = function(modelName, sortBy) {
 				// TODO: extend this to handle multiple filters
 				query = req.query.filter;
 			}
-
+			console.log(query);
 			Model.find(query).sort(sortBy).exec(function(err, models) {
 				if (err) {
 					return res.status(400).send({

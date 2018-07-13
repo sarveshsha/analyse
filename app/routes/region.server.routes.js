@@ -5,13 +5,15 @@ module.exports = function(app) {
 	var users = require('../controllers/users.server.controller');
 	var apiAuth = require('../controllers/api.authorization.server.controller');
 var region = require('../controllers/region.server.controller');
-	
+
 	app.route('/v1.0/regions')
 		.get(apiAuth,  region.list)
 		.post(apiAuth,  region.create);
 
-	
-	
+		// app.route('/v1.0/regions/getByDate')
+		// .post(apiAuth,region.getByDate);
+
+
 	app.route('/v1.0/region/:regionId')
 		.get(apiAuth,  region.read)
 		.put(apiAuth,  region.update)

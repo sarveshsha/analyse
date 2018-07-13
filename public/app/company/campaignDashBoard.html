@@ -1,5 +1,6 @@
 
            <div id="page-wrapper" ng-controller="CompanyController">
+		   
                 <div class="container-fluid">
                     <section>
                         <div class="row">
@@ -168,6 +169,8 @@
                                                         </table>
                                                     </section>
                                                     <section>
+													 <div class="row"> 
+													
                                                         <div class="row no-gutters">
                                                             <div class="col-md-8">
                                                                 <h6>Predicted future value</h6>
@@ -177,6 +180,21 @@
                                                                 <h6>Future value distribution</h6>
                                                             </div>
                                                         </div>
+														</div>
+														 <div class="row"> 
+														  <div class="row no-gutters">
+                                                            <div class="col-md-8">
+                                                                <h6></h6>
+																<nvd3 options="predictedFutureValue" data="predictedFutureValueData"></nvd3>
+                                                               
+                                                            </div>
+                                                            <div class="col-md-4 text-right">
+                                                                <h6></h6>
+																<nvd3 options="futureValueDistribution" data="futureValueDistributionData"></nvd3>     
+                                                            </div>
+                                                        </div>
+														 
+														 </div>
                                                     </section>
                                                     <section>
                                                         <div class="row no-gutters">

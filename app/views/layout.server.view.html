@@ -47,38 +47,33 @@
         <!-- Wrapper -->
         <!-- ============================================================== -->
         <div id="wrapper">
-            <!-- ============================================================== -->
-            <!-- Topbar header - style you can find in pages.scss -->
-            <!-- ============================================================== -->
             <nav class="navbar navbar-default navbar-static-top m-b-0">
                 <div class="navbar-header">
                     <div class="top-left-part">
-                        <!-- Logo -->
                         <a class="logo" href="index.html">
                             <b>
                                 <img src="images/logo.png" alt="home" class="light-logo" />
                             </b>
                         </a>
                     </div>
-                    <!-- /Logo -->
                     <ul class="nav navbar-top-links navbar-right pull-right">
+                        <li>
+                            <img src="images/brain.png" style="padding-top: 8px; padding-right: 20px;">
+                        </li>
                         <li>
                             <form role="search" class="app-search hidden-sm hidden-xs m-r-10">
                                 <input type="text" placeholder="Search Documents" class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
                         </li>
+                         <li>
+                            <a href="#" style="font-size: 22px; padding-top: 2px;"><i class="fa fa-list"></i></a>
+                        </li>
                         <li>
-                            <!--                        <a class="profile-pic" href="#"> <img src="plugins/images/users/varun.jpg" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">Steave</b></a>-->
+                            <a href="#" style="font-size: 24px; padding-top: 2px;"><i class="fa fa-cog"></i></a>
                         </li>
                     </ul>
                 </div>
-                <!-- /.navbar-header -->
-                <!-- /.navbar-top-links -->
-                <!-- /.navbar-static-side -->
             </nav>
-            <!-- End Top Navigation -->
-            <!-- ============================================================== -->
-            <!-- Left Sidebar - style you can find in sidebar.scss  -->
-            <!-- ============================================================== -->
+            
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav slimscrollsidebar">
                     <div class="sidebar-head">
@@ -92,26 +87,26 @@
                             <a href="index.html" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Marketing Intelligence</a>
                             <ul>
                                 <li><a href="#/companyOverview" class="waves-effect">Company Overview</a></li>
-                                <li><a href="#" class="waves-effect">Tangelo Model</a></li>
-                                <li><a href="#" class="waves-effect">Custom Reports</a></li>
+                                <li><a href="/" class="waves-effect">Tangelo Model</a></li>
+                                <li><a href="#/reports"waves-effect">Custom Reports</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="index.html" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Marketing Management</a>
                             <ul>
-                                <li><a href="#" class="waves-effect">Marketing Plan</a></li>
-                                <li><a href="#" class="waves-effect">Audience Creator</a></li>
-                                <li><a href="#" class="waves-effect">Campaign Creator</a></li>
-                                <li><a href="#" class="waves-effect">Campaign Management</a></li>
+                                 <li><a href="#/marketingPlan" class="waves-effect">Marketing Plan</a></li>
+                                <li><a href="#/audienceCreator" class="waves-effect">Audience Creator</a></li>
+                                <li><a href="#/campaignCreator" class="waves-effect">Campaign Creator</a></li>
+                                <li><a href="#/campaignManagement" class="waves-effect">Campaign Management</a></li>
                                 <li><a href="#" class="waves-effect">Asset Management</a></li>
                                 <li><a href="#" class="waves-effect">Asset Creator</a></li>
-                                <li><a href="#" class="waves-effect">Journey Builder</a></li>
+                                <li><a href="#/reports" class="waves-effect">Journey Builder</a></li>
                             </ul>
                         </li>
                         <li>
-                            <a href="index.html" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Integration Library</a>
+                            <a href="#/integrationLibrary" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Integration Library</a>
                             <ul>
-                                <li><a href="#" class="waves-effect">Integration Library</a></li>
+                                <li><a href="#/integrationLibrary" class="waves-effect">Integration Library</a></li>
                                 <li><a href="#" class="waves-effect">Integration Performance</a></li>
                             </ul>
                         </li>
@@ -128,8 +123,7 @@
             <!-- ============================================================== -->
             <!-- Page Content -->
             <!-- ============================================================== -->
-           <div class="main-page" ng-view></div>
-        </div>
+             <div class="main-page" ng-view></div>
         <script src="plugins/bower_components/jquery/dist/jquery.min.js"></script>
         <!-- Bootstrap Core JavaScript -->
         <script src="bootstrap/dist/js/bootstrap.min.js"></script>
@@ -151,8 +145,6 @@
         <script src="js/custom.min.js"></script>
         <script src="js/dashboard1.js"></script>
         <script src="plugins/bower_components/toast-master/js/jquery.toast.js"></script>
-        <script src="js/utils.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 	<!-- /.main-wrapper -->
 
 	<!-- ========== COMMON JS FILES ========== -->
@@ -185,7 +177,7 @@
 	<script src="js/angular/ui-bootstrap-tpls-2.5.0.min.js"></script>
 	<script src="js/angular/datetime-picker.js"></script>
 	<!-- ========== Angular js MVC start =========  -->
-<script src="js/d3/d3.min.js"></script>
+<script src="lib/d3/d3.min.js"></script>
 
 
 	<script src="app.module.js"></script>
@@ -193,8 +185,13 @@
 
 	<script src="app/lifecycle/lifecycle.module.js"></script>
 	<script src="app/lifecycle/lifecycle.controller.js"></script>
+	<script src="app/company/company.module.js"></script>
+	<script src="app/company/company.controller.js"></script>
 	
 
+<script src="lib/nvd3/build/nv.d3.js"></script> <!-- or use another assembly -->
+<script src="lib/angular-nvd3/dist/angular-nvd3.js"></script>
+<link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.css">
 	
 	<!-- Notification List for Client Management -->
 	

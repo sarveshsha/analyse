@@ -1700,6 +1700,20 @@
 			templateUrl : "app/company/advertisingDashBoard.html"
 		}).when('/campaignDashBoard', {
 			templateUrl : "app/company/campaignDashBoard.html"
+		}).when('/marketingPlan', {
+			templateUrl : "app/group/marketing-plan.html"
+		}).when('/audienceCreator', {
+			templateUrl : "app/group/audience-creator.html"
+		}).when('/campaignCreator', {
+			templateUrl : "app/campaign/campaign-creator.html"
+		}).when('/campaignManagement', {
+			templateUrl : "app/campaign/campaign-management.html"
+		}).when('/reports', {
+			templateUrl : "app/reports/custom-reports.html"
+		}).when('/integrationLibrary', {
+			templateUrl : "app/integration/integration-library.html"
 		});
+		
+		
 	}
 })(window.angular);

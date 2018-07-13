@@ -10,4 +10,5 @@ var mongoose = require('mongoose'),
 
 var crud = require('./crud.server.controller')('Region', 'name');
 
+
 module.exports = crud;

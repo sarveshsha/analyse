@@ -1,4 +1,5 @@
   <div id="page-wrapper" ng-controller="CompanyController">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css"/>
                 <div class="container-fluid">
                     <section>
                         <div class="row">
@@ -32,25 +33,54 @@
                                                                         <h4>Today Lead by Program</h4>
                                                                     </div>
                                                                      <div class="box-body">
-                                                                     <nvd3 options='options' data='datanz'></nvd3>
+                                                                     <nvd3 options='TodayLeadByProgram' data='TodayLeadByProgramData'></nvd3>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </section>
                                                     <section>
+                                                   
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <div class="boxfull boxgrey">
                                                                     <div class="box-title">
                                                                         <h4>Lead This Month</h4>
                                                                     </div>
-                                                                  <div class="box-body">
- <nvd3 options='leadsByToday' data='leadsByTodayData'></nvd3>                                                                    </div>
+                                                                  
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </section>
+														 <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="boxfull boxgrey">
+                                                                    <div class="box-title">
+                                                                        <h4>Leads(Today)</h4>
+                                                                    </div>
+                                                                  <div class="box-body">
+																  <nvd3 options='leadsByToday' data='leadsByTodayData'></nvd3>                                                                    </div>
+                                                                </div>
+                                                            </div>
+															 <div class="col-md-4">
+                                                                <div class="boxfull boxgrey">
+                                                                    <div class="box-title">
+                                                                        <h4>Leads(This Month)</h4>
+                                                                    </div>
+                                                                  <div class="box-body">
+																  <nvd3 options='leadsByThisMonth' data='leadsByThisMonthData'></nvd3>                                                                    </div>
+                                                                </div>
+                                                            </div>
+															 <div class="col-md-4">
+                                                                <div class="boxfull boxgrey">
+                                                                    <div class="box-title">
+                                                                        <h4>Web User (This Month)</h4>
+                                                                    </div>
+                                                                  <div class="box-body">
+																  <nvd3 options='WebuserThisMonth' data='WebuserThisMonthData'></nvd3>                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+														 </section>
                                                     <section>
                                                         <div class="row">
                                                             <div class="col-md-12">
@@ -72,50 +102,49 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr>
-																					
-																					<svg width="500" height="200"></svg>
+																																							
                                                                                     <td>Organic</td>
-                                                                                    <td>Graph</td>
+                                                                                    <td width="30%" ><nvd3 options='Organic' data='OrganicData'></nvd3>  </td>
                                                                                     <td class="text-right">86,954</td>
                                                                                     <td class="text-right">5.49%</td>
                                                                                     <td class="text-right">48.41%</td>
                                                                                     <td class="text-right">1.22 : 1</td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td>Organic</td>
-                                                                                    <td>Graph</td>
+                                                                                    <td>Display</td>
+                                                                                    <td width="30%" ><nvd3 options='Display' data='DisplayData'></nvd3>  </td>
+                                                                                    <td class="text-right">34,251</td>
+                                                                                    <td class="text-right">18.85%</td>
+                                                                                    <td class="text-right">71.64%</td>
+                                                                                    <td class="text-right">1.45 : 1</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Direct</td>
+                                                                                    <td width="30%" ><nvd3 options='Direct' data='DirectData'></nvd3>  </td>
                                                                                     <td class="text-right">86,954</td>
                                                                                     <td class="text-right">5.49%</td>
                                                                                     <td class="text-right">48.41%</td>
                                                                                     <td class="text-right">1.22 : 1</td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td>Organic</td>
-                                                                                    <td>Graph</td>
+                                                                                    <td>Referal</td>
+                                                                                     <td width="30%" ><nvd3 options='Referal' data='ReferalData'></nvd3>  </td>
                                                                                     <td class="text-right">86,954</td>
                                                                                     <td class="text-right">5.49%</td>
                                                                                     <td class="text-right">48.41%</td>
                                                                                     <td class="text-right">1.22 : 1</td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td>Organic</td>
-                                                                                    <td>Graph</td>
+                                                                                    <td>Social</td>
+                                                                                     <td width="30%" ><nvd3 options='Social' data='SocialData'></nvd3>  </td>
                                                                                     <td class="text-right">86,954</td>
                                                                                     <td class="text-right">5.49%</td>
                                                                                     <td class="text-right">48.41%</td>
                                                                                     <td class="text-right">1.22 : 1</td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td>Organic</td>
-                                                                                    <td>Graph</td>
-                                                                                    <td class="text-right">86,954</td>
-                                                                                    <td class="text-right">5.49%</td>
-                                                                                    <td class="text-right">48.41%</td>
-                                                                                    <td class="text-right">1.22 : 1</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>Organic</td>
-                                                                                    <td>Graph</td>
+                                                                                    <td>Other</td>
+                                                                                     <td width="30%" ><nvd3 options='Other' data='OtherData'></nvd3>  </td>
                                                                                     <td class="text-right">86,954</td>
                                                                                     <td class="text-right">5.49%</td>
                                                                                     <td class="text-right">48.41%</td>
